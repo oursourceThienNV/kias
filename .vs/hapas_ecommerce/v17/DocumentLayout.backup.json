@@ -1,0 +1,596 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\homepage\\CategoryTiles.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:themes\\hapas\\src\\pages\\homepage\\CategoryTiles.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\homepage\\HeroSlider.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:themes\\hapas\\src\\pages\\homepage\\HeroSlider.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\homepage\\VideoBanner.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:themes\\hapas\\src\\pages\\homepage\\VideoBanner.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\homepage\\HeroSlider.scss||{181FE41B-5A5D-479F-9F8F-BF665F4EBC2A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:themes\\hapas\\src\\pages\\homepage\\HeroSlider.scss||{181FE41B-5A5D-479F-9F8F-BF665F4EBC2A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\homepage\\CategoryTiles.scss||{181FE41B-5A5D-479F-9F8F-BF665F4EBC2A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:themes\\hapas\\src\\pages\\homepage\\CategoryTiles.scss||{181FE41B-5A5D-479F-9F8F-BF665F4EBC2A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\homepage\\VideoBanner.scss||{181FE41B-5A5D-479F-9F8F-BF665F4EBC2A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:themes\\hapas\\src\\pages\\homepage\\VideoBanner.scss||{181FE41B-5A5D-479F-9F8F-BF665F4EBC2A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\packages\\evershop\\src\\modules\\base\\pages\\frontStore\\all\\Base.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:packages\\evershop\\src\\modules\\base\\pages\\frontStore\\all\\Base.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\homepage\\StoryBanner.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:themes\\hapas\\src\\pages\\homepage\\StoryBanner.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\homepage\\ProductCarousel.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:themes\\hapas\\src\\pages\\homepage\\ProductCarousel.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\homepage\\NewsGrid.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:themes\\hapas\\src\\pages\\homepage\\NewsGrid.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\packages\\evershop\\src\\modules\\base\\pages\\admin\\all\\Layout.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:packages\\evershop\\src\\modules\\base\\pages\\admin\\all\\Layout.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\all\\MainNavigationLeft.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:themes\\hapas\\src\\pages\\all\\MainNavigationLeft.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\all\\HapasLogo.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:themes\\hapas\\src\\pages\\all\\HapasLogo.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\homepage\\ProductCarousel.scss||{181FE41B-5A5D-479F-9F8F-BF665F4EBC2A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:themes\\hapas\\src\\pages\\homepage\\ProductCarousel.scss||{181FE41B-5A5D-479F-9F8F-BF665F4EBC2A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\homepage\\StoryBanner.scss||{181FE41B-5A5D-479F-9F8F-BF665F4EBC2A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:themes\\hapas\\src\\pages\\homepage\\StoryBanner.scss||{181FE41B-5A5D-479F-9F8F-BF665F4EBC2A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\all\\HapasHeaderActions.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:themes\\hapas\\src\\pages\\all\\HapasHeaderActions.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\all\\HapasHeaderActions.scss||{181FE41B-5A5D-479F-9F8F-BF665F4EBC2A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:themes\\hapas\\src\\pages\\all\\HapasHeaderActions.scss||{181FE41B-5A5D-479F-9F8F-BF665F4EBC2A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\packages\\evershop\\src\\components\\frontStore\\Header.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:packages\\evershop\\src\\components\\frontStore\\Header.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\extensions\\hapas-homepage\\src\\pages\\frontStore\\homepage\\index.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:extensions\\hapas-homepage\\src\\pages\\frontStore\\homepage\\index.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\packages\\create-evershop-app\\sample\\themes\\sample\\dist\\pages\\homepage\\OnlyHomePage.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:packages\\create-evershop-app\\sample\\themes\\sample\\dist\\pages\\homepage\\OnlyHomePage.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\components\\HapasHeader.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:themes\\hapas\\components\\HapasHeader.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\packages\\evershop\\src\\components\\frontStore\\Og.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:packages\\evershop\\src\\components\\frontStore\\Og.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\all\\MainNavigation.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:themes\\hapas\\src\\pages\\all\\MainNavigation.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\tests\\hapas-homepage.spec.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:tests\\hapas-homepage.spec.ts||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\packages\\create-evershop-app\\sample\\themes\\sample\\src\\pages\\homepage\\OnlyHomePage.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:packages\\create-evershop-app\\sample\\themes\\sample\\src\\pages\\homepage\\OnlyHomePage.tsx||{0F2454B1-A556-402D-A7D0-1FDE7F99DEE0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\homepage\\NewsGrid.scss||{181FE41B-5A5D-479F-9F8F-BF665F4EBC2A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:themes\\hapas\\src\\pages\\homepage\\NewsGrid.scss||{181FE41B-5A5D-479F-9F8F-BF665F4EBC2A}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 34,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:22:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:3:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:23:0:{e8034f19-ab72-4f06-83fd-f6832b41aa63}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:131:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:132:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:133:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:134:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:135:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:136:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:138:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:141:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:137:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:139:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:140:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:134:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:136:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:131:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:132:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:133:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:138:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:24:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:23:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:25:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:26:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:27:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "VideoBanner.tsx",
+              "DocumentMoniker": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\homepage\\VideoBanner.tsx",
+              "RelativeDocumentMoniker": "themes\\hapas\\src\\pages\\homepage\\VideoBanner.tsx",
+              "ToolTip": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\homepage\\VideoBanner.tsx",
+              "RelativeToolTip": "themes\\hapas\\src\\pages\\homepage\\VideoBanner.tsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2025-10-14T05:48:23.125Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Layout.tsx",
+              "DocumentMoniker": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\packages\\evershop\\src\\modules\\base\\pages\\admin\\all\\Layout.tsx",
+              "RelativeDocumentMoniker": "packages\\evershop\\src\\modules\\base\\pages\\admin\\all\\Layout.tsx",
+              "ToolTip": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\packages\\evershop\\src\\modules\\base\\pages\\admin\\all\\Layout.tsx",
+              "RelativeToolTip": "packages\\evershop\\src\\modules\\base\\pages\\admin\\all\\Layout.tsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAgwBAAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2025-10-14T03:30:24.091Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "CategoryTiles.tsx",
+              "DocumentMoniker": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\homepage\\CategoryTiles.tsx",
+              "RelativeDocumentMoniker": "themes\\hapas\\src\\pages\\homepage\\CategoryTiles.tsx",
+              "ToolTip": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\homepage\\CategoryTiles.tsx*",
+              "RelativeToolTip": "themes\\hapas\\src\\pages\\homepage\\CategoryTiles.tsx*",
+              "ViewState": "AgIAACIAAAAAAAAAAAAAAAcAAAACAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2025-10-14T03:29:39.188Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "HeroSlider.tsx",
+              "DocumentMoniker": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\homepage\\HeroSlider.tsx",
+              "RelativeDocumentMoniker": "themes\\hapas\\src\\pages\\homepage\\HeroSlider.tsx",
+              "ToolTip": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\homepage\\HeroSlider.tsx",
+              "RelativeToolTip": "themes\\hapas\\src\\pages\\homepage\\HeroSlider.tsx",
+              "ViewState": "AgIAAF8AAAAAAAAAAAAgwJsAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2025-10-14T00:24:20.841Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "CategoryTiles.scss",
+              "DocumentMoniker": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\homepage\\CategoryTiles.scss",
+              "RelativeDocumentMoniker": "themes\\hapas\\src\\pages\\homepage\\CategoryTiles.scss",
+              "ToolTip": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\homepage\\CategoryTiles.scss",
+              "RelativeToolTip": "themes\\hapas\\src\\pages\\homepage\\CategoryTiles.scss",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002663|",
+              "WhenOpened": "2025-10-14T03:38:42.693Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "ProductCarousel.tsx",
+              "DocumentMoniker": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\homepage\\ProductCarousel.tsx",
+              "RelativeDocumentMoniker": "themes\\hapas\\src\\pages\\homepage\\ProductCarousel.tsx",
+              "ToolTip": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\homepage\\ProductCarousel.tsx",
+              "RelativeToolTip": "themes\\hapas\\src\\pages\\homepage\\ProductCarousel.tsx",
+              "ViewState": "AgIAALcAAAAAAAAAAAAAACoAAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2025-10-14T03:34:08.742Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "VideoBanner.scss",
+              "DocumentMoniker": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\homepage\\VideoBanner.scss",
+              "RelativeDocumentMoniker": "themes\\hapas\\src\\pages\\homepage\\VideoBanner.scss",
+              "ToolTip": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\homepage\\VideoBanner.scss",
+              "RelativeToolTip": "themes\\hapas\\src\\pages\\homepage\\VideoBanner.scss",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABMAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002663|",
+              "WhenOpened": "2025-10-14T06:19:24.785Z"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "HeroSlider.scss",
+              "DocumentMoniker": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\homepage\\HeroSlider.scss",
+              "RelativeDocumentMoniker": "themes\\hapas\\src\\pages\\homepage\\HeroSlider.scss",
+              "ToolTip": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\homepage\\HeroSlider.scss",
+              "RelativeToolTip": "themes\\hapas\\src\\pages\\homepage\\HeroSlider.scss",
+              "ViewState": "AgIAADABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002663|",
+              "WhenOpened": "2025-10-14T03:38:48.019Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Base.tsx",
+              "DocumentMoniker": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\packages\\evershop\\src\\modules\\base\\pages\\frontStore\\all\\Base.tsx",
+              "RelativeDocumentMoniker": "packages\\evershop\\src\\modules\\base\\pages\\frontStore\\all\\Base.tsx",
+              "ToolTip": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\packages\\evershop\\src\\modules\\base\\pages\\frontStore\\all\\Base.tsx",
+              "RelativeToolTip": "packages\\evershop\\src\\modules\\base\\pages\\frontStore\\all\\Base.tsx",
+              "ViewState": "AgIAADEAAAAAAAAAAAAAADwAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2025-10-14T03:38:12.145Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "NewsGrid.tsx",
+              "DocumentMoniker": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\homepage\\NewsGrid.tsx",
+              "RelativeDocumentMoniker": "themes\\hapas\\src\\pages\\homepage\\NewsGrid.tsx",
+              "ToolTip": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\homepage\\NewsGrid.tsx",
+              "RelativeToolTip": "themes\\hapas\\src\\pages\\homepage\\NewsGrid.tsx",
+              "ViewState": "AgIAAHEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2025-10-14T00:29:55.649Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "StoryBanner.tsx",
+              "DocumentMoniker": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\homepage\\StoryBanner.tsx",
+              "RelativeDocumentMoniker": "themes\\hapas\\src\\pages\\homepage\\StoryBanner.tsx",
+              "ToolTip": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\homepage\\StoryBanner.tsx",
+              "RelativeToolTip": "themes\\hapas\\src\\pages\\homepage\\StoryBanner.tsx",
+              "ViewState": "AgIAAE4AAAAAAAAAAAAAAEcAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2025-10-14T00:30:06.042Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "HapasLogo.tsx",
+              "DocumentMoniker": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\all\\HapasLogo.tsx",
+              "RelativeDocumentMoniker": "themes\\hapas\\src\\pages\\all\\HapasLogo.tsx",
+              "ToolTip": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\all\\HapasLogo.tsx",
+              "RelativeToolTip": "themes\\hapas\\src\\pages\\all\\HapasLogo.tsx",
+              "ViewState": "AgIAACQAAAAAAAAAAAAowAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2025-10-14T03:35:11.814Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "ProductCarousel.scss",
+              "DocumentMoniker": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\homepage\\ProductCarousel.scss",
+              "RelativeDocumentMoniker": "themes\\hapas\\src\\pages\\homepage\\ProductCarousel.scss",
+              "ToolTip": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\homepage\\ProductCarousel.scss",
+              "RelativeToolTip": "themes\\hapas\\src\\pages\\homepage\\ProductCarousel.scss",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002663|",
+              "WhenOpened": "2025-10-14T03:34:09.772Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "StoryBanner.scss",
+              "DocumentMoniker": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\homepage\\StoryBanner.scss",
+              "RelativeDocumentMoniker": "themes\\hapas\\src\\pages\\homepage\\StoryBanner.scss",
+              "ToolTip": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\homepage\\StoryBanner.scss",
+              "RelativeToolTip": "themes\\hapas\\src\\pages\\homepage\\StoryBanner.scss",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002663|",
+              "WhenOpened": "2025-10-14T03:34:07.301Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "HapasHeaderActions.scss",
+              "DocumentMoniker": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\all\\HapasHeaderActions.scss",
+              "RelativeDocumentMoniker": "themes\\hapas\\src\\pages\\all\\HapasHeaderActions.scss",
+              "ToolTip": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\all\\HapasHeaderActions.scss",
+              "RelativeToolTip": "themes\\hapas\\src\\pages\\all\\HapasHeaderActions.scss",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002663|",
+              "WhenOpened": "2025-10-14T03:29:32.49Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "MainNavigationLeft.tsx",
+              "DocumentMoniker": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\all\\MainNavigationLeft.tsx",
+              "RelativeDocumentMoniker": "themes\\hapas\\src\\pages\\all\\MainNavigationLeft.tsx",
+              "ToolTip": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\all\\MainNavigationLeft.tsx",
+              "RelativeToolTip": "themes\\hapas\\src\\pages\\all\\MainNavigationLeft.tsx",
+              "ViewState": "AgIAALAAAAAAAAAAAAAwwI0AAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2025-10-14T00:13:38.925Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "index.ts",
+              "DocumentMoniker": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\extensions\\hapas-homepage\\src\\pages\\frontStore\\homepage\\index.ts",
+              "RelativeDocumentMoniker": "extensions\\hapas-homepage\\src\\pages\\frontStore\\homepage\\index.ts",
+              "ToolTip": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\extensions\\hapas-homepage\\src\\pages\\frontStore\\homepage\\index.ts",
+              "RelativeToolTip": "extensions\\hapas-homepage\\src\\pages\\frontStore\\homepage\\index.ts",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAA8AAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2025-10-14T03:04:18.238Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "OnlyHomePage.js",
+              "DocumentMoniker": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\packages\\create-evershop-app\\sample\\themes\\sample\\dist\\pages\\homepage\\OnlyHomePage.js",
+              "RelativeDocumentMoniker": "packages\\create-evershop-app\\sample\\themes\\sample\\dist\\pages\\homepage\\OnlyHomePage.js",
+              "ToolTip": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\packages\\create-evershop-app\\sample\\themes\\sample\\dist\\pages\\homepage\\OnlyHomePage.js",
+              "RelativeToolTip": "packages\\create-evershop-app\\sample\\themes\\sample\\dist\\pages\\homepage\\OnlyHomePage.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-10-14T02:59:42.587Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "Og.tsx",
+              "DocumentMoniker": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\packages\\evershop\\src\\components\\frontStore\\Og.tsx",
+              "RelativeDocumentMoniker": "packages\\evershop\\src\\components\\frontStore\\Og.tsx",
+              "ToolTip": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\packages\\evershop\\src\\components\\frontStore\\Og.tsx",
+              "RelativeToolTip": "packages\\evershop\\src\\components\\frontStore\\Og.tsx",
+              "ViewState": "AgIAAEEAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2025-10-14T02:57:38.507Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "MainNavigation.tsx",
+              "DocumentMoniker": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\all\\MainNavigation.tsx",
+              "RelativeDocumentMoniker": "themes\\hapas\\src\\pages\\all\\MainNavigation.tsx",
+              "ToolTip": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\all\\MainNavigation.tsx",
+              "RelativeToolTip": "themes\\hapas\\src\\pages\\all\\MainNavigation.tsx",
+              "ViewState": "AgIAAFUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2025-10-14T00:27:46.081Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "hapas-homepage.spec.ts",
+              "DocumentMoniker": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\tests\\hapas-homepage.spec.ts",
+              "RelativeDocumentMoniker": "tests\\hapas-homepage.spec.ts",
+              "ToolTip": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\tests\\hapas-homepage.spec.ts",
+              "RelativeToolTip": "tests\\hapas-homepage.spec.ts",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAAB4AAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2025-10-14T00:25:53.648Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "HapasHeaderActions.tsx",
+              "DocumentMoniker": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\all\\HapasHeaderActions.tsx",
+              "RelativeDocumentMoniker": "themes\\hapas\\src\\pages\\all\\HapasHeaderActions.tsx",
+              "ToolTip": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\all\\HapasHeaderActions.tsx",
+              "RelativeToolTip": "themes\\hapas\\src\\pages\\all\\HapasHeaderActions.tsx",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2025-10-14T00:14:10.156Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "OnlyHomePage.tsx",
+              "DocumentMoniker": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\packages\\create-evershop-app\\sample\\themes\\sample\\src\\pages\\homepage\\OnlyHomePage.tsx",
+              "RelativeDocumentMoniker": "packages\\create-evershop-app\\sample\\themes\\sample\\src\\pages\\homepage\\OnlyHomePage.tsx",
+              "ToolTip": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\packages\\create-evershop-app\\sample\\themes\\sample\\src\\pages\\homepage\\OnlyHomePage.tsx",
+              "RelativeToolTip": "packages\\create-evershop-app\\sample\\themes\\sample\\src\\pages\\homepage\\OnlyHomePage.tsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2025-10-14T02:59:34.304Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "Header.tsx",
+              "DocumentMoniker": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\packages\\evershop\\src\\components\\frontStore\\Header.tsx",
+              "RelativeDocumentMoniker": "packages\\evershop\\src\\components\\frontStore\\Header.tsx",
+              "ToolTip": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\packages\\evershop\\src\\components\\frontStore\\Header.tsx",
+              "RelativeToolTip": "packages\\evershop\\src\\components\\frontStore\\Header.tsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003213|",
+              "WhenOpened": "2025-10-14T00:16:19.302Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "NewsGrid.scss",
+              "DocumentMoniker": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\homepage\\NewsGrid.scss",
+              "RelativeDocumentMoniker": "themes\\hapas\\src\\pages\\homepage\\NewsGrid.scss",
+              "ToolTip": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\src\\pages\\homepage\\NewsGrid.scss",
+              "RelativeToolTip": "themes\\hapas\\src\\pages\\homepage\\NewsGrid.scss",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002663|",
+              "WhenOpened": "2025-10-14T00:29:47.422Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "HapasHeader.jsx",
+              "DocumentMoniker": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\components\\HapasHeader.jsx",
+              "RelativeDocumentMoniker": "themes\\hapas\\components\\HapasHeader.jsx",
+              "ToolTip": "D:\\FREE_LANCER\\DU_AN\\DU_AN_PHONG\\20250810\\hapas_ecommerce\\themes\\hapas\\components\\HapasHeader.jsx",
+              "RelativeToolTip": "themes\\hapas\\components\\HapasHeader.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwA4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2025-10-14T00:13:21.439Z"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 50,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 50,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

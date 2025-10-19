@@ -1,0 +1,377 @@
+---
+description: HAPAS theme development and component patterns
+globs:
+  - "themes/hapas/**/*"
+alwaysApply: false
+---
+
+# Theme Components Quick Reference
+
+Essential patterns for HAPAS theme development. For full guide, see `docs/EVERSHOP-MODULES-EXTENSIONS-WIDGETS-THEMES.md`.
+
+---
+
+## Theme Structure
+
+```
+themes/hapas/
+├── src/                     # Development source
+│   ├── pages/
+│   │   ├── all/             # Global components (every page)
+│   │   ├── homepage/        # Homepage-specific
+│   │   ├── productView/     # Product page
+│   │   └── categoryView/    # Category page
+│   ├── components/          # Reusable UI (for overriding core)
+│   ├── styles/              # Global stylesheets
+│   └── assets/              # Images, fonts
+├── dist/                    # Compiled (don't edit)
+├── package.json
+└── tsconfig.json
+```
+
+---
+
+## Component Placement Rules
+
+### ✅ Add New Global Component
+→ Use `src/pages/all/`
+
+```tsx
+// themes/hapas/src/pages/all/CustomHeader.tsx
+export default function CustomHeader() {
+  return <header>...</header>;
+}
+
+export const layout = {
+  areaId: 'header',
+  sortOrder: 10
+};
+```
+
+### ✅ Add Page-Specific Component
+→ Use `src/pages/{pageName}/`
+
+```tsx
+// themes/hapas/src/pages/homepage/HeroBanner.tsx
+export default function HeroBanner() {
+  return <div className="hero">...</div>;
+}
+
+export const layout = {
+  areaId: 'content',
+  sortOrder: 1
+};
+```
+
+### ✅ Override Core Component
+→ Use `src/components/`
+
+```tsx
+// themes/hapas/src/components/ProductCard.tsx
+// Overrides core ProductCard component
+export default function ProductCard({ product }: Props) {
+  return <div className="custom-product-card">...</div>;
+}
+```
+
+**Key Difference:**
+- `pages/` → Components with `layout` export (area registration)
+- `components/` → Reusable UI primitives (overrides)
+
+---
+
+## Styling Patterns
+
+### ⚠️ SCSS @import DOESN'T WORK
+
+```scss
+// ❌ THIS FAILS
+@import '../../styles/variables';
+
+.component {
+  color: $primary-color; // Error: Undefined variable
+}
+```
+
+**Why:** EverShop uses `copyfiles` (not sass preprocessor), so @import isn't resolved.
+
+### ✅ Pattern 1: CSS Variables (RECOMMENDED)
+
+**Step 1:** Define variables globally
+
+```css
+/* themes/hapas/src/styles/theme.css */
+:root {
+  --color-primary: #000000;
+  --color-secondary: #666666;
+  --spacing-md: 1rem;
+  --font-primary: 'Inter', sans-serif;
+}
+```
+
+**Step 2:** Import once in global component
+
+```tsx
+// themes/hapas/src/pages/all/GlobalStyles.tsx
+import '../../styles/theme.css';
+
+export default function GlobalStyles() {
+  return null;
+}
+
+export const layout = {
+  areaId: 'head',
+  sortOrder: 1
+};
+```
+
+**Step 3:** Use in components
+
+```scss
+// Component.scss
+.component {
+  background: var(--color-primary);
+  padding: var(--spacing-md);
+  font-family: var(--font-primary);
+}
+```
+
+### ✅ Pattern 2: Tailwind CSS
+
+```tsx
+export default function Button() {
+  return (
+    <button className="bg-black text-white px-4 py-2 hover:bg-gray-800">
+      Click Me
+    </button>
+  );
+}
+```
+
+### ✅ Pattern 3: Self-Contained SCSS
+
+```scss
+// Define variables at top of each file
+$local-primary: #000000;
+$local-spacing: 1rem;
+
+.component {
+  color: $local-primary;
+  padding: $local-spacing;
+}
+```
+
+---
+
+## Common Area IDs
+
+### Header Areas
+```
+'header'              // Full header
+'headerTop'           // Announcement bar
+'headerMiddle'        // Logo, search, cart
+  'headerMiddleLeft'  // Logo
+  'headerMiddleCenter'  // Search
+  'headerMiddleRight'  // Cart/account
+'headerBottom'        // Main navigation
+```
+
+### Content Areas
+```
+'content'             // Main content
+'mainContent'         // Primary column
+'sidebar'             // Filters, widgets
+```
+
+### Footer Areas
+```
+'footer'              // Full footer
+'footerTop'           // Newsletter
+'footerMiddle'        // Link columns
+'footerBottom'        // Copyright
+```
+
+---
+
+## Component Patterns
+
+### Global Component (All Pages)
+
+```tsx
+// themes/hapas/src/pages/all/MainNavigation.tsx
+export default function MainNavigation({ categories }: Props) {
+  return (
+    <nav className="main-nav">
+      {categories.map(cat => (
+        <a key={cat.id} href={cat.url}>{cat.name}</a>
+      ))}
+    </nav>
+  );
+}
+
+export const layout = {
+  areaId: 'headerBottom',
+  sortOrder: 10
+};
+
+export const query = `
+  query {
+    categories(filters: [
+      { key: "status", operation: eq, value: "1" },
+      { key: "include_in_nav", operation: eq, value: "1" }
+    ]) {
+      items {
+        categoryId
+        name
+        url
+      }
+    }
+  }
+`;
+```
+
+### Page-Specific Component
+
+```tsx
+// themes/hapas/src/pages/homepage/FeaturedProducts.tsx
+export default function FeaturedProducts({ products }: Props) {
+  return (
+    <div className="featured-products">
+      {products.map(p => (
+        <ProductCard key={p.productId} product={p} />
+      ))}
+    </div>
+  );
+}
+
+export const layout = {
+  areaId: 'content',
+  sortOrder: 20
+};
+```
+
+### Overriding Core Component
+
+```tsx
+// themes/hapas/src/components/ProductCard.tsx
+// Overrides core ProductCard with custom styling
+export default function ProductCard({ product }: Props) {
+  return (
+    <div className="hapas-product-card">
+      <img src={product.image} alt={product.name} />
+      <h3>{product.name}</h3>
+      <p className="price">${product.price}</p>
+    </div>
+  );
+}
+```
+
+---
+
+## Import Styles
+
+```tsx
+// Import component SCSS
+import './Component.scss';
+
+export default function Component() {
+  return <div className="component">Content</div>;
+}
+```
+
+```scss
+// Component.scss
+.component {
+  background: var(--color-primary);
+  
+  &__title {
+    font-size: 1.5rem;
+  }
+  
+  &--featured {
+    border: 2px solid var(--color-accent);
+  }
+}
+```
+
+---
+
+## Build & Development
+
+### Development
+- Components resolved from `themes/hapas/src/`
+- Changes reflect immediately (hot reload)
+
+### Production
+- Components resolved from `themes/hapas/dist/`
+- Must run `npm run build` to compile
+
+### Build Process
+```bash
+npm run build
+```
+
+Compiles:
+1. TypeScript → JavaScript
+2. Copy SCSS, GraphQL, JSON files
+3. Bundle for production
+
+---
+
+## Common Issues & Solutions
+
+### ❌ Component Not Rendering
+
+**Symptoms:** Component exists but doesn't appear
+
+**Solutions:**
+1. Check location: should be in `pages/all/` for global
+2. Ensure `export const layout` exists
+3. Run `npm run build`
+4. Check browser console for errors
+
+### ❌ "Undefined variable" in SCSS
+
+**Root Cause:** Using `@import` for variables (not supported)
+
+**Solution:** Use CSS variables instead (see Styling Patterns above)
+
+### ❌ Styles Not Applying
+
+**Solutions:**
+1. Check SCSS imported in component: `import './Component.scss'`
+2. Verify class names match
+3. Run `npm run build`
+4. Check browser DevTools
+
+---
+
+## Best Practices
+
+✅ **DO:**
+- Place global components in `pages/all/`
+- Use TypeScript (.tsx) for type safety
+- Use CSS variables for theming
+- Export `layout` for area placement
+- Import global styles once in `GlobalStyles.tsx`
+
+❌ **DON'T:**
+- Use `@import` for SCSS variables
+- Hardcode navigation/content data
+- Edit files in `dist/` directory
+- Skip `npm run build` for production
+- Place new components in `components/` (use for overrides only)
+
+---
+
+## Naming Conventions
+
+- **Files:** PascalCase - `MainNavigation.tsx`, `ProductCard.tsx`
+- **Classes:** BEM style - `.main-nav`, `.product-card__title`
+- **Brand prefix:** `Hapas` for custom components - `HapasHeader`, `HapasLogo`
+
+---
+
+📚 **Full Documentation:** `docs/EVERSHOP-MODULES-EXTENSIONS-WIDGETS-THEMES.md` § 5-6 (Theme Development)
+
+**Last Updated:** October 2025

@@ -1,0 +1,226 @@
+/**
+ * HAPAS Theme - Global Styles
+ * 
+ * Theo EverShop best practices:
+ * https://evershop.io/docs/development/theme/styling
+ * 
+ * Pattern: "Adding Global CSS" → "Importing CSS in Global Components"
+ * Import once via GlobalStyles component (themes/hapas/src/pages/all/GlobalStyles.tsx)
+ * 
+ * SCSS được support NHƯNG không nên dùng @import giữa các files.
+ * Thay vào đó: Dùng CSS Variables (:root) để share values giữa components.
+ */
+
+/* =====================================================
+   CSS VARIABLES - Global Design Tokens
+   ===================================================== */
+
+:root {
+  /* ===== Brand Colors ===== */
+  --color-primary: #000000;
+  --color-secondary: #666666;
+  --color-text-primary: #1a1a1a;
+  --color-text-secondary: #666666;
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f5f5f5;
+  --color-bg-accent: #f9f9f9;
+  --color-border: #e5e5e5;
+  --color-border-light: #f0f0f0;
+  
+  /* ===== Typography ===== */
+  --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-size-xs: 0.75rem;    /* 12px */
+  --font-size-sm: 0.875rem;   /* 14px */
+  --font-size-base: 1rem;     /* 16px */
+  --font-size-lg: 1.125rem;   /* 18px */
+  --font-size-xl: 1.25rem;    /* 20px */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+  
+  /* ===== Spacing ===== */
+  --spacing-xs: 0.25rem;  /* 4px */
+  --spacing-sm: 0.5rem;   /* 8px */
+  --spacing-md: 1rem;     /* 16px */
+  --spacing-lg: 1.5rem;   /* 24px */
+  --spacing-xl: 2rem;     /* 32px */
+  --spacing-2xl: 3rem;    /* 48px */
+  
+  /* ===== Layout ===== */
+  --header-height: 60px;
+  --announcement-height: 36px;
+  --container-max-width: 1200px;
+  
+  /* ===== Border Radius ===== */
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
+  --border-radius-full: 9999px;
+  
+  /* ===== Transitions ===== */
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+  --transition-slow: 350ms ease;
+  
+  /* ===== Z-Index Layers ===== */
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+  
+  /* ===== Shadows ===== */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  
+  /* ===== Component-specific ===== */
+  --cart-badge-size: 18px;
+  --cart-badge-bg: #000000;
+  --cart-badge-color: #ffffff;
+  
+  /* ===== Breakpoints (for reference in @media queries) ===== */
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+}
+
+/* =====================================================
+   BASE STYLES
+   ===================================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-primary);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-normal);
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* =====================================================
+   UTILITY CLASSES
+   ===================================================== */
+
+.page-width {
+  // max-width: var(--container-max-width);
+  margin-top: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--spacing-md);
+  padding-right: var(--spacing-md);
+  
+  @media (min-width: 768px) {
+    padding-left: var(--spacing-lg);
+    padding-right: var(--spacing-lg);
+  }
+}
+
+/* =====================================================
+   RESET & NORMALIZATION
+   ===================================================== */
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+  
+  &:hover {
+    color: var(--color-secondary);
+  }
+}
+
+button {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  cursor: pointer;
+  
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+ul, ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* =====================================================
+   ACCESSIBILITY
+   ===================================================== */
+
+*:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Screen reader only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* =====================================================
+   TYPOGRAPHY
+   ===================================================== */
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0 0 var(--spacing-md) 0;
+  font-weight: var(--font-weight-bold);
+  line-height: 1.2;
+  color: var(--color-text-primary);
+}
+
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.75rem; }
+h4 { font-size: 1.5rem; }
+h5 { font-size: 1.25rem; }
+h6 { font-size: 1rem; }
+
+p {
+  margin: 0 0 var(--spacing-md) 0;
+}
+
+/* =====================================================
+   COMPONENT STYLES
+   Các components import SCSS riêng của chúng
+   và dùng CSS variables từ :root
+   ===================================================== */
+
+/* Components sẽ có file .scss riêng và import trực tiếp:
+   - MainNavigation.scss
+   - AnnouncementBar.scss  
+   - HapasHeaderActions.scss
+   - HapasLogo.scss
+   - HapasFooter.scss
+   
+   Tất cả đều dùng var(--variable-name) thay vì $scss-variable
+*/

@@ -1,0 +1,64 @@
+version: '3.8'
+
+# Supabase Stack for Database Administration
+# Lighter version - Only Studio + Meta API (not full Supabase)
+
+services:
+  # PostgreSQL Metadata API
+  postgres-meta:
+    container_name: hapas_supabase_meta
+    image: supabase/postgres-meta:v0.68.0
+    restart: unless-stopped
+    environment:
+      PG_META_HOST: host.docker.internal
+      PG_META_PORT: 5433
+      PG_META_DB: hapas_ecommerce
+      PG_META_USER: hapas
+      PG_META_PASSWORD: hapasdev123
+    ports:
+      - "8080:8080"
+    networks:
+      - hapas_network
+
+  # Supabase Studio - Database Admin UI
+  studio:
+    container_name: hapas_supabase_studio
+    image: supabase/studio:20240101-5d1ff88
+    restart: unless-stopped
+    ports:
+      - "3001:3000"
+    environment:
+      STUDIO_PG_META_URL: http://postgres-meta:8080
+      POSTGRES_PASSWORD: hapasdev123
+      DEFAULT_ORGANIZATION_NAME: HAPAS E-commerce
+      DEFAULT_PROJECT_NAME: HAPAS Development
+      
+      # Optional: Disable auth features we don't need
+      SUPABASE_PUBLIC_URL: http://localhost:3001
+      NEXT_PUBLIC_ENABLE_LOGS: "true"
+    depends_on:
+      - postgres-meta
+    networks:
+      - hapas_network
+
+networks:
+  hapas_network:
+    name: hapas_supabase
+    driver: bridge
+
+# USAGE:
+# 1. Start: docker-compose -f docker-compose.supabase.yml up -d
+# 2. Access Supabase Studio: http://localhost:3001
+# 3. Stop: docker-compose -f docker-compose.supabase.yml down
+#
+# Features:
+# ✅ Beautiful UI for browsing tables
+# ✅ Visual query builder
+# ✅ Schema visualization
+# ✅ Table editor with validation
+# ✅ SQL editor with autocomplete
+#
+# Note: This is ONLY the admin UI, not full Supabase stack
+# For realtime/auth features, use full docker-compose from:
+# https://supabase.com/docs/guides/self-hosting/docker
+

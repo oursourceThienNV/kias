@@ -1,0 +1,370 @@
+🚀 Starting KIAS.VN Complete Migration to EverShop
+
+Configuration:
+  KIAS Base URL: https://kias.vn
+  EverShop API: http://localhost:3000
+  Media Directory: /Volumes/DoanBHSST9/Outsource/hapas_ecommerce/media
+  KIAS Categories: 4
+  Virtual Categories: 2
+  Total Categories: 6
+
+✅ Directories initialized
+
+🏗️  Creating custom attributes...
+
+🔐 Logging in as admin...
+✅ Admin login successful
+
+✅ Created attribute: Chất liệu (ID: 3)
+❌ Failed to create attribute "Kích cỡ": {
+  error: {
+    status: 500,
+    message: 'Exception in middleware createAttribute: duplicate key value violates unique constraint "ATTRIBUTE_CODE_UNIQUE"'
+  }
+}
+
+📁 Creating categories...
+
+✅ Created category: Set Bộ (ID: 4)
+✅ Created category: Váy & Đầm (ID: 5)
+✅ Created category: Quần (ID: 6)
+✅ Created category: Áo (ID: 7)
+✅ Created category: Hàng mới về (ID: 8)
+✅ Created category: Giá mới hấp dẫn (ID: 9)
+
+🔍 Scraping products from KIAS.VN...
+
+📂 Category: Set Bộ
+   URL: https://kias.vn/danh-muc-san-pham/set-bo-sets/
+   Found 20 products
+
+   🔎 Scraping: https://kias.vn/san-pham/kias-x-hannaholala-%f0%9d%90%84%f0%9d%90%a5%f0%9d%90%9e...
+      ✅ [KIAS x HannahOlala] 𝐄𝐥𝐞𝐠𝐚𝐧𝐭 𝐋𝐞𝐚𝐝𝐞𝐫 – Thanh thu... (12 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/kias-x-hannaholala-%f0%9d%90%84%f0%9d%90%a5%f0%9d%90%9e...
+      ✅ [KIAS x HannahOlala] 𝐄𝐥𝐞𝐠𝐚𝐧𝐭 𝐋𝐞𝐚𝐝𝐞𝐫 – Thanh thu... (12 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/kias-x-hannaholala-%f0%9d%90%84%f0%9d%90%a5%f0%9d%90%a2...
+      ✅ [KIAS x HannahOlala] 𝐄𝐥𝐢𝐭𝐞 𝐂𝐡𝐚𝐫𝐦 – Thanh tao nhưng... (14 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/kias-x-hannaholala-%f0%9d%90%84%f0%9d%90%a5%f0%9d%90%a2...
+      ✅ [KIAS x HannahOlala] 𝐄𝐥𝐢𝐭𝐞 𝐂𝐡𝐚𝐫𝐦 – Thanh tao nhưng... (14 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/kias-x-hannaholala-%f0%9d%90%86%f0%9d%90%a8%f0%9d%90%a5...
+      ✅ [KIAS x HannahOlala] 𝐆𝐨𝐥𝐝𝐞𝐧 𝐆𝐫𝐚𝐜𝐞 – Duyên dáng và... (12 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/kias-x-hannaholala-%f0%9d%90%86%f0%9d%90%a8%f0%9d%90%a5...
+      ✅ [KIAS x HannahOlala] 𝐆𝐨𝐥𝐝𝐞𝐧 𝐆𝐫𝐚𝐜𝐞 – Duyên dáng và... (12 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/kias-x-hannaholala-%f0%9d%90%8b%f0%9d%90%9a%f0%9d%90%9c...
+      ✅ [KIAS x HannahOlala] 𝐋𝐚𝐜𝐞 𝐆𝐫𝐚𝐜𝐞 – Thanh khiết, kiêu... (12 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/kias-x-hannaholala-%f0%9d%90%8b%f0%9d%90%9a%f0%9d%90%9c...
+      ✅ [KIAS x HannahOlala] 𝐋𝐚𝐜𝐞 𝐆𝐫𝐚𝐜𝐞 – Thanh khiết, kiêu... (12 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/kias-x-hannaholala-%f0%9d%90%8b%f0%9d%90%ae%f0%9d%90%a6...
+      ✅ [KIAS x HannahOlala] 𝐋𝐮𝐦𝐢𝐧𝐚 𝐆𝐫𝐞𝐲 – Sắc xám tỏa sán... (10 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/kias-x-hannaholala-%f0%9d%90%8b%f0%9d%90%ae%f0%9d%90%a6...
+      ✅ [KIAS x HannahOlala] 𝐋𝐮𝐦𝐢𝐧𝐚 𝐆𝐫𝐞𝐲 – Sắc xám tỏa sán... (10 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/kias-x-hannaholala-set-vest-%f0%9d%90%8b%f0%9d%90%ae%f0...
+      ✅ [KIAS x HannahOlala] 𝐋𝐮𝐧𝐚𝐫 𝐄́𝐜𝐥𝐚𝐭 – Sắc đen huyền ... (12 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/kias-x-hannaholala-set-vest-%f0%9d%90%8b%f0%9d%90%ae%f0...
+      ✅ [KIAS x HannahOlala] 𝐋𝐮𝐧𝐚𝐫 𝐄́𝐜𝐥𝐚𝐭 – Sắc đen huyền ... (12 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/kias-x-hannaholala-%f0%9d%90%8c%f0%9d%90%a8%f0%9d%90%9d...
+      ✅ [KIAS x HannahOlala] 𝐌𝐨𝐝𝐞𝐫𝐧 𝐀𝐮𝐭𝐡𝐨𝐫𝐢𝐭𝐲 – Bản l... (14 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/kias-x-hannaholala-%f0%9d%90%8c%f0%9d%90%a8%f0%9d%90%9d...
+      ✅ [KIAS x HannahOlala] 𝐌𝐨𝐝𝐞𝐫𝐧 𝐀𝐮𝐭𝐡𝐨𝐫𝐢𝐭𝐲 – Bản l... (14 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/kias-x-hannaholala-%f0%9d%90%8d%f0%9d%90%a8%f0%9d%90%a2...
+      ✅ [KIAS x HannahOlala] 𝐍𝐨𝐢𝐫 𝐄́𝐥𝐢𝐭𝐞 – Bí ẩn, quyền lực... (12 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/kias-x-hannaholala-%f0%9d%90%8d%f0%9d%90%a8%f0%9d%90%a2...
+      ✅ [KIAS x HannahOlala] 𝐍𝐨𝐢𝐫 𝐄́𝐥𝐢𝐭𝐞 – Bí ẩn, quyền lực... (12 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/aura-radiant-moments-ve-dep-tu-tin-toa-sang-moi-ngay/...
+      ✅ Aura Radiant Moments – Vẻ đẹp tự tin tỏa sáng mỗi ngày... (12 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/aura-radiant-moments-ve-dep-tu-tin-toa-sang-moi-ngay/...
+      ✅ Aura Radiant Moments – Vẻ đẹp tự tin tỏa sáng mỗi ngày... (12 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/blossom-blend-bloom-in-your-own-way/...
+      ✅ Blossom Blend – Bloom in Your Own Way... (10 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/blossom-blend-bloom-in-your-own-way/...
+      ✅ Blossom Blend – Bloom in Your Own Way... (10 images, 0 sizes)
+📂 Category: Váy & Đầm
+   URL: https://kias.vn/danh-muc-san-pham/vay-dam/
+   Found 20 products
+
+   🔎 Scraping: https://kias.vn/san-pham/kias-x-hannaholala-%f0%9d%90%86%f0%9d%90%a8%f0%9d%90%a5...
+      ✅ [KIAS x HannahOlala] 𝐆𝐨𝐥𝐝𝐞𝐧 𝐆𝐫𝐚𝐜𝐞 – Duyên dáng và... (12 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/kias-x-hannaholala-%f0%9d%90%86%f0%9d%90%a8%f0%9d%90%a5...
+      ✅ [KIAS x HannahOlala] 𝐆𝐨𝐥𝐝𝐞𝐧 𝐆𝐫𝐚𝐜𝐞 – Duyên dáng và... (12 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/kias-x-hannaholala-%f0%9d%90%8b%f0%9d%90%9a%f0%9d%90%9c...
+      ✅ [KIAS x HannahOlala] 𝐋𝐚𝐜𝐞 𝐆𝐫𝐚𝐜𝐞 – Thanh khiết, kiêu... (12 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/kias-x-hannaholala-%f0%9d%90%8b%f0%9d%90%9a%f0%9d%90%9c...
+      ✅ [KIAS x HannahOlala] 𝐋𝐚𝐜𝐞 𝐆𝐫𝐚𝐜𝐞 – Thanh khiết, kiêu... (12 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/aura-radiant-moments-ve-dep-tu-tin-toa-sang-moi-ngay/...
+      ✅ Aura Radiant Moments – Vẻ đẹp tự tin tỏa sáng mỗi ngày... (12 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/aura-radiant-moments-ve-dep-tu-tin-toa-sang-moi-ngay/...
+      ✅ Aura Radiant Moments – Vẻ đẹp tự tin tỏa sáng mỗi ngày... (12 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/blend-kim-cuong-y/...
+      ✅ Blend kim cương Ý... (10 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/blend-kim-cuong-y/...
+      ✅ Blend kim cương Ý... (10 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/ao-vai-lua-phap-chan-vay-vai-blend-y/...
+      ✅ Charm Petals – Áo vải Lụa Pháp – Chân váy vải Blend Ý... (12 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/ao-vai-lua-phap-chan-vay-vai-blend-y/...
+      ✅ Charm Petals – Áo vải Lụa Pháp – Chân váy vải Blend Ý... (12 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/dam-vest-navy-ton-dang-l20/...
+      ✅ Đầm vest Navy tôn dáng – L20... (12 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/dam-vest-navy-ton-dang-l20/...
+      ✅ Đầm vest Navy tôn dáng – L20... (12 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/dotdress-elegance-in-summer-l15/...
+      ✅ DotDress – Elegance In Summer  – L15... (12 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/dotdress-elegance-in-summer-l15/...
+      ✅ DotDress – Elegance In Summer  – L15... (12 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/elegant-flow-phong-cach-thanh-lich-hien-dai-l18/...
+      ✅ Elegant Flow – Phong cách thanh lịch hiện đại – L18... (10 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/elegant-flow-phong-cach-thanh-lich-hien-dai-l18/...
+      ✅ Elegant Flow – Phong cách thanh lịch hiện đại – L18... (10 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/la-rose-lua-silk-y-l13/...
+      ✅ La Rose – Lụa silk Ý – L13... (16 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/la-rose-lua-silk-y-l13/...
+      ✅ La Rose – Lụa silk Ý – L13... (16 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/set-ao-tay-dai-quan-short-xanh-la-pastel-h1/...
+      ✅ Set Áo Tay Dài + Quần Short Xanh Lá Pastel – H1... (12 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/set-ao-tay-dai-quan-short-xanh-la-pastel-h1/...
+      ✅ Set Áo Tay Dài + Quần Short Xanh Lá Pastel – H1... (12 images, 0 sizes)
+📂 Category: Quần
+   URL: https://kias.vn/danh-muc-san-pham/quan-pants/
+   Found 10 products
+
+   🔎 Scraping: https://kias.vn/san-pham/denim-redefined-summer-edition/...
+      ✅ Denim Redefined – Summer Edition... (16 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/denim-redefined-summer-edition/...
+      ✅ Denim Redefined – Summer Edition... (16 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/dotdress-elegance-in-summer-l15/...
+      ✅ DotDress – Elegance In Summer  – L15... (12 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/dotdress-elegance-in-summer-l15/...
+      ✅ DotDress – Elegance In Summer  – L15... (12 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/elegant-flow-phong-cach-thanh-lich-hien-dai-l18/...
+      ✅ Elegant Flow – Phong cách thanh lịch hiện đại – L18... (10 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/elegant-flow-phong-cach-thanh-lich-hien-dai-l18/...
+      ✅ Elegant Flow – Phong cách thanh lịch hiện đại – L18... (10 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/linen-y-mem-mai-co-gian-nhe-nhang/...
+      ✅ Linen Ý mềm mại co giãn nhẹ nhàng... (10 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/linen-y-mem-mai-co-gian-nhe-nhang/...
+      ✅ Linen Ý mềm mại co giãn nhẹ nhàng... (10 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/vay-wrap-hoa-tiet-paisley-l16/...
+      ✅ váy Wrap họa tiết Paisley – L16... (12 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/vay-wrap-hoa-tiet-paisley-l16/...
+      ✅ váy Wrap họa tiết Paisley – L16... (12 images, 0 sizes)
+📂 Category: Áo
+   URL: https://kias.vn/danh-muc-san-pham/ao-tops/
+   Found 20 products
+
+   🔎 Scraping: https://kias.vn/san-pham/kias-x-hannaholala-%f0%9d%90%8b%f0%9d%90%9a%f0%9d%90%9c...
+      ✅ [KIAS x HannahOlala] 𝐋𝐚𝐜𝐞 𝐆𝐫𝐚𝐜𝐞 – Thanh khiết, kiêu... (12 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/kias-x-hannaholala-%f0%9d%90%8b%f0%9d%90%9a%f0%9d%90%9c...
+      ✅ [KIAS x HannahOlala] 𝐋𝐚𝐜𝐞 𝐆𝐫𝐚𝐜𝐞 – Thanh khiết, kiêu... (12 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/aura-radiant-moments-ve-dep-tu-tin-toa-sang-moi-ngay/...
+      ✅ Aura Radiant Moments – Vẻ đẹp tự tin tỏa sáng mỗi ngày... (12 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/aura-radiant-moments-ve-dep-tu-tin-toa-sang-moi-ngay/...
+      ✅ Aura Radiant Moments – Vẻ đẹp tự tin tỏa sáng mỗi ngày... (12 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/blossom-blend-bloom-in-your-own-way/...
+      ✅ Blossom Blend – Bloom in Your Own Way... (10 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/blossom-blend-bloom-in-your-own-way/...
+      ✅ Blossom Blend – Bloom in Your Own Way... (10 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/ao-vai-lua-phap-chan-vay-vai-blend-y/...
+      ✅ Charm Petals – Áo vải Lụa Pháp – Chân váy vải Blend Ý... (12 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/ao-vai-lua-phap-chan-vay-vai-blend-y/...
+      ✅ Charm Petals – Áo vải Lụa Pháp – Chân váy vải Blend Ý... (12 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/denim-redefined-summer-edition/...
+      ✅ Denim Redefined – Summer Edition... (16 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/denim-redefined-summer-edition/...
+      ✅ Denim Redefined – Summer Edition... (16 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/dotdress-elegance-in-summer-l15/...
+      ✅ DotDress – Elegance In Summer  – L15... (12 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/dotdress-elegance-in-summer-l15/...
+      ✅ DotDress – Elegance In Summer  – L15... (12 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/elegant-flow-phong-cach-thanh-lich-hien-dai-l18/...
+      ✅ Elegant Flow – Phong cách thanh lịch hiện đại – L18... (10 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/elegant-flow-phong-cach-thanh-lich-hien-dai-l18/...
+      ✅ Elegant Flow – Phong cách thanh lịch hiện đại – L18... (10 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/linen-y-mem-mai-co-gian-nhe-nhang/...
+      ✅ Linen Ý mềm mại co giãn nhẹ nhàng... (10 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/linen-y-mem-mai-co-gian-nhe-nhang/...
+      ✅ Linen Ý mềm mại co giãn nhẹ nhàng... (10 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/orchid-haze/...
+      ✅ Orchid Haze... (14 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/orchid-haze/...
+      ✅ Orchid Haze... (14 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/set-ao-tay-dai-quan-short-xanh-la-pastel-h1/...
+      ✅ Set Áo Tay Dài + Quần Short Xanh Lá Pastel – H1... (12 images, 0 sizes)
+   🔎 Scraping: https://kias.vn/san-pham/set-ao-tay-dai-quan-short-xanh-la-pastel-h1/...
+      ✅ Set Áo Tay Dài + Quần Short Xanh Lá Pastel – H1... (12 images, 0 sizes)
+
+✅ Total products scraped: 70
+
+
+🖼️  Downloading product images...
+
+   ✅ [KIAS x HannahOlala] 𝐄𝐥𝐞𝐠𝐚𝐧𝐭 𝐋𝐞𝐚𝐝𝐞𝐫 –... (12 images)
+   ✅ [KIAS x HannahOlala] 𝐄𝐥𝐞𝐠𝐚𝐧𝐭 𝐋𝐞𝐚𝐝𝐞𝐫 –... (12 images)
+   ✅ [KIAS x HannahOlala] 𝐄𝐥𝐢𝐭𝐞 𝐂𝐡𝐚𝐫𝐦 – Thanh... (14 images)
+   ✅ [KIAS x HannahOlala] 𝐄𝐥𝐢𝐭𝐞 𝐂𝐡𝐚𝐫𝐦 – Thanh... (14 images)
+   ✅ [KIAS x HannahOlala] 𝐆𝐨𝐥𝐝𝐞𝐧 𝐆𝐫𝐚𝐜𝐞 – Duy... (12 images)
+   ✅ [KIAS x HannahOlala] 𝐆𝐨𝐥𝐝𝐞𝐧 𝐆𝐫𝐚𝐜𝐞 – Duy... (12 images)
+   ✅ [KIAS x HannahOlala] 𝐋𝐚𝐜𝐞 𝐆𝐫𝐚𝐜𝐞 – Thanh k... (12 images)
+   ✅ [KIAS x HannahOlala] 𝐋𝐚𝐜𝐞 𝐆𝐫𝐚𝐜𝐞 – Thanh k... (12 images)
+   ✅ [KIAS x HannahOlala] 𝐋𝐮𝐦𝐢𝐧𝐚 𝐆𝐫𝐞𝐲 – Sắc x... (10 images)
+   ✅ [KIAS x HannahOlala] 𝐋𝐮𝐦𝐢𝐧𝐚 𝐆𝐫𝐞𝐲 – Sắc x... (10 images)
+   ✅ [KIAS x HannahOlala] 𝐋𝐮𝐧𝐚𝐫 𝐄́𝐜𝐥𝐚𝐭 – Sắc ... (12 images)
+   ✅ [KIAS x HannahOlala] 𝐋𝐮𝐧𝐚𝐫 𝐄́𝐜𝐥𝐚𝐭 – Sắc ... (12 images)
+   ✅ [KIAS x HannahOlala] 𝐌𝐨𝐝𝐞𝐫𝐧 𝐀𝐮𝐭𝐡𝐨𝐫𝐢𝐭... (14 images)
+   ✅ [KIAS x HannahOlala] 𝐌𝐨𝐝𝐞𝐫𝐧 𝐀𝐮𝐭𝐡𝐨𝐫𝐢𝐭... (14 images)
+   ✅ [KIAS x HannahOlala] 𝐍𝐨𝐢𝐫 𝐄́𝐥𝐢𝐭𝐞 – Bí ẩn,... (12 images)
+   ✅ [KIAS x HannahOlala] 𝐍𝐨𝐢𝐫 𝐄́𝐥𝐢𝐭𝐞 – Bí ẩn,... (12 images)
+   ✅ Aura Radiant Moments – Vẻ đẹp tự tin tỏa sáng mỗi ... (12 images)
+   ✅ Aura Radiant Moments – Vẻ đẹp tự tin tỏa sáng mỗi ... (12 images)
+   ✅ Blossom Blend – Bloom in Your Own Way... (10 images)
+   ✅ Blossom Blend – Bloom in Your Own Way... (10 images)
+   ✅ [KIAS x HannahOlala] 𝐆𝐨𝐥𝐝𝐞𝐧 𝐆𝐫𝐚𝐜𝐞 – Duy... (12 images)
+   ✅ [KIAS x HannahOlala] 𝐆𝐨𝐥𝐝𝐞𝐧 𝐆𝐫𝐚𝐜𝐞 – Duy... (12 images)
+   ✅ [KIAS x HannahOlala] 𝐋𝐚𝐜𝐞 𝐆𝐫𝐚𝐜𝐞 – Thanh k... (12 images)
+   ✅ [KIAS x HannahOlala] 𝐋𝐚𝐜𝐞 𝐆𝐫𝐚𝐜𝐞 – Thanh k... (12 images)
+   ✅ Aura Radiant Moments – Vẻ đẹp tự tin tỏa sáng mỗi ... (12 images)
+   ✅ Aura Radiant Moments – Vẻ đẹp tự tin tỏa sáng mỗi ... (12 images)
+   ✅ Blend kim cương Ý... (10 images)
+   ✅ Blend kim cương Ý... (10 images)
+   ✅ Charm Petals – Áo vải Lụa Pháp – Chân váy vải Blen... (12 images)
+   ✅ Charm Petals – Áo vải Lụa Pháp – Chân váy vải Blen... (12 images)
+   ✅ Đầm vest Navy tôn dáng – L20... (12 images)
+   ✅ Đầm vest Navy tôn dáng – L20... (12 images)
+   ✅ DotDress – Elegance In Summer  – L15... (12 images)
+   ✅ DotDress – Elegance In Summer  – L15... (12 images)
+   ✅ Elegant Flow – Phong cách thanh lịch hiện đại – L1... (10 images)
+   ✅ Elegant Flow – Phong cách thanh lịch hiện đại – L1... (10 images)
+   ✅ La Rose – Lụa silk Ý – L13... (16 images)
+   ✅ La Rose – Lụa silk Ý – L13... (16 images)
+   ✅ Set Áo Tay Dài + Quần Short Xanh Lá Pastel – H1... (12 images)
+   ✅ Set Áo Tay Dài + Quần Short Xanh Lá Pastel – H1... (12 images)
+   ✅ Denim Redefined – Summer Edition... (16 images)
+   ✅ Denim Redefined – Summer Edition... (16 images)
+   ✅ DotDress – Elegance In Summer  – L15... (12 images)
+   ✅ DotDress – Elegance In Summer  – L15... (12 images)
+   ✅ Elegant Flow – Phong cách thanh lịch hiện đại – L1... (10 images)
+   ✅ Elegant Flow – Phong cách thanh lịch hiện đại – L1... (10 images)
+   ✅ Linen Ý mềm mại co giãn nhẹ nhàng... (10 images)
+   ✅ Linen Ý mềm mại co giãn nhẹ nhàng... (10 images)
+   ✅ váy Wrap họa tiết Paisley – L16... (12 images)
+   ✅ váy Wrap họa tiết Paisley – L16... (12 images)
+   ✅ [KIAS x HannahOlala] 𝐋𝐚𝐜𝐞 𝐆𝐫𝐚𝐜𝐞 – Thanh k... (12 images)
+   ✅ [KIAS x HannahOlala] 𝐋𝐚𝐜𝐞 𝐆𝐫𝐚𝐜𝐞 – Thanh k... (12 images)
+   ✅ Aura Radiant Moments – Vẻ đẹp tự tin tỏa sáng mỗi ... (12 images)
+   ✅ Aura Radiant Moments – Vẻ đẹp tự tin tỏa sáng mỗi ... (12 images)
+   ✅ Blossom Blend – Bloom in Your Own Way... (10 images)
+   ✅ Blossom Blend – Bloom in Your Own Way... (10 images)
+   ✅ Charm Petals – Áo vải Lụa Pháp – Chân váy vải Blen... (12 images)
+   ✅ Charm Petals – Áo vải Lụa Pháp – Chân váy vải Blen... (12 images)
+   ✅ Denim Redefined – Summer Edition... (16 images)
+   ✅ Denim Redefined – Summer Edition... (16 images)
+   ✅ DotDress – Elegance In Summer  – L15... (12 images)
+   ✅ DotDress – Elegance In Summer  – L15... (12 images)
+   ✅ Elegant Flow – Phong cách thanh lịch hiện đại – L1... (10 images)
+   ✅ Elegant Flow – Phong cách thanh lịch hiện đại – L1... (10 images)
+   ✅ Linen Ý mềm mại co giãn nhẹ nhàng... (10 images)
+   ✅ Linen Ý mềm mại co giãn nhẹ nhàng... (10 images)
+   ✅ Orchid Haze... (14 images)
+   ✅ Orchid Haze... (14 images)
+   ✅ Set Áo Tay Dài + Quần Short Xanh Lá Pastel – H1... (12 images)
+   ✅ Set Áo Tay Dài + Quần Short Xanh Lá Pastel – H1... (12 images)
+
+✅ Images downloaded: 210
+⚠️  Images failed: 0
+
+
+📦 Importing products to EverShop...
+
+   ✅ [KIAS x HannahOlala] 𝐄𝐥𝐞𝐠𝐚𝐧𝐭 𝐋𝐞𝐚𝐝𝐞𝐫 – Thanh thu... (ID: 5)
+   ✅ [KIAS x HannahOlala] 𝐄𝐥𝐞𝐠𝐚𝐧𝐭 𝐋𝐞𝐚𝐝𝐞𝐫 – Thanh thu... (ID: 6)
+   ✅ [KIAS x HannahOlala] 𝐄𝐥𝐢𝐭𝐞 𝐂𝐡𝐚𝐫𝐦 – Thanh tao nhưng... (ID: 7)
+   ✅ [KIAS x HannahOlala] 𝐄𝐥𝐢𝐭𝐞 𝐂𝐡𝐚𝐫𝐦 – Thanh tao nhưng... (ID: 8)
+   ✅ [KIAS x HannahOlala] 𝐆𝐨𝐥𝐝𝐞𝐧 𝐆𝐫𝐚𝐜𝐞 – Duyên dáng và... (ID: 9)
+   ✅ [KIAS x HannahOlala] 𝐆𝐨𝐥𝐝𝐞𝐧 𝐆𝐫𝐚𝐜𝐞 – Duyên dáng và... (ID: 10)
+   ✅ [KIAS x HannahOlala] 𝐋𝐚𝐜𝐞 𝐆𝐫𝐚𝐜𝐞 – Thanh khiết, kiêu... (ID: 11)
+   ✅ [KIAS x HannahOlala] 𝐋𝐚𝐜𝐞 𝐆𝐫𝐚𝐜𝐞 – Thanh khiết, kiêu... (ID: 12)
+   ✅ [KIAS x HannahOlala] 𝐋𝐮𝐦𝐢𝐧𝐚 𝐆𝐫𝐞𝐲 – Sắc xám tỏa sán... (ID: 13)
+   ✅ [KIAS x HannahOlala] 𝐋𝐮𝐦𝐢𝐧𝐚 𝐆𝐫𝐞𝐲 – Sắc xám tỏa sán... (ID: 14)
+   ✅ [KIAS x HannahOlala] 𝐋𝐮𝐧𝐚𝐫 𝐄́𝐜𝐥𝐚𝐭 – Sắc đen huyền ... (ID: 15)
+   ✅ [KIAS x HannahOlala] 𝐋𝐮𝐧𝐚𝐫 𝐄́𝐜𝐥𝐚𝐭 – Sắc đen huyền ... (ID: 16)
+   ✅ [KIAS x HannahOlala] 𝐌𝐨𝐝𝐞𝐫𝐧 𝐀𝐮𝐭𝐡𝐨𝐫𝐢𝐭𝐲 – Bản l... (ID: 17)
+   ✅ [KIAS x HannahOlala] 𝐌𝐨𝐝𝐞𝐫𝐧 𝐀𝐮𝐭𝐡𝐨𝐫𝐢𝐭𝐲 – Bản l... (ID: 18)
+   ✅ [KIAS x HannahOlala] 𝐍𝐨𝐢𝐫 𝐄́𝐥𝐢𝐭𝐞 – Bí ẩn, quyền lực... (ID: 19)
+   ✅ [KIAS x HannahOlala] 𝐍𝐨𝐢𝐫 𝐄́𝐥𝐢𝐭𝐞 – Bí ẩn, quyền lực... (ID: 20)
+   ✅ Aura Radiant Moments – Vẻ đẹp tự tin tỏa sáng mỗi ngày... (ID: 21)
+   ✅ Aura Radiant Moments – Vẻ đẹp tự tin tỏa sáng mỗi ngày... (ID: 22)
+   ✅ Blossom Blend – Bloom in Your Own Way... (ID: 23)
+   ✅ Blossom Blend – Bloom in Your Own Way... (ID: 24)
+   ✅ [KIAS x HannahOlala] 𝐆𝐨𝐥𝐝𝐞𝐧 𝐆𝐫𝐚𝐜𝐞 – Duyên dáng và... (ID: 25)
+   ✅ [KIAS x HannahOlala] 𝐆𝐨𝐥𝐝𝐞𝐧 𝐆𝐫𝐚𝐜𝐞 – Duyên dáng và... (ID: 26)
+   ✅ [KIAS x HannahOlala] 𝐋𝐚𝐜𝐞 𝐆𝐫𝐚𝐜𝐞 – Thanh khiết, kiêu... (ID: 27)
+   ✅ [KIAS x HannahOlala] 𝐋𝐚𝐜𝐞 𝐆𝐫𝐚𝐜𝐞 – Thanh khiết, kiêu... (ID: 28)
+   ✅ Aura Radiant Moments – Vẻ đẹp tự tin tỏa sáng mỗi ngày... (ID: 29)
+   ✅ Aura Radiant Moments – Vẻ đẹp tự tin tỏa sáng mỗi ngày... (ID: 30)
+   ✅ Blend kim cương Ý... (ID: 31)
+   ✅ Blend kim cương Ý... (ID: 32)
+   ✅ Charm Petals – Áo vải Lụa Pháp – Chân váy vải Blend Ý... (ID: 33)
+   ✅ Charm Petals – Áo vải Lụa Pháp – Chân váy vải Blend Ý... (ID: 34)
+   ✅ Đầm vest Navy tôn dáng – L20... (ID: 35)
+   ✅ Đầm vest Navy tôn dáng – L20... (ID: 36)
+   ✅ DotDress – Elegance In Summer  – L15... (ID: 37)
+   ✅ DotDress – Elegance In Summer  – L15... (ID: 38)
+   ✅ Elegant Flow – Phong cách thanh lịch hiện đại – L18... (ID: 39)
+   ✅ Elegant Flow – Phong cách thanh lịch hiện đại – L18... (ID: 40)
+   ✅ La Rose – Lụa silk Ý – L13... (ID: 41)
+   ✅ La Rose – Lụa silk Ý – L13... (ID: 42)
+   ✅ Set Áo Tay Dài + Quần Short Xanh Lá Pastel – H1... (ID: 43)
+   ✅ Set Áo Tay Dài + Quần Short Xanh Lá Pastel – H1... (ID: 44)
+   ✅ Denim Redefined – Summer Edition... (ID: 45)
+   ✅ Denim Redefined – Summer Edition... (ID: 46)
+   ✅ DotDress – Elegance In Summer  – L15... (ID: 47)
+   ✅ DotDress – Elegance In Summer  – L15... (ID: 48)
+   ✅ Elegant Flow – Phong cách thanh lịch hiện đại – L18... (ID: 49)
+   ✅ Elegant Flow – Phong cách thanh lịch hiện đại – L18... (ID: 50)
+   ✅ Linen Ý mềm mại co giãn nhẹ nhàng... (ID: 51)
+   ✅ Linen Ý mềm mại co giãn nhẹ nhàng... (ID: 52)
+   ✅ váy Wrap họa tiết Paisley – L16... (ID: 53)
+   ✅ váy Wrap họa tiết Paisley – L16... (ID: 54)
+   ✅ [KIAS x HannahOlala] 𝐋𝐚𝐜𝐞 𝐆𝐫𝐚𝐜𝐞 – Thanh khiết, kiêu... (ID: 55)
+   ✅ [KIAS x HannahOlala] 𝐋𝐚𝐜𝐞 𝐆𝐫𝐚𝐜𝐞 – Thanh khiết, kiêu... (ID: 56)
+   ✅ Aura Radiant Moments – Vẻ đẹp tự tin tỏa sáng mỗi ngày... (ID: 57)
+   ✅ Aura Radiant Moments – Vẻ đẹp tự tin tỏa sáng mỗi ngày... (ID: 58)
+   ✅ Blossom Blend – Bloom in Your Own Way... (ID: 59)
+   ✅ Blossom Blend – Bloom in Your Own Way... (ID: 60)
+   ✅ Charm Petals – Áo vải Lụa Pháp – Chân váy vải Blend Ý... (ID: 61)
+   ✅ Charm Petals – Áo vải Lụa Pháp – Chân váy vải Blend Ý... (ID: 62)
+   ✅ Denim Redefined – Summer Edition... (ID: 63)
+   ✅ Denim Redefined – Summer Edition... (ID: 64)
+   ✅ DotDress – Elegance In Summer  – L15... (ID: 65)
+   ✅ DotDress – Elegance In Summer  – L15... (ID: 66)
+   ✅ Elegant Flow – Phong cách thanh lịch hiện đại – L18... (ID: 67)
+   ✅ Elegant Flow – Phong cách thanh lịch hiện đại – L18... (ID: 68)
+   ✅ Linen Ý mềm mại co giãn nhẹ nhàng... (ID: 69)
+   ✅ Linen Ý mềm mại co giãn nhẹ nhàng... (ID: 70)
+   ✅ Orchid Haze... (ID: 71)
+   ✅ Orchid Haze... (ID: 72)
+   ✅ Set Áo Tay Dài + Quần Short Xanh Lá Pastel – H1... (ID: 73)
+   ✅ Set Áo Tay Dài + Quần Short Xanh Lá Pastel – H1... (ID: 74)
+
+✅ Products imported: 70
+❌ Products failed: 0
+
+
+📊 Generating migration report...
+
+Migration Summary:
+──────────────────────────────────────────────────
+Categories Created:     6
+Attributes Created:     1
+Products Scraped:       70
+Products Imported:      70
+Products Failed:        0
+Images Downloaded:      210
+Images Failed:          0
+Success Rate:           100.00%
+Total Errors:           1
+──────────────────────────────────────────────────
+
+📄 Full report saved to: /Volumes/DoanBHSST9/Outsource/hapas_ecommerce/data/kias-migration/migration-report-complete.json
+
+
+🎉 Migration completed successfully in 407.88s!
+

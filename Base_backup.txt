@@ -1,0 +1,1 @@
+how origin/prod:packages/evershop/src/modules/base/pages/frontStore/all/Base.tsx

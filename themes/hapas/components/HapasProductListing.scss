@@ -1,0 +1,468 @@
+/**
+ * HAPAS Product Listing Styles
+ * 
+ * Product listing styling matching HAPAS.VN design:
+ * - Responsive grid layout
+ * - Vietnamese controls and labels
+ * - Professional pagination
+ * - Loading and empty states
+ * - Clean, minimalist aesthetic
+ */
+
+@import '../styles/variables';
+@import '../styles/mixins';
+
+.hapas-product-listing {
+  width: 100%;
+}
+
+// ===== CATEGORY HEADER =====
+.category-header {
+  text-align: center;
+  margin-bottom: $spacing-3xl;
+  
+  @include mobile {
+    margin-bottom: $spacing-2xl;
+  }
+}
+
+.category-title {
+  @include hapas-title;
+  margin-bottom: $spacing-md;
+}
+
+.category-description {
+  @include vietnamese-text;
+  font-size: $font-size-lg;
+  color: $color-text-secondary;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+  
+  @include mobile {
+    font-size: $font-size-base;
+  }
+}
+
+// ===== LISTING CONTROLS =====
+.listing-controls {
+  @include flex-between;
+  margin-bottom: $spacing-2xl;
+  padding: $spacing-lg 0;
+  border-bottom: 1px solid $color-border-light;
+  
+  @include mobile {
+    flex-direction: column;
+    gap: $spacing-lg;
+    align-items: stretch;
+  }
+}
+
+.controls-left {
+  display: flex;
+  align-items: center;
+}
+
+.results-count {
+  @include vietnamese-text;
+  font-size: $font-size-sm;
+  color: $color-text-muted;
+}
+
+.controls-right {
+  display: flex;
+  align-items: center;
+  gap: $spacing-lg;
+  
+  @include mobile {
+    justify-content: space-between;
+  }
+}
+
+// ===== VIEW MODE TOGGLE =====
+.view-mode-toggle {
+  display: flex;
+  border: 1px solid $color-border;
+  border-radius: $border-radius-sm;
+  overflow: hidden;
+}
+
+.view-btn {
+  @include flex-center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: $color-bg-primary;
+  color: $color-text-muted;
+  cursor: pointer;
+  transition: all $transition-fast;
+  
+  &:hover {
+    background: $color-bg-accent;
+    color: $color-text-primary;
+  }
+  
+  &.active {
+    background: $color-primary;
+    color: $color-secondary;
+  }
+  
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+// ===== SORT DROPDOWN =====
+.sort-dropdown {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+}
+
+.sort-label {
+  @include vietnamese-text;
+  font-size: $font-size-sm;
+  color: $color-text-primary;
+  font-weight: $font-weight-medium;
+  white-space: nowrap;
+}
+
+.sort-select {
+  @include form-input;
+  @include vietnamese-text;
+  min-width: 160px;
+  padding: $spacing-2 $spacing-3;
+  font-size: $font-size-sm;
+  
+  @include mobile {
+    min-width: 140px;
+  }
+}
+
+// ===== PRODUCT GRID =====
+.product-grid {
+  &.grid {
+    @include grid(4, $spacing-lg);
+    
+    @include tablet {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    
+    @include mobile {
+      grid-template-columns: repeat(2, 1fr);
+      gap: $spacing-md;
+    }
+  }
+  
+  &.list {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-lg;
+    
+    .hapas-product-card {
+      display: flex;
+      align-items: center;
+      padding: $spacing-lg;
+      
+      .product-image-container {
+        width: 200px;
+        height: 200px;
+        margin-right: $spacing-lg;
+        margin-bottom: 0;
+        flex-shrink: 0;
+        
+        @include mobile {
+          width: 120px;
+          height: 120px;
+          margin-right: $spacing-md;
+        }
+      }
+      
+      .product-info {
+        flex: 1;
+        padding: 0;
+      }
+      
+      .add-to-cart-btn {
+        opacity: 1;
+        transform: none;
+        width: auto;
+        margin-top: 0;
+        margin-left: $spacing-lg;
+        
+        @include mobile {
+          margin-left: $spacing-md;
+        }
+      }
+    }
+  }
+}
+
+// ===== LOADING STATE =====
+.loading-grid {
+  @include grid(4, $spacing-lg);
+  
+  @include tablet {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  @include mobile {
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-md;
+  }
+}
+
+.product-skeleton {
+  @include card-base;
+  @include loading-shimmer;
+  
+  .skeleton-image {
+    width: 100%;
+    height: 280px;
+    background: $color-bg-accent;
+    border-radius: $border-radius-sm;
+    margin-bottom: $spacing-4;
+    
+    @include mobile {
+      height: 220px;
+    }
+  }
+  
+  .skeleton-content {
+    padding: 0 $spacing-2;
+  }
+  
+  .skeleton-title {
+    height: 20px;
+    background: $color-bg-accent;
+    border-radius: $border-radius-sm;
+    margin-bottom: $spacing-2;
+  }
+  
+  .skeleton-price {
+    height: 16px;
+    width: 60%;
+    background: $color-bg-accent;
+    border-radius: $border-radius-sm;
+    margin-bottom: $spacing-3;
+  }
+  
+  .skeleton-button {
+    height: 40px;
+    background: $color-bg-accent;
+    border-radius: $border-radius-sm;
+  }
+}
+
+// ===== EMPTY STATE =====
+.empty-state {
+  @include flex-center;
+  flex-direction: column;
+  padding: $spacing-3xl;
+  text-align: center;
+  grid-column: 1 / -1; // Span all columns
+
+  .empty-icon {
+    width: 80px;
+    height: 80px;
+    margin-bottom: $spacing-lg;
+    color: $color-text-muted;
+    opacity: 0.5;
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .empty-title {
+    @include vietnamese-text;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+    margin-bottom: $spacing-md;
+  }
+
+  .empty-description {
+    @include vietnamese-text;
+    font-size: $font-size-base;
+    color: $color-text-muted;
+    max-width: 400px;
+    line-height: 1.6;
+    margin-bottom: $spacing-lg;
+  }
+
+  .reset-filters-btn {
+    @include button-secondary;
+    @include vietnamese-text;
+  }
+}
+
+// ===== PAGINATION =====
+.pagination {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-lg;
+  margin-top: $spacing-3xl;
+  padding-top: $spacing-2xl;
+  border-top: 1px solid $color-border-light;
+
+  @include mobile {
+    margin-top: $spacing-2xl;
+    padding-top: $spacing-xl;
+  }
+}
+
+.pagination-info {
+  @include vietnamese-text;
+  font-size: $font-size-sm;
+  color: $color-text-muted;
+}
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+}
+
+.pagination-btn {
+  @include flex-center;
+  gap: $spacing-1;
+  padding: $spacing-2 $spacing-3;
+  border: 1px solid $color-border;
+  background: $color-bg-primary;
+  color: $color-text-primary;
+  border-radius: $border-radius-sm;
+  cursor: pointer;
+  transition: all $transition-fast;
+  font-size: $font-size-sm;
+
+  &:hover:not(:disabled) {
+    background: $color-bg-accent;
+    border-color: $color-primary;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  @include mobile {
+    padding: $spacing-2;
+
+    span {
+      display: none;
+    }
+  }
+}
+
+.pagination-numbers {
+  display: flex;
+  align-items: center;
+  gap: $spacing-1;
+  margin: 0 $spacing-2;
+}
+
+.pagination-number {
+  @include flex-center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid $color-border;
+  background: $color-bg-primary;
+  color: $color-text-primary;
+  border-radius: $border-radius-sm;
+  cursor: pointer;
+  transition: all $transition-fast;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+
+  &:hover {
+    background: $color-bg-accent;
+    border-color: $color-primary;
+  }
+
+  &.active {
+    background: $color-primary;
+    color: $color-secondary;
+    border-color: $color-primary;
+  }
+
+  @include mobile {
+    width: 36px;
+    height: 36px;
+    font-size: $font-size-xs;
+  }
+}
+
+.pagination-ellipsis {
+  @include flex-center;
+  width: 40px;
+  height: 40px;
+  color: $color-text-muted;
+  font-weight: $font-weight-bold;
+
+  @include mobile {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+// ===== RESPONSIVE DESIGN =====
+@include mobile {
+  .listing-controls {
+    padding: $spacing-md 0;
+  }
+
+  .product-grid.list {
+    .hapas-product-card {
+      flex-direction: column;
+      text-align: center;
+
+      .product-image-container {
+        width: 100%;
+        height: 200px;
+        margin-right: 0;
+        margin-bottom: $spacing-md;
+      }
+
+      .add-to-cart-btn {
+        width: 100%;
+        margin-left: 0;
+        margin-top: $spacing-md;
+      }
+    }
+  }
+}
+
+// ===== ACCESSIBILITY =====
+@media (prefers-reduced-motion: reduce) {
+  .view-btn,
+  .pagination-btn,
+  .pagination-number {
+    transition: none;
+  }
+
+  .product-skeleton {
+    animation: none;
+  }
+}
+
+// ===== HIGH CONTRAST MODE =====
+@media (prefers-contrast: high) {
+  .view-btn,
+  .pagination-btn,
+  .pagination-number {
+    border-width: 2px;
+  }
+
+  .pagination-number.active {
+    border-width: 3px;
+  }
+}

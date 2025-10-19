@@ -1,0 +1,375 @@
+---
+description: EverShop module structure and patterns
+globs:
+  - "packages/evershop/src/modules/**/*"
+  - "extensions/**/src/**/*"
+alwaysApply: false
+---
+
+# EverShop Modules Quick Reference
+
+Essential module patterns for EverShop. For comprehensive guide, see `docs/EVERSHOP-MODULES-EXTENSIONS-WIDGETS-THEMES.md`.
+
+---
+
+## Module Structure
+
+```
+module_name/src/
+├── api/                 # REST endpoints
+│   ├── global/          # Global middleware
+│   └── endpoint/
+│       ├── route.json
+│       └── middleware.ts
+├── pages/               # SSR pages
+│   ├── admin/           # Admin panel
+│   ├── frontStore/      # Storefront
+│   └── global/          # Global page middleware
+├── services/            # Business logic
+├── graphql/            
+│   ├── types/           # GraphQL schemas
+│   └── resolvers/       # Query/mutation resolvers
+├── migration/           # Database migrations
+│   └── Version_X.Y.Z.ts
+└── bootstrap.ts         # Module initialization
+```
+
+⚠️ **NEVER edit core modules** in `node_modules/@evershop/` - use extensions instead.
+
+---
+
+## API Routes
+
+### route.json
+
+```json
+{
+  "methods": ["POST"],
+  "path": "/api/product/create",
+  "access": "private"
+}
+```
+
+### Middleware Chain
+
+```
+api/createProduct/
+├── route.json
+├── validateProduct.ts               # Step 1
+└── [validateProduct]saveProduct.ts  # Step 2 (depends on 1)
+```
+
+Naming: `[dependency]middlewareName.ts`
+
+### Middleware Pattern
+
+```typescript
+// ✅ 3-arg (success)
+export default function middleware(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void {
+  // Validation/processing
+  if (error) {
+    res.status(400).json({ error: 'Invalid' });
+    return;
+  }
+  next();
+}
+
+// ✅ 4-arg (error handler)
+export default function errorHandler(
+  err: Error,
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void {
+  res.status(500).json({ error: err.message });
+}
+```
+
+---
+
+## Pages
+
+### route.json
+
+```json
+{
+  "path": "/product/:slug",
+  "method": "GET",
+  "exact": true
+}
+```
+
+### Page Component
+
+```tsx
+export default function ProductView({ product }: Props) {
+  return <div>{product.name}</div>;
+}
+
+export const layout = {
+  areaId: 'content',
+  sortOrder: 10
+};
+
+export const query = `
+  query GetProduct($slug: String!) {
+    product(slug: $slug) {
+      productId
+      name
+      price
+    }
+  }
+`;
+```
+
+### Page Middleware
+
+```typescript
+// pages/frontStore/productView/index.ts
+export default async function loadProduct(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> {
+  const { slug } = req.params;
+  
+  const result = await pool.query(
+    'SELECT * FROM product WHERE url_key = $1',
+    [slug]
+  );
+  
+  if (!result.rows[0]) {
+    res.status(404);
+    next();
+    return;
+  }
+  
+  res.locals.product = result.rows[0];
+  next();
+}
+```
+
+---
+
+## Services
+
+```typescript
+// services/ProductService.ts
+export class ProductService {
+  static async findBySlug(slug: string): Promise<Product | null> {
+    const result = await select()
+      .from('product')
+      .where('url_key', '=', slug)
+      .execute(pool);
+    
+    return result.rows[0] || null;
+  }
+  
+  static async create(input: ProductInput): Promise<Product> {
+    const product = await insert('product')
+      .given(input)
+      .execute(pool);
+    
+    return product as Product;
+  }
+}
+```
+
+---
+
+## GraphQL
+
+### Type Definition
+
+```graphql
+# graphql/types/Product.graphql
+type Product {
+  productId: ID!
+  name: String!
+  price: Float!
+  description: String
+}
+
+type Query {
+  product(slug: String!): Product
+  products(limit: Int, page: Int): [Product!]!
+}
+```
+
+### Resolver
+
+```typescript
+// graphql/resolvers/productResolver.ts
+export default {
+  Query: {
+    product: async (_: unknown, { slug }: { slug: string }) => {
+      const result = await select()
+        .from('product')
+        .where('url_key', '=', slug)
+        .execute(pool);
+      
+      return result.rows[0] || null;
+    }
+  },
+  
+  Product: {
+    // Field resolver
+    images: async (product: Product) => {
+      const result = await select()
+        .from('product_image')
+        .where('product_id', '=', product.productId)
+        .execute(pool);
+      
+      return result.rows;
+    }
+  }
+};
+```
+
+---
+
+## Migrations
+
+### File Naming
+`Version_X.Y.Z.ts` (semantic versioning)
+
+### Pattern
+
+```typescript
+// migration/Version_1.0.0.ts
+import { Pool } from 'pg';
+
+export async function up(pool: Pool): Promise<void> {
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS custom_table (
+      id SERIAL PRIMARY KEY,
+      name VARCHAR(255) NOT NULL,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+    
+    CREATE INDEX IF NOT EXISTS idx_custom_name 
+    ON custom_table(name);
+  `);
+}
+
+export async function down(pool: Pool): Promise<void> {
+  await pool.query(`
+    DROP TABLE IF EXISTS custom_table CASCADE;
+  `);
+}
+```
+
+**Best Practices:**
+- Use `IF NOT EXISTS` / `IF EXISTS` for idempotency
+- Always provide `down()` for rollback
+- Test both up and down migrations
+
+---
+
+## Bootstrap
+
+```typescript
+// bootstrap.ts
+import { registerWidget } from '@evershop/evershop';
+import { on } from '@evershop/evershop/lib/event';
+
+export default function bootstrap() {
+  // Register widgets
+  registerWidget({
+    name: 'MyWidget',
+    component: MyWidgetComponent,
+    settingsComponent: MyWidgetSettings,
+    description: 'Widget description'
+  });
+  
+  // Listen to events
+  on('product.created', async (data) => {
+    console.log('Product created:', data.productId);
+  });
+  
+  console.log('Module initialized');
+}
+```
+
+---
+
+## Common Patterns
+
+### Validation Service
+
+```typescript
+export class ProductValidator {
+  static validateName(name: string): boolean {
+    return name.length >= 3 && name.length <= 255;
+  }
+  
+  static validate(data: ProductInput): ValidationResult {
+    const errors: string[] = [];
+    
+    if (!this.validateName(data.name)) {
+      errors.push('Invalid name');
+    }
+    
+    return {
+      valid: errors.length === 0,
+      errors
+    };
+  }
+}
+```
+
+### Data Service
+
+```typescript
+export class ProductService {
+  static async findById(id: string): Promise<Product | null> {
+    const result = await select()
+      .from('product')
+      .where('product_id', '=', id)
+      .execute(pool);
+    
+    return result.rows[0] || null;
+  }
+  
+  static async update(
+    id: string, 
+    data: Partial<ProductInput>
+  ): Promise<Product> {
+    const product = await update('product')
+      .given(data)
+      .where('product_id', '=', id)
+      .execute(pool);
+    
+    return product as Product;
+  }
+}
+```
+
+---
+
+## Module Best Practices
+
+✅ **DO:**
+- Single responsibility per module
+- Use TypeScript for all new code
+- Validate input early in middleware
+- Use services for business logic
+- Index frequently queried columns
+- Write migrations with up/down
+
+❌ **DON'T:**
+- Edit core modules directly
+- Mix business logic in middleware
+- Skip error handling in async functions
+- Create migrations without idempotency
+- Hardcode values - use config
+
+---
+
+📚 **Full Documentation:** `docs/EVERSHOP-MODULES-EXTENSIONS-WIDGETS-THEMES.md` § 2-3 (Modules & Extensions)
+
+**Last Updated:** October 2025

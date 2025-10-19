@@ -1,0 +1,5 @@
+[33mbca3631[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mfeature/update-cursor-rules-and-logo[m[33m, [m[1;31morigin/feature/update-cursor-rules-and-logo[m[33m)[m feat: update admin logo to KIAS branding
+[33mb53e7a7[m feat: migrate to modern .cursor/rules/*.mdc format with EverShop-specific patterns
+[33mbbab7a7[m[33m ([m[1;31morigin/prod[m[33m, [m[1;32mprod[m[33m)[m feat: Complete production deployment setup with CI/CD
+[33m9e79f79[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m feat: Add CI/CD deployment status - Testing automatic deployment workflow
+[33m519cd27[m add doc

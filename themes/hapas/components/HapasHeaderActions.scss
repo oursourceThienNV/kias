@@ -1,0 +1,347 @@
+/**
+ * HAPAS Header Actions Styles
+ * 
+ * Action buttons styling matching HAPAS.VN design:
+ * - Clean, minimalist icons
+ * - Smooth hover effects
+ * - Cart badge styling
+ * - Search overlay
+ * - Mobile responsive
+ */
+
+@import '../styles/variables';
+@import '../styles/mixins';
+
+.hapas-header-actions {
+  display: flex;
+  align-items: center;
+  gap: $spacing-4;
+  
+  @include mobile {
+    gap: $spacing-2;
+  }
+}
+
+// ===== ACTION BUTTONS =====
+.action-button {
+  @include flex-center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: none;
+  color: $color-text-primary;
+  cursor: pointer;
+  border-radius: $border-radius-sm;
+  transition: all $transition-fast;
+  text-decoration: none;
+  position: relative;
+  
+  &:hover {
+    background-color: $color-bg-accent;
+    color: $color-primary;
+    transform: translateY(-1px);
+  }
+  
+  &:focus {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+  
+  @include mobile {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+.action-icon {
+  width: 20px;
+  height: 20px;
+  stroke-width: 1.5;
+  
+  @include mobile {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+// ===== CART SPECIFIC STYLES =====
+.cart-button {
+  .cart-icon-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.cart-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: $cart-badge-bg;
+  color: $cart-badge-color;
+  border-radius: $border-radius-full;
+  min-width: $cart-badge-size;
+  height: $cart-badge-size;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-bold;
+  line-height: 1;
+  padding: 0 4px;
+  
+  // Animation for new items
+  animation: cartBadgePulse 0.3s ease-out;
+  
+  @include mobile {
+    top: -6px;
+    right: -6px;
+    min-width: 16px;
+    height: 16px;
+    font-size: 10px;
+  }
+}
+
+@keyframes cartBadgePulse {
+  0% {
+    transform: scale(0.8);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+// ===== SEARCH OVERLAY =====
+.search-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: $z-modal;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: $header-height;
+  
+  @include fade-in;
+}
+
+.search-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+}
+
+.search-container {
+  position: relative;
+  z-index: 1;
+  background: $color-bg-primary;
+  border-radius: $border-radius-lg;
+  box-shadow: $shadow-xl;
+  margin: $spacing-8;
+  padding: $spacing-6;
+  width: 100%;
+  max-width: 600px;
+  
+  @include slide-up;
+  
+  @include mobile {
+    margin: $spacing-4;
+    padding: $spacing-4;
+    border-radius: $border-radius-md;
+  }
+}
+
+.search-form {
+  display: flex;
+  align-items: center;
+  gap: $spacing-3;
+  margin-bottom: $spacing-4;
+}
+
+.search-input {
+  @include form-input;
+  flex: 1;
+  font-size: $font-size-lg;
+  padding: $spacing-4;
+  border: 2px solid $color-border;
+  
+  &:focus {
+    border-color: $color-primary;
+    box-shadow: 0 0 0 3px rgba($color-primary, 0.1);
+  }
+  
+  &::placeholder {
+    @include vietnamese-text;
+    color: $color-text-muted;
+  }
+  
+  @include mobile {
+    font-size: $font-size-base;
+    padding: $spacing-3;
+  }
+}
+
+.search-submit {
+  @include button-primary;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+  
+  @include mobile {
+    width: 40px;
+    height: 40px;
+    
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+}
+
+.search-close {
+  position: absolute;
+  top: $spacing-4;
+  right: $spacing-4;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: none;
+  color: $color-text-muted;
+  cursor: pointer;
+  border-radius: $border-radius-sm;
+  transition: all $transition-fast;
+  
+  &:hover {
+    background-color: $color-bg-accent;
+    color: $color-text-primary;
+  }
+  
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+  
+  @include mobile {
+    top: $spacing-2;
+    right: $spacing-2;
+    width: 28px;
+    height: 28px;
+    
+    svg {
+      width: 14px;
+      height: 14px;
+    }
+  }
+}
+
+// ===== SEARCH SUGGESTIONS =====
+.search-suggestions {
+  border-top: 1px solid $color-border-light;
+  padding-top: $spacing-4;
+  
+  .suggestion-title {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    color: $color-text-muted;
+    margin-bottom: $spacing-3;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  
+  .suggestion-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .suggestion-item {
+    margin-bottom: $spacing-2;
+    
+    a {
+      display: block;
+      padding: $spacing-2 $spacing-3;
+      color: $color-text-primary;
+      text-decoration: none;
+      border-radius: $border-radius-sm;
+      transition: all $transition-fast;
+      
+      &:hover {
+        background-color: $color-bg-accent;
+        color: $color-primary;
+      }
+    }
+  }
+}
+
+// ===== RESPONSIVE DESIGN =====
+@include mobile {
+  .search-overlay {
+    padding-top: 60px; // Mobile header height
+  }
+  
+  .search-container {
+    margin: $spacing-2;
+    padding: $spacing-3;
+  }
+  
+  .search-form {
+    margin-bottom: $spacing-3;
+  }
+}
+
+// ===== ACCESSIBILITY =====
+@media (prefers-reduced-motion: reduce) {
+  .action-button {
+    transition: none;
+    
+    &:hover {
+      transform: none;
+    }
+  }
+  
+  .cart-badge {
+    animation: none;
+  }
+  
+  .search-overlay {
+    animation: none;
+  }
+  
+  .search-container {
+    animation: none;
+  }
+}
+
+// ===== HIGH CONTRAST MODE =====
+@media (prefers-contrast: high) {
+  .action-button {
+    border: 1px solid $color-border;
+    
+    &:hover {
+      border-color: $color-primary;
+    }
+  }
+  
+  .cart-badge {
+    border: 2px solid $color-bg-primary;
+  }
+}

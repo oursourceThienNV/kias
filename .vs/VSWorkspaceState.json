@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\packages\\evershop",
+    "\\packages\\evershop\\src",
+    "\\packages\\evershop\\src\\components",
+    "\\packages\\evershop\\src\\components\\frontStore",
+    "\\themes",
+    "\\themes\\hapas",
+    "\\themes\\hapas\\src",
+    "\\themes\\hapas\\src\\pages",
+    "\\themes\\hapas\\src\\pages\\homepage"
+  ],
+  "SelectedNode": "\\themes\\hapas\\src\\pages\\homepage\\ProductCarousel.tsx",
+  "PreviewInSolutionExplorer": false
+}

@@ -1,0 +1,686 @@
+import "./Layout.scss";
+import "./tailwind.scss";
+import React, { useRef,useEffect } from "react";
+const ASSETS = {
+    logo: 'http://160.22.123.39:8081/uploads/d5771fd2-e636-47a6-8bdb-71c6759534b5_logo.jpg',
+    heroPoster: '/assets/images/hero-poster.jpg',
+    heroVideo: 'https://file.hstatic.net/200000978078/file/frame_ngang__final___2_.mp4'
+};
+
+/** ====== Menu bên trái ====== */
+const NAV = [
+    { label: "TRANG CHỦ", href: "/collections/new" },
+    {
+        label: "SÉT BỘ",
+        href: "/collections/bags"
+    },
+    {
+        label: "VÁY ĐẦM",
+    },
+    { label: "QUẦN", href: "/collections/sale" },
+    { label: "ÁO", href: "/pages/stores" },
+    { label: "TIN TỨC", href: "/pages/stores" },
+    { label: "VỀ CHÚNG TÔI", href: "/pages/stores" },
+];
+
+/** ====== SVG Icons ====== */
+const Icon = {
+    Search: () => (
+        <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden>
+            <circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" strokeWidth="1.8" />
+            <path d="M20 20L16.6 16.6" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+        </svg>
+    ),
+    User: () => (
+        <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden>
+            <path d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5Z" fill="none" stroke="currentColor" strokeWidth="1.8" />
+            <path d="M4 20a8 8 0 0 1 16 0" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+        </svg>
+    ),
+    Heart: () => (
+        <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden>
+            <path
+                d="M12 21s-7-4.35-9.33-8A5.33 5.33 0 0 1 12 5.67 5.33 5.33 0 0 1 21.33 13C19 16.65 12 21 12 21Z"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+            />
+        </svg>
+    ),
+    Cart: () => (
+        <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden>
+            <circle cx="9" cy="21" r="1.2" fill="currentColor" />
+            <circle cx="19" cy="21" r="1.2" fill="currentColor" />
+            <path d="M1 2h3l2.4 12a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L22 7H6" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+        </svg>
+    ),
+    Chevron: () => (
+        <svg width="12" height="12" viewBox="0 0 24 24" className="ml-1 inline-block align-middle">
+            <path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+    ),
+};
+
+export default function Layout() {
+    return (
+        <main className="min-h-screen bg-white text-[#1f2937]">
+            {/* Announcement bar */}
+            <div className="announcement">
+                Ưu đãi 150K cho sản phẩm BUBBLY
+            </div>
+
+            {/* Header */}
+            <header className="site-header">
+                <div className="container">
+                    <div className="header-grid">
+                        {/* LEFT: menu */}
+                        <nav className="main-nav">
+                            {NAV.map((item) => (
+                                <div key={item.label} className="nav-item group">
+                                    <a href={item.href} className="nav-link">
+                                        {item.label}
+                                        {item.children && <Icon.Chevron />}
+                                    </a>
+
+                                    {item.children && (
+                                        <div className="dropdown">
+                                            <ul className="dropdown-list">
+                                                {item.children.map((c) => (
+                                                    <li key={c.label}>
+                                                        <a href={c.href} className="dropdown-link">
+                                                            {c.label}
+                                                        </a>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    )}
+                                </div>
+                            ))}
+                        </nav>
+
+                        {/* CENTER: logo */}
+                        <div className="logo-wrap">
+                            <a href="/" aria-label="HAPAS">
+                                <img src={ASSETS.logo} alt="HAPAS" className="logo" />
+                            </a>
+                        </div>
+
+                        {/* RIGHT: actions */}
+                        <div className="actions">
+                            <button aria-label="Tìm kiếm" className="action">
+                                <Icon.Search />
+                            </button>
+                            <a href="/account" aria-label="Tài khoản" className="action">
+                                <Icon.User />
+                            </a>
+                            <a href="/wishlist" aria-label="Yêu thích" className="action">
+                                <Icon.Heart />
+                            </a>
+                            <a href="/cart" aria-label="Giỏ hàng" className="action">
+                                <Icon.Cart />
+                            </a>
+
+                            <span className="divider" />
+                            <a href="/?lang=vi" className="lang">VN</a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            {/* HERO video */}
+            <section className="container my-4">
+                <div className="hero">
+                    <video
+                        className="hero-video"
+                        src={ASSETS.heroVideo}
+                        poster={ASSETS.heroPoster}
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                    />
+                </div>
+            </section>
+            <section className="container my-10 md:my-14">
+                {/* ===== TOP TABS ===== */}
+                <div className="mb-6 md:mb-8">
+                    <nav className="flex items-center gap-10 uppercase tracking-[0.08em] text-[13px]">
+                        <a
+                            href="/collections/new"
+                            className="font-semibold hover:opacity-80"
+                        >
+                            BỘ SƯU TẬP MỚI
+                        </a>
+
+                        <a
+                            href="/collections/gifts"
+                            className="text-gray-500 hover:text-gray-900"
+                        >
+                            QUÀ TẶNG
+                        </a>
+                    </nav>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
+                    {/* Ô trái: ĐƯỢC YÊU THÍCH NHẤT */}
+                    <a
+                        href="/collections/best-sellers"
+                        className="group relative block overflow-hidden rounded-2xl"
+                        style={{ aspectRatio: '4 / 3' }} // giữ tỉ lệ ảnh, hỗ trợ tốt trên trình duyệt mới
+                        aria-label="Được yêu thích nhất"
+                    >
+                        <img
+                            src="https://file.hstatic.net/200000978078/file/1.png"
+                            alt="Được yêu thích nhất"
+                            className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                        {/* lớp mờ đáy để nổi chữ */}
+                        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-transparent" />
+                        <div className="absolute left-6 md:left-10 bottom-6 md:bottom-10 text-white select-none">
+                            <h3 className="text-lg md:text-xl font-medium tracking-wide">
+                                ĐƯỢC YÊU THÍCH NHẤT
+                            </h3>
+                            <span className="mt-2 inline-flex items-center gap-2 text-sm opacity-90 group-hover:opacity-100 transition">
+          Xem chi tiết
+          <svg width="16" height="16" viewBox="0 0 24 24" className="transition-transform group-hover:translate-x-1">
+            <path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </span>
+                        </div>
+                    </a>
+
+                    {/* Ô phải: QUÀ TẶNG */}
+                    <a
+                        href="/collections/gifts"
+                        className="group relative block overflow-hidden rounded-2xl"
+                        style={{ aspectRatio: '4 / 3' }}
+                        aria-label="Quà tặng"
+                    >
+                        <img
+                            src="https://file.hstatic.net/200000978078/file/1_63559a0aba7d4bed9aa5056d49243667.png"
+                            alt="Quà tặng"
+                            className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-transparent" />
+                        <div className="absolute left-6 md:left-10 bottom-6 md:bottom-10 text-white select-none">
+                            <h3 className="text-lg md:text-xl font-medium tracking-wide">
+                                QUÀ TẶNG
+                            </h3>
+                            <span className="mt-2 inline-flex items-center gap-2 text-sm opacity-90 group-hover:opacity-100 transition">
+          Xem chi tiết
+          <svg width="16" height="16" viewBox="0 0 24 24" className="transition-transform group-hover:translate-x-1">
+            <path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </span>
+                        </div>
+                    </a>
+                </div>
+            </section>
+            {/* ===== TABS + CẶP Ô TRÁI/PHẢI ===== */}
+
+
+            {/* ===== DÁNG TÚI BẠN CẦN ===== */}
+            <section className="container my-14 md:my-20">
+                {/* Header */}
+                <div className="mb-6 md:mb-8 flex items-end justify-between">
+                    <div>
+                        <h2 className="text-[28px] md:text-[36px] font-semibold tracking-wide uppercase">DÁNG TÚI BẠN CẦN</h2>
+                        <a href="/collections/all-bag-styles" className="mt-2 inline-flex items-center gap-2 text-[15px] text-gray-700 hover:text-gray-900">
+                            Xem thêm
+                            <svg width="18" height="18" viewBox="0 0 24 24" className="translate-y-[1px]">
+                                <path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                {/* 5 thẻ lớn */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+                    {/* Túi Trống */}
+                    <div className="group">
+                        <a href="/collections/satchel" className="relative block overflow-hidden rounded-2xl" style={{ aspectRatio: '4 / 5' }} aria-label="Túi Trống">
+                            <img src="https://file.hstatic.net/200000978078/file/t_i_tr_ng.png" alt="Túi Trống" className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+                        </a>
+                        <div className="mt-3 text-sm text-gray-700">Túi Trống</div>
+                        <div className="mt-4">
+                            <img src="https://file.hstatic.net/200000978078/file/24x32__1_.png" style={{ width: 'auto', height: 80 }} alt="Túi Trống icon" className="h-12 w-auto select-none" loading="lazy" />
+                        </div>
+                    </div>
+
+                    {/* Túi Hobo */}
+                    <div className="group">
+                        <a href="/collections/hobo" className="relative block overflow-hidden rounded-2xl" style={{ aspectRatio: '4 / 5' }} aria-label="Túi Hobo">
+                            <img src="https://file.hstatic.net/200000978078/file/_nh__3_.png" alt="Túi Hobo" className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+                        </a>
+                        <div className="mt-3 text-sm text-gray-700">Túi Hobo</div>
+                        <div className="mt-4">
+                            <img src="https://file.hstatic.net/200000978078/file/hobo_tron-pro.png" style={{ width: 'auto', height: 80 }} alt="Túi Hobo icon" className="h-12 w-auto select-none" loading="lazy" />
+                        </div>
+                    </div>
+
+                    {/* Túi Tote */}
+                    <div className="group">
+                        <a href="/collections/tote" className="relative block overflow-hidden rounded-2xl" style={{ aspectRatio: '4 / 5' }} aria-label="Túi Tote">
+                            <img src="https://file.hstatic.net/200000978078/file/_nh.png" alt="Túi Tote" className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+                        </a>
+                        <div className="mt-3 text-sm text-gray-700">Túi Tote</div>
+                        <div className="mt-4">
+                            <img src="https://file.hstatic.net/200000978078/file/tui_tote-pro.png" style={{ width: 'auto', height: 80 }} alt="Túi Tote icon" className="h-12 w-auto select-none" loading="lazy" />
+                        </div>
+                    </div>
+
+                    {/* Túi Baguette */}
+                    <div className="group">
+                        <a href="/collections/baguette" className="relative block overflow-hidden rounded-2xl" style={{ aspectRatio: '4 / 5' }} aria-label="Túi Baguette">
+                            <img src="https://file.hstatic.net/200000978078/file/_nh__4_.png" alt="Túi Baguette" className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+                        </a>
+                        <div className="mt-3 text-sm text-gray-700">Túi Baguette</div>
+                        <div className="mt-4">
+                            <img src="https://file.hstatic.net/200000978078/file/tui_baguette-pro.png" style={{ width: 'auto', height: 80 }} alt="Túi Baguette icon" className="h-12 w-auto select-none" loading="lazy" />
+                        </div>
+                    </div>
+
+                    {/* Balo */}
+                    <div className="group">
+                        <a href="/collections/backpack" className="relative block overflow-hidden rounded-2xl" style={{ aspectRatio: '4 / 5' }} aria-label="Balo">
+                            <img src="https://file.hstatic.net/200000978078/file/_nh__1_.png" alt="Balo" className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+                        </a>
+                        <div className="mt-3 text-sm text-gray-700">Balo</div>
+                        <div className="mt-4">
+                            <img src="https://file.hstatic.net/200000978078/file/_nh__2_.png" style={{ width: 'auto', height: 80 }} alt="Balo icon" className="h-12 w-auto select-none" loading="lazy" />
+                        </div>
+                    </div>
+                </div>
+            </section>
+            {/* ===== FULLSCREEN STORY ===== */}
+            <section className="relative w-full h-screen">
+                {/* Video nền full-bleed */}
+                <video
+                    className="absolute inset-0 w-full h-full object-cover"
+                    src="https://file.hstatic.net/200000978078/file/hapas_8__2_.mp4"
+                    poster="/assets/images/hero-poster.jpg"
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                />
+                {/* Lớp gradient để nổi chữ phía dưới */}
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
+
+                {/* Nội dung bên trái dưới */}
+                <div className="absolute left-5 md:left-10 bottom-6 md:bottom-10 max-w-xl text-white">
+                    <h3 className="text-2xl md:text-3xl font-semibold tracking-wide">
+                        THE MAKING OF A BAG
+                    </h3>
+                    <p className="mt-3 text-sm md:text-[15px] leading-6 opacity-90">
+                        Mỗi sản phẩm được tạo ra không đơn thuần chỉ là một món đồ – mà là kết tinh của sự tỉ mỉ trong từng đường kim mũi chỉ, là kết quả của hàng giờ nghiên cứu, thử nghiệm và hoàn thiện...
+                    </p>
+                    <a
+                        href="/pages/the-making-of-a-bag"
+                        className="mt-4 inline-flex items-center gap-2 text-sm md:text-[15px]"
+                    >
+                        Xem chi tiết
+                        <svg width="18" height="18" viewBox="0 0 24 24" className="translate-y-[1px]">
+                            <path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                    </a>
+                </div>
+
+                {/* Thẻ “Sản phẩm bán chạy” ở góc phải dưới */}
+                <div className="absolute right-5 md:right-10 bottom-6 md:bottom-10">
+                    <div className="mb-2 flex items-left justify-end gap-2 text-white text-xs md:text-sm opacity-90">
+                        <span>Sản phẩm bán chạy</span>
+                        <svg width="16" height="16" viewBox="0 0 24 24">
+                            <path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                    </div>
+                    <a
+                        href="/products/bubbly"
+                        className="block w-[210px] h-[260px] bg-white rounded-xl overflow-hidden shadow-lg"
+                        aria-label="Sản phẩm bán chạy"
+                    >
+                        <img
+                            src="https://file.hstatic.net/200000978078/file/img_8059_ddbccef8d7da49538562a1b9fcb28313.jpg"
+                            alt="Bubbly Cream"
+                            className="w-full h-full object-cover"
+                            loading="lazy"
+                        />
+                    </a>
+                </div>
+            </section>
+            {/* ===== CÓ VÀI ĐIỀU VỪA CẬP NHẬT (HTML/CSS ONLY) ===== */}
+            <section className="container my-14">
+                <div className="flex items-center justify-between mb-6">
+                    <h2 className="text-[36px] font-semibold tracking-wide uppercase text-[#1f2650]">
+                        CÓ VÀI ĐIỀU VỪA CẬP NHẬT
+                    </h2>
+                    <a href="/blogs/all" className="inline-flex items-center gap-2 text-sm">Xem tất cả
+                        <svg width="18" height="18" viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                    </a>
+                </div>
+
+                <BlogRowWithSlider />
+            </section>
+            {/* ===== BẠN THÂN HAPAS ===== */}
+            <section className="my-16 md:my-24">
+                {/* Header vẫn theo layout container của bạn */}
+                <div className="container mb-6 md:mb-8">
+                    <h2 className="text-[28px] md:text-[36px] font-semibold tracking-wide uppercase text-[#1f2650]">
+                        BẠN THÂN HAPAS
+                    </h2>
+                    <a href="/pages/friends" className="mt-2 inline-flex items-center gap-2 text-sm md:text-[15px] text-gray-700 hover:text-gray-900">
+                        Xem tất cả
+                        <svg width="18" height="18" viewBox="0 0 24 24" className="translate-y-[1px]">
+                            <path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                    </a>
+                </div>
+
+                {/* Dải ảnh full-bleed */}
+                <FriendsDragStrip />
+            </section>
+            <footer className="w-full bg-[#1f2650] text-white py-12 md:py-16">
+                <div className="container">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr_1.2fr] gap-10 md:gap-16">
+
+                        {/* Cột 1 */}
+                        <div>
+                            <h4 className="text-sm font-semibold tracking-wide uppercase">Về HAPAS</h4>
+                            <ul className="mt-4 space-y-3 text-sm text-white/90">
+                                <li><a href="/pages/dieu-binh-thuong" className="hover:opacity-80">Điều bình thường tươi đẹp</a></li>
+                                <li><a href="/pages/hapas-can-ban" className="hover:opacity-80">Hapas cần bạn</a></li>
+                                <li><a href="/collections/gifts" className="hover:opacity-80">Quà tặng</a></li>
+                                <li><a href="/collections" className="hover:opacity-80">Bộ sưu tập</a></li>
+                            </ul>
+                        </div>
+
+                        {/* Cột 2 */}
+                        <div>
+                            <h4 className="text-sm font-semibold tracking-wide uppercase">Dịch vụ khách hàng</h4>
+                            <ul className="mt-4 space-y-3 text-sm text-white/90">
+                                <li><a href="/pages/chinh-sach-khach-hang-than-thiet" className="hover:opacity-80">Chính sách khách hàng thân thiết</a></li>
+                                <li><a href="/pages/doi-tra" className="hover:opacity-80">Chính sách đổi/trả sản phẩm</a></li>
+                                <li><a href="/pages/bao-mat" className="hover:opacity-80">Chính sách bảo mật</a></li>
+                                <li><a href="/pages/giao-hang" className="hover:opacity-80">Chính sách giao hàng</a></li>
+                                <li><a href="/pages/thanh-toan" className="hover:opacity-80">Hình thức thanh toán</a></li>
+                                <li><a href="/pages/dieu-khoan" className="hover:opacity-80">Điều khoản sử dụng</a></li>
+                                <li><a href="/pages/faq" className="hover:opacity-80">Các câu hỏi thường gặp</a></li>
+                            </ul>
+                        </div>
+
+                        {/* Cột 3 */}
+                        <div>
+                            <h4 className="text-sm font-semibold tracking-wide uppercase">Liên hệ HAPAS</h4>
+                            <ul className="mt-4 space-y-3 text-sm text-white/90">
+                                <li><a href="/pages/stores" className="hover:opacity-80">Hệ thống cửa hàng</a></li>
+                                <li><a href="/blogs/news" className="hover:opacity-80">Tin tức</a></li>
+                            </ul>
+
+                            <div className="mt-6">
+                                <h5 className="text-sm font-semibold tracking-wide uppercase">Theo dõi chúng tôi</h5>
+                                <div className="mt-3 flex items-center gap-4 text-white">
+                                    {/* Instagram */}
+                                    <a href="https://instagram.com" aria-label="Instagram" className="hover:opacity-80">
+                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                                            <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" strokeWidth="1.8"/>
+                                            <circle cx="12" cy="12" r="4.2" stroke="currentColor" strokeWidth="1.8"/>
+                                            <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/>
+                                        </svg>
+                                    </a>
+                                    {/* Facebook */}
+                                    <a href="https://facebook.com" aria-label="Facebook" className="hover:opacity-80">
+                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                                            <path d="M14 8h3V5h-3a4 4 0 0 0-4 4v3H7v3h3v6h3v-6h3l1-3h-4V9a1 1 0 0 1 1-1Z" fill="currentColor"/>
+                                        </svg>
+                                    </a>
+                                    {/* TikTok */}
+                                    <a href="https://tiktok.com" aria-label="TikTok" className="hover:opacity-80">
+                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                                            <path d="M14.5 3v4.2a5.8 5.8 0 0 0 4.9 1.8v3.1a8.9 8.9 0 0 1-4.9-1.5v5.9a5.2 5.2 0 1 1-5.2-5.2c.3 0 .6 0 .9.1v3.1a2.1 2.1 0 1 0 2.1 2.1V3h2.2Z" fill="currentColor"/>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Cột 4 — form + badges */}
+                        <div>
+                            <h4 className="text-sm font-semibold tracking-wide uppercase">Đăng ký để nhận tin</h4>
+                            <form className="mt-4 flex w-full max-w-[520px]">
+                                <input
+                                    type="email"
+                                    placeholder="Email của bạn"
+                                    className="h-10 flex-1 rounded-l-md bg-white/10 placeholder-white/70 text-white text-sm px-4 outline-none border border-white/20 focus:border-white/40"
+                                />
+                                {/* nút gửi */}
+                                <button
+                                    type="button"
+                                    className="h-10 px-4 rounded-r-md bg-white text-[#1f2650] text-sm font-semibold"
+                                >
+                                    Gửi
+                                </button>
+                            </form>
+
+                            <div className="mt-4">
+                                <a href="https://online.gov.vn" target="_blank" rel="noreferrer" aria-label="Đã thông báo Bộ Công Thương">
+                                    <img
+                                        src="https://file.hstatic.net/200000978078/file/dathongbao.png"
+                                        alt="Đã thông báo Bộ Công Thương"
+                                        className="h-12 w-auto"
+                                        loading="lazy"
+                                    />
+                                </a>
+                            </div>
+
+                            <div className="mt-6">
+                                <h5 className="text-sm font-semibold tracking-wide uppercase">Phương thức thanh toán</h5>
+                                <div className="mt-3 flex items-center gap-4">
+                                    <img src="https://cdn.hstatic.net/themes/200000978078/1001399698/14/payment_1_img.png?v=199" alt="Visa" className="h-5 w-auto" loading="lazy" />
+                                    <img src="https://cdn.hstatic.net/themes/200000978078/1001399698/14/payment_2_img.png?v=199" alt="Mastercard" className="h-5 w-auto" loading="lazy" />
+                                    <img src="https://cdn.hstatic.net/themes/200000978078/1001399698/14/payment_3_img.png?v=199" alt="JCB" className="h-5 w-auto" loading="lazy" />
+                                    <img src="https://cdn.hstatic.net/themes/200000978078/1001399698/14/payment_4_img.png?v=199" alt="COD" className="h-5 w-auto" loading="lazy" />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </footer>
+
+
+
+            {/* Nút Liên hệ */}
+            <a href="/lien-he" className="chat-fab" aria-label="Liên hệ">
+                <span>Liên hệ</span>
+            </a>
+        </main>
+    );
+}
+function BlogRowWithSlider() {
+    const trackRef = useRef(null);
+    const sliderRef = useRef(null);
+
+    useEffect(() => {
+        const track = trackRef.current;
+        const slider = sliderRef.current;
+        if (!track || !slider) return;
+
+        const syncFromScroll = () => {
+            const max = track.scrollWidth - track.clientWidth;
+            if (max <= 0) { slider.disabled = true; slider.value = "0"; return; }
+            slider.disabled = false;
+            slider.value = String((track.scrollLeft / max) * 100);
+        };
+        const syncFromInput = () => {
+            const max = track.scrollWidth - track.clientWidth;
+            track.scrollLeft = (Number(slider.value) / 100) * max;
+        };
+
+        track.addEventListener("scroll", syncFromScroll, { passive: true });
+        slider.addEventListener("input", syncFromInput);
+        syncFromScroll();
+
+        const ro = new ResizeObserver(syncFromScroll);
+        ro.observe(track);
+        return () => {
+            track.removeEventListener("scroll", syncFromScroll);
+            slider.removeEventListener("input", syncFromInput);
+            ro.disconnect();
+        };
+    }, []);
+
+    return (
+        <>
+            {/* Hàng thẻ bài viết (giữ layout hiện có của bạn) */}
+            <div ref={trackRef} className="blog-track">
+                <div className="flex gap-10 w-max pr-6">
+                    {/* ==== Card mẫu, copy ra các card của bạn ==== */}
+                    <a href="#" className="block w-[520px]">
+                        <div className="rounded-xl overflow-hidden">
+                            <img src="https://cdn.hstatic.net/files/200000978078/article/82361__1__51593cf1dc7d42d0a17625011ff40766_large.jpg" style={{ width: 'auto', height: '100%' }} className="w-full h-[260px] object-cover" alt="" />
+                        </div>
+                        <div className="mt-2 text-xs text-gray-500">24/09/2025</div>
+                        <div className="text-sm">HAPAS x VŨ CÁT TƯỜNG - BÍ ĐỎ: NHẸ &amp; LÀ CHÍNH MÌNH</div>
+                    </a>
+                    <a href="#" className="block w-[520px]">
+                        <div className="rounded-xl overflow-hidden">
+                            <img src="https://file.hstatic.net/200000978078/article/chain_handle__3__7212e50d5fb04a58ab65b14a18d2859d_large.png"  style={{ width: 'auto', height: '100%' }} className="w-full h-[260px] object-cover" alt="" />
+                        </div>
+                        <div className="mt-2 text-xs text-gray-500">24/09/2025</div>
+                        <div className="text-sm">HAPAS x VŨ CÁT TƯỜNG - BÍ ĐỎ: NHẸ &amp; LÀ CHÍNH MÌNH</div>
+                    </a>
+                    <a href="#" className="block w-[520px]">
+                        <div className="rounded-xl overflow-hidden">
+                            <img src="https://file.hstatic.net/200000978078/article/20250319_hm5uwovd_59b676f36f7e43d4987b87b2c94b7603_large.jpeg"  style={{ width: 'auto', height: '100%' }} className="w-full h-[260px] object-cover" alt="" />
+                        </div>
+                        <div className="mt-2 text-xs text-gray-500">24/09/2025</div>
+                        <div className="text-sm">HAPAS x VŨ CÁT TƯỜNG - BÍ ĐỎ: NHẸ &amp; LÀ CHÍNH MÌNH</div>
+                    </a>
+                    <a href="#" className="block w-[520px]">
+                        <div className="rounded-xl overflow-hidden">
+                            <img src="https://cdn.hstatic.net/files/200000978078/article/82361__1__51593cf1dc7d42d0a17625011ff40766_large.jpg"  style={{ width: 'auto', height: '100%' }} className="w-full h-[260px] object-cover" alt="" />
+                        </div>
+                        <div className="mt-2 text-xs text-gray-500">24/09/2025</div>
+                        <div className="text-sm">HAPAS x VŨ CÁT TƯỜNG - BÍ ĐỎ: NHẸ &amp; LÀ CHÍNH MÌNH</div>
+                    </a>
+                    <a href="#" className="block w-[520px]">
+                        <div className="rounded-xl overflow-hidden">
+                            <img src="https://file.hstatic.net/200000978078/article/chain_handle__3__7212e50d5fb04a58ab65b14a18d2859d_large.png"  style={{ width: 'auto', height: '100%' }} className="w-full h-[260px] object-cover" alt="" />
+                        </div>
+                        <div className="mt-2 text-xs text-gray-500">24/09/2025</div>
+                        <div className="text-sm">HAPAS x VŨ CÁT TƯỜNG - BÍ ĐỎ: NHẸ &amp; LÀ CHÍNH MÌNH</div>
+                    </a>
+                    <a href="#" className="block w-[520px]">
+                        <div className="rounded-xl overflow-hidden">
+                            <img src="https://file.hstatic.net/200000978078/article/20250319_hm5uwovd_59b676f36f7e43d4987b87b2c94b7603_large.jpeg"  style={{ width: 'auto', height: '100%' }}className="w-full h-[260px] object-cover" alt="" />
+                        </div>
+                        <div className="mt-2 text-xs text-gray-500">24/09/2025</div>
+                        <div className="text-sm">HAPAS x VŨ CÁT TƯỜNG - BÍ ĐỎ: NHẸ &amp; LÀ CHÍNH MÌNH</div>
+                    </a>
+                    <a href="#" className="block w-[520px]">
+                        <div className="rounded-xl overflow-hidden">
+                            <img src="https://cdn.hstatic.net/files/200000978078/article/82361__1__51593cf1dc7d42d0a17625011ff40766_large.jpg"  style={{ width: 'auto', height: '100%' }} className="w-full h-[260px] object-cover" alt="" />
+                        </div>
+                        <div className="mt-2 text-xs text-gray-500">24/09/2025</div>
+                        <div className="text-sm">HAPAS x VŨ CÁT TƯỜNG - BÍ ĐỎ: NHẸ &amp; LÀ CHÍNH MÌNH</div>
+                    </a>
+                    <a href="#" className="block w-[520px]">
+                        <div className="rounded-xl overflow-hidden">
+                            <img src="https://file.hstatic.net/200000978078/article/chain_handle__3__7212e50d5fb04a58ab65b14a18d2859d_large.png"  style={{ width: 'auto', height: '100%' }} className="w-full h-[260px] object-cover" alt="" />
+                        </div>
+                        <div className="mt-2 text-xs text-gray-500">24/09/2025</div>
+                        <div className="text-sm">HAPAS x VŨ CÁT TƯỜNG - BÍ ĐỎ: NHẸ &amp; LÀ CHÍNH MÌNH</div>
+                    </a>
+                    <a href="#" className="block w-[520px]">
+                        <div className="rounded-xl overflow-hidden">
+                            <img src="https://file.hstatic.net/200000978078/article/20250319_hm5uwovd_59b676f36f7e43d4987b87b2c94b7603_large.jpeg"  style={{ width: 'auto', height: '100%' }} className="w-full h-[260px] object-cover" alt="" />
+                        </div>
+                        <div className="mt-2 text-xs text-gray-500">24/09/2025</div>
+                        <div className="text-sm">HAPAS x VŨ CÁT TƯỜNG - BÍ ĐỎ: NHẸ &amp; LÀ CHÍNH MÌNH</div>
+                    </a>
+
+                    {/* thêm các card còn lại của bạn ... */}
+                </div>
+            </div>
+
+            {/* Thanh kéo full width */}
+            <div className="mt-6">
+                <input ref={sliderRef} type="range" min="0" max="100" step="0.1" defaultValue="0" className="blog-slider" />
+            </div>
+        </>
+    );
+}
+function FriendsDragStrip() {
+    const wrapRef = useRef(null);
+    const trackRef = useRef(null);
+    let isDown = false, startX = 0, startLeft = 0;
+
+    const onPointerDown = (e) => {
+        const wrap = wrapRef.current, track = trackRef.current;
+        if (!wrap || !track) return;
+        isDown = true;
+        track.classList.add("dragging");
+        wrap.setPointerCapture(e.pointerId);
+        startX = e.clientX;
+        startLeft = wrap.scrollLeft;
+    };
+
+    const onPointerMove = (e) => {
+        if (!isDown) return;
+        const wrap = wrapRef.current;
+        wrap.scrollLeft = startLeft - (e.clientX - startX);
+    };
+
+    const onPointerUp = (e) => {
+        if (!isDown) return;
+        isDown = false;
+        trackRef.current?.classList.remove("dragging");
+        wrapRef.current?.releasePointerCapture(e.pointerId);
+    };
+
+    return (
+        <div
+            className="full-bleed drag-wrap"
+            ref={wrapRef}
+            onPointerDown={onPointerDown}
+            onPointerMove={onPointerMove}
+            onPointerUp={onPointerUp}
+            onPointerLeave={onPointerUp}
+        >
+            <div className="friends-track" ref={trackRef}>
+                {/* chỉnh kích thước & độ lệch để giống ảnh (so le) */}
+                <a href="/p/1" className="friend-item block" style={{ width: 320, height: 420, marginTop: 40 }}>
+                    <img src="https://file.hstatic.net/200000978078/file/snapinsta.to_473645412_632621325774129_3186392239450981564_n.jpg" alt="" loading="lazy" />
+                </a>
+                <a href="/p/2" className="friend-item block" style={{ width: 260, height: 300, marginTop: 140 }}>
+                    <img src="https://file.hstatic.net/200000978078/file/snapinsta.to_473645412_632621325774129_3186392239450981564_n.jpg" alt="" loading="lazy" />
+                </a>
+                <a href="/p/3" className="friend-item block" style={{ width: 300, height: 340, marginTop: 90 }}>
+                    <img src="https://file.hstatic.net/200000978078/file/snapinsta.to_473645412_632621325774129_3186392239450981564_n.jpg" alt="" loading="lazy" />
+                </a>
+                <a href="/p/4" className="friend-item block" style={{ width: 330, height: 380, marginTop: 40 }}>
+                    <img src="https://file.hstatic.net/200000978078/file/snapinsta.to_473645412_632621325774129_3186392239450981564_n.jpg" alt="" loading="lazy" />
+                </a>
+                <a href="/p/5" className="friend-item block" style={{ width: 280, height: 360, marginTop: 110 }}>
+                    <img src="https://file.hstatic.net/200000978078/file/snapinsta.to_473645412_632621325774129_3186392239450981564_n.jpg" alt="" loading="lazy" />
+                </a>
+                <a href="/p/6" className="friend-item block" style={{ width: 260, height: 320, marginTop: 70 }}>
+                    <img src="https://file.hstatic.net/200000978078/file/snapinsta.to_473645412_632621325774129_3186392239450981564_n.jpg" alt="" loading="lazy" />
+                </a>
+                <a href="/p/7" className="friend-item block" style={{ width: 320, height: 420, marginTop: 30 }}>
+                    <img src="https://file.hstatic.net/200000978078/file/snapinsta.to_473645412_632621325774129_3186392239450981564_n.jpg" alt="" loading="lazy" />
+                </a>
+                <a href="/p/8" className="friend-item block" style={{ width: 240, height: 300, marginTop: 140 }}>
+                    <img src="https://file.hstatic.net/200000978078/file/snapinsta.to_473645412_632621325774129_3186392239450981564_n.jpg" alt="" loading="lazy" />
+                </a>
+                <a href="/p/9" className="friend-item block" style={{ width: 360, height: 420, marginTop: 60 }}>
+                    <img src="https://file.hstatic.net/200000978078/file/snapinsta.to_473645412_632621325774129_3186392239450981564_n.jpg" alt="" loading="lazy" />
+                </a>
+            </div>
+        </div>
+    );
+}
+/** ====== (Không bắt buộc) xuất layout meta nếu hệ thống của bạn cần ====== */
+export const layout = { areaId: "body", sortOrder: 1000 };

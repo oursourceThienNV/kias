@@ -1,0 +1,210 @@
+///**
+// * Announcement Bar Styles - HAPAS Theme
+// * Matching hapas.vn design
+// */
+//
+//.announcement-bar {
+//  position: relative;
+//  width: 100%;
+//  padding: 0.75rem 1rem;
+//  background-color: #2d2d2d;
+//  color: #ffffff;
+//  font-size: 0.875rem;
+//  line-height: 1.5;
+//  text-align: center;
+//  overflow: hidden;
+//  z-index: 100;
+//
+//  @media (max-width: 768px) {
+//    padding: 0.625rem 1rem;
+//    font-size: 0.8125rem;
+//  }
+//}
+//
+//.announcement-bar__container {
+//  position: relative;
+//  max-width: 1400px;
+//  margin: 0 auto;
+//  display: flex;
+//  align-items: center;
+//  justify-content: center;
+//  gap: 1rem;
+//}
+//
+//.announcement-bar__slider {
+//  flex: 1;
+//  overflow: hidden;
+//  position: relative;
+//  min-height: 1.5rem;
+//}
+//
+//.announcement-bar__track {
+//  display: flex;
+//  transition: transform 0.5s ease-in-out;
+//  will-change: transform;
+//}
+//
+//.announcement-bar__slide {
+//  flex: 0 0 100%;
+//  width: 100%;
+//  min-width: 100%;
+//  display: flex;
+//  align-items: center;
+//  justify-content: center;
+//  padding: 0 0.5rem;
+//  box-sizing: border-box;
+//}
+//
+//.announcement-bar__link,
+//.announcement-bar__text {
+//  display: inline-block;
+//  color: inherit;
+//  text-decoration: none;
+//  font-weight: 400;
+//  letter-spacing: 0.02em;
+//  transition: opacity 0.2s ease;
+//
+//  &:hover {
+//    opacity: 0.85;
+//  }
+//
+//  &:focus-visible {
+//    outline: 2px solid currentColor;
+//    outline-offset: 2px;
+//    border-radius: 2px;
+//  }
+//}
+//
+//.announcement-bar__text {
+//  cursor: default;
+//
+//  &:hover {
+//    opacity: 1;
+//  }
+//}
+//
+//// Navigation Buttons
+//.announcement-bar__nav {
+//  flex-shrink: 0;
+//  width: 32px;
+//  height: 32px;
+//  display: flex;
+//  align-items: center;
+//  justify-content: center;
+//  background: transparent;
+//  border: none;
+//  color: currentColor;
+//  cursor: pointer;
+//  opacity: 0.7;
+//  transition: opacity 0.2s ease;
+//  border-radius: 4px;
+//
+//  &:hover {
+//    opacity: 1;
+//    background: rgba(255, 255, 255, 0.1);
+//  }
+//
+//  &:focus-visible {
+//    outline: 2px solid currentColor;
+//    outline-offset: 2px;
+//    opacity: 1;
+//  }
+//
+//  &:active {
+//    transform: scale(0.95);
+//  }
+//
+//  svg {
+//    display: block;
+//  }
+//
+//  @media (max-width: 768px) {
+//    width: 28px;
+//    height: 28px;
+//
+//    svg {
+//      width: 14px;
+//      height: 14px;
+//    }
+//  }
+//}
+//
+//// Dots Navigation
+//.announcement-bar__dots {
+//  position: absolute;
+//  bottom: -1.5rem;
+//  left: 50%;
+//  transform: translateX(-50%);
+//  display: flex;
+//  gap: 0.5rem;
+//  padding: 0.25rem;
+//
+//  @media (min-width: 769px) {
+//    bottom: 50%;
+//    left: auto;
+//    right: 1rem;
+//    transform: translateY(50%);
+//  }
+//}
+//
+//.announcement-bar__dot {
+//  width: 6px;
+//  height: 6px;
+//  padding: 0;
+//  background: currentColor;
+//  opacity: 0.4;
+//  border: none;
+//  border-radius: 50%;
+//  cursor: pointer;
+//  transition: all 0.2s ease;
+//
+//  &:hover {
+//    opacity: 0.7;
+//    transform: scale(1.2);
+//  }
+//
+//  &:focus-visible {
+//    outline: 2px solid currentColor;
+//    outline-offset: 2px;
+//  }
+//
+//  &.active {
+//    opacity: 1;
+//    width: 20px;
+//    border-radius: 3px;
+//  }
+//
+//  @media (max-width: 768px) {
+//    width: 5px;
+//    height: 5px;
+//
+//    &.active {
+//      width: 16px;
+//    }
+//  }
+//}
+//
+//// Accessibility
+//@media (prefers-reduced-motion: reduce) {
+//  .announcement-bar__track {
+//    transition: none;
+//  }
+//
+//  .announcement-bar__nav:active {
+//    transform: none;
+//  }
+//}
+//
+//// High contrast mode
+//@media (prefers-contrast: high) {
+//  .announcement-bar {
+//    border-bottom: 2px solid currentColor;
+//  }
+//
+//  .announcement-bar__link:focus-visible,
+//  .announcement-bar__nav:focus-visible,
+//  .announcement-bar__dot:focus-visible {
+//    outline-width: 3px;
+//  }
+//}
+//

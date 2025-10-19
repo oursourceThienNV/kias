@@ -1,0 +1,148 @@
+{
+  "timestamp": "2025-09-22T10:13:11.527Z",
+  "tests": [
+    {
+      "name": "Product Data Retrieval",
+      "status": "PASSED",
+      "details": {
+        "totalProducts": 2,
+        "kiasProducts": 2,
+        "vietnameseNames": 2
+      },
+      "timestamp": "2025-09-22T10:13:11.530Z"
+    },
+    {
+      "name": "Product Card Rendering",
+      "status": "PASSED",
+      "details": {
+        "productName": "Set Bộ Áo Thun + Quần Short KIAS Phong Cách Hàn Quốc",
+        "priceFormatted": "1.103.760 ₫",
+        "hasImage": true,
+        "hasDescription": true,
+        "cardStructure": [
+          "id",
+          "name",
+          "price",
+          "salePrice",
+          "formattedPrice",
+          "description",
+          "image",
+          "inStock",
+          "category"
+        ]
+      },
+      "timestamp": "2025-09-22T10:13:11.550Z"
+    },
+    {
+      "name": "Vietnamese Text Formatting",
+      "status": "PASSED",
+      "details": {
+        "textsProcessed": 4,
+        "vietnameseTexts": 4,
+        "averageLength": 25,
+        "samples": [
+          {
+            "original": "Set Bộ Áo Thun + Quần Short KIAS",
+            "hasVietnamese": true,
+            "length": 32,
+            "wordCount": 8
+          },
+          {
+            "original": "Váy Đầm Dự Tiệc Cao Cấp",
+            "hasVietnamese": true,
+            "length": 23,
+            "wordCount": 6
+          },
+          {
+            "original": "Áo Sơ Mi Công Sở Nữ",
+            "hasVietnamese": true,
+            "length": 19,
+            "wordCount": 6
+          },
+          {
+            "original": "Quần Jean Skinny Thời Trang",
+            "hasVietnamese": true,
+            "length": 27,
+            "wordCount": 5
+          }
+        ]
+      },
+      "timestamp": "2025-09-22T10:13:11.551Z"
+    },
+    {
+      "name": "Price Formatting",
+      "status": "PASSED",
+      "details": {
+        "pricesProcessed": 4,
+        "validFormats": 4,
+        "samples": [
+          {
+            "usd": 25.99,
+            "formatted": "623.760 ₫",
+            "isValid": true
+          },
+          {
+            "usd": 45.5,
+            "formatted": "1.092.000 ₫",
+            "isValid": true
+          },
+          {
+            "usd": 89.99,
+            "formatted": "2.159.760 ₫",
+            "isValid": true
+          },
+          {
+            "usd": 120,
+            "formatted": "2.880.000 ₫",
+            "isValid": true
+          }
+        ]
+      },
+      "timestamp": "2025-09-22T10:13:11.552Z"
+    },
+    {
+      "name": "Responsive Behavior",
+      "status": "PASSED",
+      "details": {
+        "breakpointsTested": 4,
+        "validBreakpoints": 4,
+        "breakpoints": [
+          {
+            "name": "Mobile",
+            "width": 375,
+            "columns": 2,
+            "gridClass": "grid-mobile",
+            "isValid": true
+          },
+          {
+            "name": "Tablet",
+            "width": 768,
+            "columns": 3,
+            "gridClass": "grid-tablet",
+            "isValid": true
+          },
+          {
+            "name": "Desktop",
+            "width": 1024,
+            "columns": 4,
+            "gridClass": "grid-desktop",
+            "isValid": true
+          },
+          {
+            "name": "Large Desktop",
+            "width": 1440,
+            "columns": 4,
+            "gridClass": "grid-desktop",
+            "isValid": true
+          }
+        ]
+      },
+      "timestamp": "2025-09-22T10:13:11.553Z"
+    }
+  ],
+  "summary": {
+    "total": 5,
+    "passed": 5,
+    "failed": 0
+  }
+}

@@ -1,0 +1,417 @@
+---
+description: React component patterns, SSR requirements, and area system
+globs:
+  - "**/*.tsx"
+  - "themes/hapas/src/pages/**/*"
+  - "themes/hapas/src/components/**/*"
+  - "extensions/**/src/pages/**/*"
+alwaysApply: false
+---
+
+# React Components Quick Reference
+
+Essential React patterns for EverShop SSR and area system. For full guide, see `docs/EVERSHOP-MODULES-EXTENSIONS-WIDGETS-THEMES.md`.
+
+---
+
+## Core Rules
+
+✅ **ALWAYS:**
+- Function components only (no classes)
+- Typed props with interfaces
+- Export `layout` for area placement
+- SSR-safe code (no direct `window`/`document` access)
+
+❌ **NEVER:**
+- Class components
+- Props without types
+- Components without `layout` export (won't render)
+- Direct DOM manipulation with refs
+
+---
+
+## Area System Essentials
+
+### Layout Export (REQUIRED)
+
+```tsx
+// ✅ Correct: Component will render
+export default function MyComponent({ data }: Props) {
+  return <div>{data}</div>;
+}
+
+export const layout = {
+  areaId: 'content',    // Where to render
+  sortOrder: 10         // Order (lower = earlier)
+};
+
+// ❌ Wrong: Component won't appear
+export default function MyComponent() {
+  return <div>Hello</div>;
+}
+// Missing layout export!
+```
+
+### Common Area IDs
+
+```typescript
+// Header
+'header'              // Full header
+'headerTop'           // Announcement bar
+'headerMiddle'        // Logo, search, cart
+'headerBottom'        // Main navigation
+
+// Content
+'content'             // Main content
+'sidebar'             // Filters, widgets
+
+// Footer
+'footer'              // Full footer
+```
+
+### Sort Order
+
+```tsx
+// Render order: A (5) → B (10) → C (15)
+
+// Component A
+export const layout = { areaId: 'header', sortOrder: 5 };
+
+// Component B  
+export const layout = { areaId: 'header', sortOrder: 10 };
+
+// Component C
+export const layout = { areaId: 'header', sortOrder: 15 };
+```
+
+---
+
+## Component Placement
+
+### Global Components (All Pages)
+
+```
+themes/hapas/src/pages/all/
+├── Header.tsx           # Site header
+├── MainNavigation.tsx   # Main menu
+└── Footer.tsx           # Site footer
+```
+
+```tsx
+// pages/all/Header.tsx
+export default function Header() {
+  return <header>...</header>;
+}
+
+export const layout = {
+  areaId: 'header',
+  sortOrder: 10
+};
+```
+
+### Route-Specific Components
+
+```
+themes/hapas/src/pages/
+├── homepage/
+│   └── HeroBanner.tsx       # Only on /
+├── productView/
+│   └── ProductGallery.tsx   # Only on /product/:slug
+```
+
+---
+
+## Data Fetching (SSR)
+
+### GraphQL Query Export
+
+```tsx
+// Component receives data from query
+export default function ProductView({ product }: { product: Product }) {
+  return (
+    <div>
+      <h1>{product.name}</h1>
+      <p>${product.price}</p>
+    </div>
+  );
+}
+
+export const layout = {
+  areaId: 'content',
+  sortOrder: 10
+};
+
+// Query executed server-side before render
+export const query = `
+  query GetProduct($slug: String!) {
+    product(slug: $slug) {
+      productId
+      name
+      price
+    }
+  }
+`;
+```
+
+**How it works:**
+1. Route params (`:slug`) auto-passed as variables
+2. Query executes on server before render
+3. Results passed as props to component
+4. Component renders with data
+
+---
+
+## SSR Requirements
+
+### ✅ SSR-Safe Patterns
+
+```tsx
+export default function SafeComponent() {
+  const [mounted, setMounted] = useState(false);
+  
+  // ✅ useEffect only runs on client
+  useEffect(() => {
+    setMounted(true);
+    console.log('Client-side only');
+  }, []);
+  
+  return <div>{mounted ? 'Client' : 'Server'}</div>;
+}
+```
+
+### ❌ SSR-Unsafe Patterns
+
+```tsx
+// ❌ Direct window access (crashes on server)
+export default function BadComponent() {
+  const width = window.innerWidth; // Error!
+  return <div style={{ width }}></div>;
+}
+
+// ✅ Safe version
+export default function GoodComponent() {
+  const [width, setWidth] = useState(0);
+  
+  useEffect(() => {
+    setWidth(window.innerWidth); // Only runs on client
+  }, []);
+  
+  return <div style={{ width: width || '100%' }}></div>;
+}
+```
+
+---
+
+## React Hooks
+
+### useState
+
+```tsx
+// ✅ Proper typing
+const [products, setProducts] = useState<Product[]>([]);
+const [loading, setLoading] = useState(false);
+
+// ❌ No types
+const [data, setData] = useState();
+```
+
+### useEffect
+
+```tsx
+// ✅ With cleanup
+useEffect(() => {
+  const controller = new AbortController();
+  
+  fetch('/api/data', { signal: controller.signal })
+    .then(res => res.json())
+    .then(setData);
+  
+  return () => controller.abort(); // Cleanup
+}, [dependencies]);
+
+// ❌ No cleanup, missing deps
+useEffect(() => {
+  fetch('/api/data').then(res => res.json()).then(setData);
+});
+```
+
+### useCallback & useMemo
+
+```tsx
+// ✅ Memoize callbacks
+const handleClick = useCallback((id: string) => {
+  // Handler logic
+}, [dependencies]);
+
+// ✅ Memoize expensive computations
+const filtered = useMemo(() => {
+  return items.filter(item => item.price < maxPrice);
+}, [items, maxPrice]);
+```
+
+---
+
+## Styling
+
+### Import SCSS
+
+```tsx
+import './ProductCard.scss';
+
+export default function ProductCard({ product }: Props) {
+  return (
+    <div className="product-card">
+      <h2 className="product-card__title">{product.name}</h2>
+    </div>
+  );
+}
+```
+
+### CSS Variables
+
+```tsx
+// Use global CSS variables
+export default function Button({ variant }: Props) {
+  return (
+    <button style={{
+      backgroundColor: variant === 'primary'
+        ? 'var(--color-primary)'
+        : 'var(--color-secondary)'
+    }}>
+      Click
+    </button>
+  );
+}
+```
+
+### Conditional Classes
+
+```tsx
+// ✅ Helper function
+function cn(...classes: (string | boolean | undefined)[]) {
+  return classes.filter(Boolean).join(' ');
+}
+
+export default function Button({ variant, active }: Props) {
+  return (
+    <button className={cn(
+      'btn',
+      variant === 'primary' && 'btn--primary',
+      active && 'btn--active'
+    )}>
+      Click
+    </button>
+  );
+}
+```
+
+---
+
+## Common Patterns
+
+### Typed Props
+
+```tsx
+interface ProductCardProps {
+  product: Product;
+  showPrice?: boolean;
+  onAddToCart?: (id: string) => void;
+}
+
+export default function ProductCard({
+  product,
+  showPrice = true,
+  onAddToCart
+}: ProductCardProps) {
+  return <div>{product.name}</div>;
+}
+```
+
+### Container/Presentational
+
+```tsx
+// Presentational (UI only)
+export function ProductCard({ product, onAdd }: Props) {
+  return (
+    <div>
+      <h3>{product.name}</h3>
+      <button onClick={() => onAdd(product.productId)}>Add</button>
+    </div>
+  );
+}
+
+// Container (data & logic)
+export default function ProductGrid({ products }: Props) {
+  const handleAdd = useCallback(async (id: string) => {
+    await fetch('/api/cart/add', {
+      method: 'POST',
+      body: JSON.stringify({ productId: id })
+    });
+  }, []);
+  
+  return (
+    <div className="grid">
+      {products.map(p => (
+        <ProductCard key={p.productId} product={p} onAdd={handleAdd} />
+      ))}
+    </div>
+  );
+}
+```
+
+---
+
+## Common Mistakes
+
+❌ **Missing layout export:**
+```tsx
+export default function MyComponent() {
+  return <div>Won't render!</div>;
+}
+```
+
+✅ **With layout:**
+```tsx
+export default function MyComponent() {
+  return <div>Will render!</div>;
+}
+
+export const layout = { areaId: 'content', sortOrder: 10 };
+```
+
+❌ **Side effects in render:**
+```tsx
+export default function BadComponent() {
+  const [count, setCount] = useState(0);
+  setCount(count + 1); // Infinite loop!
+  return <div>{count}</div>;
+}
+```
+
+✅ **Use useEffect:**
+```tsx
+export default function GoodComponent() {
+  const [count, setCount] = useState(0);
+  
+  useEffect(() => {
+    setCount(count + 1);
+  }, []); // Runs once
+  
+  return <div>{count}</div>;
+}
+```
+
+---
+
+## Naming Conventions
+
+- **Files:** PascalCase - `ProductCard.tsx`, `MainNavigation.tsx`
+- **Components:** Match filename
+- **Props:** Interface with `Props` suffix - `ProductCardProps`
+- **Classes:** BEM style - `.product-card__title`, `.btn--primary`
+
+---
+
+📚 **Full Documentation:** `docs/EVERSHOP-MODULES-EXTENSIONS-WIDGETS-THEMES.md` § 5 (React Components & Area System)
+
+**Last Updated:** October 2025

@@ -1,0 +1,381 @@
+---
+description: Extension development patterns and workflow
+globs:
+  - "extensions/**/*"
+alwaysApply: false
+---
+
+# EverShop Extensions Quick Reference
+
+Essential patterns for building EverShop extensions. For full guide, see `docs/EVERSHOP-MODULES-EXTENSIONS-WIDGETS-THEMES.md`.
+
+---
+
+## Extension vs Core Module
+
+| Aspect          | Core Module           | Extension              |
+|-----------------|-----------------------|------------------------|
+| Location        | `node_modules/`       | `extensions/*/src/`    |
+| Editable        | ❌ No                 | ✅ Yes                 |
+| Lifecycle       | Always active         | Enable/disable via config |
+| Version Control | Platform              | Your repository        |
+
+---
+
+## Setup
+
+### 1. Workspace Config
+
+Add to root `package.json`:
+
+```json
+{
+  "workspaces": [
+    "extensions/*"
+  ]
+}
+```
+
+### 2. Extension Structure
+
+```
+extensions/my_feature/
+├── src/
+│   ├── api/              # REST endpoints
+│   ├── pages/            # SSR pages
+│   ├── services/         # Business logic
+│   ├── graphql/          # GraphQL (optional)
+│   ├── migration/        # Database changes
+│   └── bootstrap.ts      # Initialization
+├── package.json
+└── tsconfig.json
+```
+
+### 3. package.json
+
+```json
+{
+  "name": "my_feature",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "compile": "tsc && copyfiles -u 1 \"src/**/*.{graphql,scss,json}\" dist"
+  }
+}
+```
+
+### 4. Enable in Config
+
+```json
+// config/default.json
+{
+  "system": {
+    "extensions": [
+      {
+        "name": "my_feature",
+        "resolve": "extensions/my_feature",
+        "enabled": true,
+        "priority": 10
+      }
+    ]
+  }
+}
+```
+
+**Priority:** Lower number loads first (1 before 10)
+
+---
+
+## Naming Conventions
+
+✅ **Valid:**
+- `my_feature`
+- `vendor_payment`
+- `custom_shipping_v2`
+
+❌ **Invalid:**
+- `MyFeature` (no uppercase)
+- `my-feature` (no hyphens)
+- `my.feature` (no dots)
+
+**Recommendation:** Use `vendor_feature` prefix to avoid conflicts
+
+---
+
+## Widget Development
+
+### Create Widget Component
+
+```tsx
+// src/components/widgets/GreetingWidget.tsx
+export default function GreetingWidget({ 
+  greeting = 'Hello', 
+  name = 'World' 
+}: Props) {
+  return (
+    <div className="greeting-widget">
+      <h2>{greeting}, {name}!</h2>
+    </div>
+  );
+}
+```
+
+### Settings Component
+
+```tsx
+// src/components/widgets/GreetingWidgetSettings.tsx
+import { Field } from '@evershop/evershop/components/common/form/Field';
+import { Card } from '@evershop/evershop/components/admin/cms/Card';
+
+export default function GreetingWidgetSettings() {
+  return (
+    <Card title="Greeting Widget Settings">
+      <Card.Session>
+        <Field
+          type="text"
+          name="greeting"
+          label="Greeting Text"
+          validationRules={['notEmpty']}
+        />
+        <Field
+          type="text"
+          name="name"
+          label="Name"
+          validationRules={['notEmpty']}
+        />
+      </Card.Session>
+    </Card>
+  );
+}
+```
+
+### Register Widget
+
+```typescript
+// src/bootstrap.ts
+import { registerWidget } from '@evershop/evershop';
+import GreetingWidget from './components/widgets/GreetingWidget';
+import GreetingWidgetSettings from './components/widgets/GreetingWidgetSettings';
+
+export default function bootstrap() {
+  registerWidget({
+    name: 'GreetingWidget',
+    component: GreetingWidget,
+    settingsComponent: GreetingWidgetSettings,
+    description: 'Display customizable greeting',
+    previewImage: '/assets/greeting-preview.png' // Optional
+  });
+}
+```
+
+---
+
+## Extension Patterns
+
+### API Endpoint
+
+```typescript
+// src/api/customAction/handler.ts
+export default async function customAction(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> {
+  try {
+    const result = await performAction(req.body);
+    res.json({ success: true, result });
+  } catch (error) {
+    next(error);
+  }
+}
+```
+
+### Page Component
+
+```tsx
+// src/pages/frontStore/customPage/CustomPage.tsx
+export default function CustomPage({ data }: Props) {
+  return <div>{data.content}</div>;
+}
+
+export const layout = {
+  areaId: 'content',
+  sortOrder: 10
+};
+
+export const query = `
+  query {
+    customData {
+      content
+    }
+  }
+`;
+```
+
+### Service
+
+```typescript
+// src/services/CustomService.ts
+export class CustomService {
+  static async process(input: Input): Promise<Result> {
+    // Business logic
+    return result;
+  }
+}
+```
+
+### Migration
+
+```typescript
+// src/migration/Version_1.0.0.ts
+import { Pool } from 'pg';
+
+export async function up(pool: Pool): Promise<void> {
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS extension_table (
+      id SERIAL PRIMARY KEY,
+      data TEXT
+    );
+  `);
+}
+
+export async function down(pool: Pool): Promise<void> {
+  await pool.query(`DROP TABLE IF EXISTS extension_table CASCADE;`);
+}
+```
+
+---
+
+## Event System
+
+### Listen to Events
+
+```typescript
+// src/bootstrap.ts
+import { on } from '@evershop/evershop/lib/event';
+
+export default function bootstrap() {
+  on('product.created', async (data) => {
+    console.log('New product:', data.productId);
+    // Send notification, update cache, etc.
+  });
+  
+  on('order.placed', async (data) => {
+    console.log('Order placed:', data.orderId);
+    // Trigger fulfillment, send emails, etc.
+  });
+}
+```
+
+### Emit Custom Events
+
+```typescript
+import { emit } from '@evershop/evershop/lib/event';
+
+export async function customAction() {
+  // Perform action
+  
+  await emit('custom.action.completed', {
+    actionId: '123',
+    result: 'success'
+  });
+}
+```
+
+---
+
+## Publishing Extension
+
+### 1. Prepare
+
+```json
+// package.json
+{
+  "name": "@vendor/evershop-feature",
+  "version": "1.0.0",
+  "description": "Feature description",
+  "keywords": ["evershop", "extension"],
+  "author": "Your Name",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vendor/evershop-feature"
+  },
+  "peerDependencies": {
+    "@evershop/evershop": "^1.0.0"
+  }
+}
+```
+
+### 2. Add README.md
+
+```markdown
+# EverShop Feature
+
+Description of your extension.
+
+## Installation
+
+\`\`\`bash
+npm install @vendor/evershop-feature
+\`\`\`
+
+## Configuration
+
+Add to `config/default.json`:
+\`\`\`json
+{
+  "system": {
+    "extensions": [
+      {
+        "name": "feature",
+        "resolve": "node_modules/@vendor/evershop-feature",
+        "enabled": true
+      }
+    ]
+  }
+}
+\`\`\`
+```
+
+### 3. Publish
+
+```bash
+npm publish --access public
+```
+
+---
+
+## Best Practices
+
+✅ **DO:**
+- Keep extensions self-contained
+- Use semantic versioning
+- Provide clear documentation
+- Handle errors gracefully
+- Test extension isolation
+
+❌ **DON'T:**
+- Depend on other extensions
+- Modify core module files
+- Hardcode configuration values
+- Skip migration rollback (`down()`)
+- Publish without testing
+
+---
+
+## Development Workflow
+
+1. Create extension structure
+2. Develop features in `src/`
+3. Test locally
+4. Run `npm run compile`
+5. Enable in config
+6. Restart server
+7. Test in browser
+
+---
+
+📚 **Full Documentation:** `docs/EVERSHOP-MODULES-EXTENSIONS-WIDGETS-THEMES.md` § 3-4 (Extensions & Widgets)
+
+**Last Updated:** October 2025

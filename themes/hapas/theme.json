@@ -1,0 +1,260 @@
+{
+  "name": "Hapas Fashion Theme",
+  "version": "1.0.0",
+  "description": "Custom theme for Hapas E-commerce matching HAPAS.VN design",
+  "author": "Hapas Development Team",
+  "license": "MIT",
+  "evershop_version": ">=1.2.0",
+  
+  "theme_config": {
+    "brand": {
+      "name": "HAPAS",
+      "tagline": "Thời trang cao cấp",
+      "logo": {
+        "src": "/kias-logo-new.png",
+        "alt": "HAPAS E-commerce",
+        "width": 150,
+        "height": 50
+      },
+      "favicon": "/themes/hapas/assets/logo/favicon.ico"
+    },
+    
+    "colors": {
+      "primary": "#000000",
+      "secondary": "#ffffff", 
+      "accent": "#f5f5f5",
+      "text": {
+        "primary": "#000000",
+        "secondary": "#666666",
+        "muted": "#999999"
+      },
+      "background": {
+        "primary": "#ffffff",
+        "secondary": "#f9f9f9",
+        "accent": "#f5f5f5"
+      },
+      "border": "#e5e5e5"
+    },
+    
+    "typography": {
+      "font_families": {
+        "primary": "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+        "heading": "'Playfair Display', Georgia, serif",
+        "accent": "'Dancing Script', cursive"
+      },
+      "font_sizes": {
+        "xs": "0.75rem",
+        "sm": "0.875rem", 
+        "base": "1rem",
+        "lg": "1.125rem",
+        "xl": "1.25rem",
+        "2xl": "1.5rem",
+        "3xl": "1.875rem",
+        "4xl": "2.25rem"
+      },
+      "font_weights": {
+        "light": 300,
+        "normal": 400,
+        "medium": 500,
+        "semibold": 600,
+        "bold": 700
+      }
+    },
+    
+    "layout": {
+      "container": {
+        "max_width": "1200px",
+        "padding": "0 1rem"
+      },
+      "header": {
+        "height": "80px",
+        "sticky": true,
+        "background": "rgba(255, 255, 255, 0.95)",
+        "backdrop_blur": true
+      },
+      "footer": {
+        "background": "#000000",
+        "text_color": "#ffffff"
+      }
+    },
+    
+    "components": {
+      "buttons": {
+        "primary": {
+          "background": "#000000",
+          "color": "#ffffff",
+          "border_radius": "4px",
+          "padding": "12px 24px",
+          "font_weight": 500,
+          "transition": "all 0.2s ease"
+        },
+        "secondary": {
+          "background": "transparent",
+          "color": "#000000", 
+          "border": "1px solid #000000",
+          "border_radius": "4px",
+          "padding": "12px 24px",
+          "font_weight": 500
+        }
+      },
+      
+      "product_card": {
+        "background": "#ffffff",
+        "border": "1px solid #e5e5e5",
+        "border_radius": "8px",
+        "padding": "16px",
+        "hover_shadow": "0 4px 12px rgba(0, 0, 0, 0.1)",
+        "transition": "all 0.3s ease"
+      },
+      
+      "navigation": {
+        "menu_items": [
+          {
+            "label": "Trang chủ",
+            "url": "/",
+            "active": true
+          },
+          {
+            "label": "Set Bộ", 
+            "url": "/set-bo"
+          },
+          {
+            "label": "Váy & Đầm",
+            "url": "/vay-dam"
+          },
+          {
+            "label": "Quần",
+            "url": "/quan"
+          },
+          {
+            "label": "Áo",
+            "url": "/ao"
+          },
+          {
+            "label": "Về chúng tôi",
+            "url": "/about"
+          }
+        ]
+      }
+    },
+    
+    "homepage": {
+      "hero": {
+        "enabled": true,
+        "title": "HAPAS",
+        "subtitle": "Thời trang cao cấp cho phụ nữ hiện đại",
+        "background_image": "/themes/hapas/assets/images/hero-bg.jpg",
+        "cta_text": "Khám phá bộ sưu tập",
+        "cta_url": "/collections"
+      },
+      
+      "featured_categories": {
+        "enabled": true,
+        "title": "Danh mục sản phẩm",
+        "layout": "grid",
+        "columns": 4
+      },
+      
+      "featured_products": {
+        "enabled": true,
+        "title": "Sản phẩm nổi bật",
+        "limit": 8,
+        "layout": "grid",
+        "columns": 4
+      },
+      
+      "newsletter": {
+        "enabled": true,
+        "title": "Đăng ký nhận tin",
+        "subtitle": "Nhận thông tin về sản phẩm mới và ưu đãi đặc biệt",
+        "background": "#f9f9f9"
+      }
+    },
+    
+    "product_page": {
+      "image_gallery": {
+        "layout": "thumbnails_left",
+        "zoom": true,
+        "lightbox": true
+      },
+      "variants": {
+        "display_type": "dropdown",
+        "show_images": true
+      },
+      "related_products": {
+        "enabled": true,
+        "title": "Sản phẩm liên quan",
+        "limit": 4
+      }
+    },
+    
+    "category_page": {
+      "layout": "grid",
+      "products_per_page": 12,
+      "columns": {
+        "desktop": 4,
+        "tablet": 3,
+        "mobile": 2
+      },
+      "filters": {
+        "enabled": true,
+        "position": "sidebar",
+        "collapsible": true
+      },
+      "sorting": {
+        "enabled": true,
+        "options": [
+          "name_asc",
+          "name_desc", 
+          "price_asc",
+          "price_desc",
+          "created_desc"
+        ]
+      }
+    },
+    
+    "cart": {
+      "mini_cart": {
+        "enabled": true,
+        "position": "right",
+        "show_product_images": true
+      },
+      "cart_page": {
+        "show_product_images": true,
+        "show_product_options": true,
+        "enable_quantity_update": true
+      }
+    },
+    
+    "checkout": {
+      "layout": "single_page",
+      "guest_checkout": true,
+      "show_order_summary": true
+    },
+    
+    "responsive": {
+      "breakpoints": {
+        "sm": "640px",
+        "md": "768px", 
+        "lg": "1024px",
+        "xl": "1280px",
+        "2xl": "1536px"
+      }
+    },
+    
+    "performance": {
+      "lazy_loading": true,
+      "image_optimization": true,
+      "css_minification": true,
+      "js_minification": true
+    },
+    
+    "seo": {
+      "meta_title_template": "{product_name} - HAPAS",
+      "meta_description_template": "{product_description} - Thời trang cao cấp HAPAS",
+      "structured_data": true,
+      "open_graph": true,
+      "twitter_cards": true
+    }
+  }
+}

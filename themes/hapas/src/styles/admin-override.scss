@@ -1,0 +1,66 @@
+/* Admin Pages Logo Override - Senior Solution */
+
+/* High specificity override for admin login */
+#app .admin-login-form .flex.items-center.justify-center.mb-7 {
+  position: relative;
+  min-height: 80px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  
+  /* Completely hide SVG logo */
+  svg {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+  
+  /* Add custom logo with larger size */
+  &::before {
+    content: '';
+    display: block !important;
+    width: 200px !important;
+    height: 67px !important;
+    min-width: 200px !important;
+    min-height: 67px !important;
+    background-image: url('/kias-logo-new.png') !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    margin: 0 auto !important;
+    flex-shrink: 0 !important;
+    z-index: 10 !important;
+  }
+}
+
+/* Override for any img elements */
+#app .admin-login-form .flex.items-center.justify-center.mb-7 img {
+  width: 200px !important;
+  height: 67px !important;
+  min-width: 200px !important;
+  min-height: 67px !important;
+  object-fit: contain !important;
+  flex-shrink: 0 !important;
+  display: block !important;
+  margin: 0 auto !important;
+}
+
+/* Additional admin body override */
+body.admin #app .admin-login-form .flex.items-center.justify-center.mb-7 {
+  svg {
+    display: none !important;
+  }
+  
+  &::before {
+    content: '';
+    display: block !important;
+    width: 200px !important;
+    height: 67px !important;
+    background-image: url('/kias-logo-new.png') !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+  }
+}

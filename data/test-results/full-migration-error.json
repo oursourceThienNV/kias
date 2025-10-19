@@ -1,0 +1,7 @@
+{
+  "timestamp": "2025-09-22T09:38:39.198Z",
+  "testType": "full_migration",
+  "error": "Admin login failed: Invalid email or password",
+  "stack": "Error: Admin login failed: Invalid email or password\n    at KiasMigrator.loginAdmin (file:///D:/OutSource/hapas_ecommerce/scripts/migrate-kias-data.js:338:13)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async KiasMigrator.createEverShopCategories (file:///D:/OutSource/hapas_ecommerce/scripts/migrate-kias-data.js:261:5)\n    at async testFullMigration (file:///D:/OutSource/hapas_ecommerce/test-full-migration.js:31:5)",
+  "success": false
+}

@@ -1,0 +1,74 @@
+{
+  "name": "hapas-theme",
+  "version": "1.0.0",
+  "description": "HAPAS Fashion Theme for EverShop - Vietnamese E-commerce Experience",
+  "main": "src/index.js",
+  "author": "HAPAS Development Team",
+  "license": "MIT",
+  "keywords": [
+    "evershop",
+    "theme",
+    "hapas",
+    "vietnamese",
+    "fashion",
+    "ecommerce"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xingcorp/hapas_ecommerce.git"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "devDependencies": {
+    "@swc/cli": "^0.1.62",
+    "@swc/core": "^1.3.93",
+    "rimraf": "^6.0.1",
+    "sass": "^1.69.0"
+  },
+  "scripts": {
+    "build": "npm run build:clean && npm run build:compile && npm run build:scss",
+    "build:clean": "rimraf dist",
+    "build:compile": "swc src -d dist --copy-files",
+    "build:scss": "sass src/styles:dist/styles --no-source-map",
+    "dev": "npm run build",
+    "clean": "rimraf dist",
+    "lint": "echo 'Theme linting'",
+    "test": "echo 'Theme testing'"
+  },
+  "evershop": {
+    "version": ">=1.2.0",
+    "type": "theme",
+    "compatibility": {
+      "frontStore": true,
+      "admin": false
+    }
+  },
+  "theme": {
+    "name": "HAPAS Fashion Theme",
+    "description": "Premium Vietnamese fashion e-commerce theme matching HAPAS.VN design",
+    "version": "1.0.0",
+    "author": "HAPAS Development Team",
+    "preview": "/themes/hapas/public/images/theme-preview.jpg",
+    "features": [
+      "Vietnamese localization",
+      "Mobile-responsive design",
+      "HAPAS brand integration",
+      "Product catalog optimization",
+      "Professional typography",
+      "Minimalist aesthetic"
+    ],
+    "requirements": {
+      "evershop": ">=1.2.0",
+      "node": ">=16.0.0"
+    },
+    "support": {
+      "email": "support@hapas.vn",
+      "documentation": "https://github.com/xingcorp/hapas_ecommerce/blob/master/themes/hapas/README.md"
+    }
+  }
+}

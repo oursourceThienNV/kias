@@ -1,0 +1,15 @@
+
+> evershop@1.2.2 build
+> node ./packages/evershop/dist/bin/build/index.js
+
+[33m⚠️ [0m [33mwarn[0m: 
+[33mExtension hapas-homepage has resolve path undefined which does not exist. Skipping.[39m
+(node:28516) [DEP0187] DeprecationWarning: Passing invalid argument types to fs.existsSync is deprecated
+(Use `node --trace-deprecation ...` to show where the warning was created)
+[31m❌[0m [31merror[0m: 
+[31mInvalid configuration:[39m
+[31m/system/extensions/0 must have required property 'resolve'[39m
+[31mError: Invalid configuration:[39m
+[31m/system/extensions/0 must have required property 'resolve'[39m
+[31m    at validateConfiguration (file:///Volumes/DoanBHSST9/Outsource/hapas_ecommerce/packages/evershop/dist/lib/util/validateConfiguration.js:48:15)[39m
+[31m    at build (file:///Volumes/DoanBHSST9/Outsource/hapas_ecommerce/packages/evershop/dist/bin/build/index.js:54:9)[39m

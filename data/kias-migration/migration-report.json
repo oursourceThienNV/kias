@@ -1,0 +1,221 @@
+{
+  "migrationDate": "2025-09-22T09:52:59.631Z",
+  "stats": {
+    "totalProducts": 48,
+    "successfulImports": 18,
+    "failedImports": 30,
+    "categoriesCreated": 0
+  },
+  "errors": [
+    {
+      "type": "category_creation",
+      "category": "Set Bộ",
+      "error": "Request failed with status code 500",
+      "timestamp": "2025-09-22T09:52:21.135Z"
+    },
+    {
+      "type": "category_creation",
+      "category": "Váy & Đầm",
+      "error": "Request failed with status code 500",
+      "timestamp": "2025-09-22T09:52:21.253Z"
+    },
+    {
+      "type": "category_creation",
+      "category": "Quần",
+      "error": "Request failed with status code 500",
+      "timestamp": "2025-09-22T09:52:21.302Z"
+    },
+    {
+      "type": "category_creation",
+      "category": "Áo",
+      "error": "Request failed with status code 500",
+      "timestamp": "2025-09-22T09:52:21.370Z"
+    },
+    {
+      "type": "product_import",
+      "product": "[KIAS x HannahOlala] 𝐌𝐨𝐝𝐞𝐫𝐧 𝐀𝐮𝐭𝐡𝐨𝐫𝐢𝐭𝐲 – Bản lĩnh thăng hoa trong tinh hoa thời trang",
+      "error": "Exception in middleware createProduct: duplicate key value violates unique constraint \"PRODUCT_URL_KEY_UNIQUE\"",
+      "timestamp": "2025-09-22T09:52:21.409Z"
+    },
+    {
+      "type": "product_import",
+      "product": "[KIAS x HannahOlala] 𝐋𝐚𝐜𝐞 𝐆𝐫𝐚𝐜𝐞 – Thanh khiết, kiêu sa, vẹn tròn tinh tế",
+      "error": "Exception in middleware createProduct: duplicate key value violates unique constraint \"PRODUCT_URL_KEY_UNIQUE\"",
+      "timestamp": "2025-09-22T09:52:21.449Z"
+    },
+    {
+      "type": "product_import",
+      "product": "[KIAS x HannahOlala] 𝐄𝐥𝐢𝐭𝐞 𝐂𝐡𝐚𝐫𝐦 – Thanh tao nhưng đầy cuốn hút, hiện thân của nét đẹp quý phái",
+      "error": "Exception in middleware createProduct: duplicate key value violates unique constraint \"PRODUCT_URL_KEY_UNIQUE\"",
+      "timestamp": "2025-09-22T09:52:21.508Z"
+    },
+    {
+      "type": "product_import",
+      "product": "[KIAS x HannahOlala] 𝐋𝐚𝐜𝐞 𝐆𝐫𝐚𝐜𝐞 – Thanh khiết, kiêu sa, vẹn tròn tinh tế",
+      "error": "Exception in middleware createProduct: duplicate key value violates unique constraint \"PRODUCT_URL_KEY_UNIQUE\"",
+      "timestamp": "2025-09-22T09:52:31.859Z"
+    },
+    {
+      "type": "product_import",
+      "product": "Orchid Haze",
+      "error": "Exception in middleware createProduct: duplicate key value violates unique constraint \"PRODUCT_URL_KEY_UNIQUE\"",
+      "timestamp": "2025-09-22T09:52:35.985Z"
+    },
+    {
+      "type": "product_import",
+      "product": "[KIAS x HannahOlala] 𝐍𝐨𝐢𝐫 𝐄́𝐥𝐢𝐭𝐞 – Bí ẩn, quyền lực, chuẩn mực của sự tinh tế",
+      "error": "Exception in middleware createProduct: duplicate key value violates unique constraint \"PRODUCT_URL_KEY_UNIQUE\"",
+      "timestamp": "2025-09-22T09:52:36.016Z"
+    },
+    {
+      "type": "product_import",
+      "product": "[KIAS x HannahOlala] 𝐆𝐨𝐥𝐝𝐞𝐧 𝐆𝐫𝐚𝐜𝐞 – Duyên dáng vàng son, khẳng định vẻ đẹp sang trọng vượt thời gian",
+      "error": "Exception in middleware createProduct: duplicate key value violates unique constraint \"PRODUCT_URL_KEY_UNIQUE\"",
+      "timestamp": "2025-09-22T09:52:36.050Z"
+    },
+    {
+      "type": "product_import",
+      "product": "[KIAS x HannahOlala] 𝐄𝐥𝐢𝐭𝐞 𝐂𝐡𝐚𝐫𝐦 – Thanh tao nhưng đầy cuốn hút, hiện thân của nét đẹp quý phái",
+      "error": "Exception in middleware createProduct: duplicate key value violates unique constraint \"PRODUCT_URL_KEY_UNIQUE\"",
+      "timestamp": "2025-09-22T09:52:36.094Z"
+    },
+    {
+      "type": "product_import",
+      "product": "Elegant Flow – Phong cách thanh lịch hiện đại – L18",
+      "error": "Exception in middleware createProduct: duplicate key value violates unique constraint \"PRODUCT_URL_KEY_UNIQUE\"",
+      "timestamp": "2025-09-22T09:52:38.210Z"
+    },
+    {
+      "type": "product_import",
+      "product": "[KIAS x HannahOlala] 𝐆𝐨𝐥𝐝𝐞𝐧 𝐆𝐫𝐚𝐜𝐞 – Duyên dáng vàng son, khẳng định vẻ đẹp sang trọng vượt thời gian",
+      "error": "Exception in middleware createProduct: duplicate key value violates unique constraint \"PRODUCT_URL_KEY_UNIQUE\"",
+      "timestamp": "2025-09-22T09:52:40.285Z"
+    },
+    {
+      "type": "product_import",
+      "product": "[KIAS x HannahOlala] 𝐋𝐚𝐜𝐞 𝐆𝐫𝐚𝐜𝐞 – Thanh khiết, kiêu sa, vẹn tròn tinh tế",
+      "error": "Exception in middleware createProduct: duplicate key value violates unique constraint \"PRODUCT_URL_KEY_UNIQUE\"",
+      "timestamp": "2025-09-22T09:52:42.375Z"
+    },
+    {
+      "type": "product_import",
+      "product": "[KIAS x HannahOlala] 𝐌𝐨𝐝𝐞𝐫𝐧 𝐀𝐮𝐭𝐡𝐨𝐫𝐢𝐭𝐲 – Bản lĩnh thăng hoa trong tinh hoa thời trang",
+      "error": "Exception in middleware createProduct: duplicate key value violates unique constraint \"PRODUCT_URL_KEY_UNIQUE\"",
+      "timestamp": "2025-09-22T09:52:42.408Z"
+    },
+    {
+      "type": "product_import",
+      "product": "[KIAS x HannahOlala] 𝐄𝐥𝐢𝐭𝐞 𝐂𝐡𝐚𝐫𝐦 – Thanh tao nhưng đầy cuốn hút, hiện thân của nét đẹp quý phái",
+      "error": "Exception in middleware createProduct: duplicate key value violates unique constraint \"PRODUCT_URL_KEY_UNIQUE\"",
+      "timestamp": "2025-09-22T09:52:42.464Z"
+    },
+    {
+      "type": "product_import",
+      "product": "Summer Escape – Nét duyên dịu dàng",
+      "error": "Exception in middleware createProduct: duplicate key value violates unique constraint \"PRODUCT_URL_KEY_UNIQUE\"",
+      "timestamp": "2025-09-22T09:52:42.496Z"
+    },
+    {
+      "type": "product_import",
+      "product": "[KIAS x HannahOlala] 𝐋𝐚𝐜𝐞 𝐆𝐫𝐚𝐜𝐞 – Thanh khiết, kiêu sa, vẹn tròn tinh tế",
+      "error": "Exception in middleware createProduct: duplicate key value violates unique constraint \"PRODUCT_URL_KEY_UNIQUE\"",
+      "timestamp": "2025-09-22T09:52:42.538Z"
+    },
+    {
+      "type": "product_import",
+      "product": "[KIAS x HannahOlala] 𝐆𝐨𝐥𝐝𝐞𝐧 𝐆𝐫𝐚𝐜𝐞 – Duyên dáng vàng son, khẳng định vẻ đẹp sang trọng vượt thời gian",
+      "error": "Exception in middleware createProduct: duplicate key value violates unique constraint \"PRODUCT_URL_KEY_UNIQUE\"",
+      "timestamp": "2025-09-22T09:52:42.617Z"
+    },
+    {
+      "type": "product_import",
+      "product": "Aura Radiant Moments – Vẻ đẹp tự tin tỏa sáng mỗi ngày",
+      "error": "Exception in middleware createProduct: duplicate key value violates unique constraint \"PRODUCT_URL_KEY_UNIQUE\"",
+      "timestamp": "2025-09-22T09:52:42.684Z"
+    },
+    {
+      "type": "product_import",
+      "product": "Charm Petals – Áo vải Lụa Pháp – Chân váy vải Blend Ý",
+      "error": "Exception in middleware createProduct: duplicate key value violates unique constraint \"PRODUCT_URL_KEY_UNIQUE\"",
+      "timestamp": "2025-09-22T09:52:42.718Z"
+    },
+    {
+      "type": "product_import",
+      "product": "Elegant Flow – Phong cách thanh lịch hiện đại – L18",
+      "error": "Exception in middleware createProduct: duplicate key value violates unique constraint \"PRODUCT_URL_KEY_UNIQUE\"",
+      "timestamp": "2025-09-22T09:52:44.825Z"
+    },
+    {
+      "type": "product_import",
+      "product": "[KIAS x HannahOlala] 𝐋𝐚𝐜𝐞 𝐆𝐫𝐚𝐜𝐞 – Thanh khiết, kiêu sa, vẹn tròn tinh tế",
+      "error": "Exception in middleware createProduct: duplicate key value violates unique constraint \"PRODUCT_URL_KEY_UNIQUE\"",
+      "timestamp": "2025-09-22T09:52:48.966Z"
+    },
+    {
+      "type": "product_import",
+      "product": "Elegant Flow – Phong cách thanh lịch hiện đại – L18",
+      "error": "Exception in middleware createProduct: duplicate key value violates unique constraint \"PRODUCT_URL_KEY_UNIQUE\"",
+      "timestamp": "2025-09-22T09:52:49.022Z"
+    },
+    {
+      "type": "product_import",
+      "product": "Summer Escape – Nét duyên dịu dàng",
+      "error": "Exception in middleware createProduct: duplicate key value violates unique constraint \"PRODUCT_URL_KEY_UNIQUE\"",
+      "timestamp": "2025-09-22T09:52:53.162Z"
+    },
+    {
+      "type": "product_import",
+      "product": "[KIAS x HannahOlala] 𝐌𝐨𝐝𝐞𝐫𝐧 𝐀𝐮𝐭𝐡𝐨𝐫𝐢𝐭𝐲 – Bản lĩnh thăng hoa trong tinh hoa thời trang",
+      "error": "Exception in middleware createProduct: duplicate key value violates unique constraint \"PRODUCT_URL_KEY_UNIQUE\"",
+      "timestamp": "2025-09-22T09:52:59.337Z"
+    },
+    {
+      "type": "product_import",
+      "product": "[KIAS x HannahOlala] 𝐋𝐚𝐜𝐞 𝐆𝐫𝐚𝐜𝐞 – Thanh khiết, kiêu sa, vẹn tròn tinh tế",
+      "error": "Exception in middleware createProduct: duplicate key value violates unique constraint \"PRODUCT_URL_KEY_UNIQUE\"",
+      "timestamp": "2025-09-22T09:52:59.368Z"
+    },
+    {
+      "type": "product_import",
+      "product": "[KIAS x HannahOlala] 𝐄𝐥𝐢𝐭𝐞 𝐂𝐡𝐚𝐫𝐦 – Thanh tao nhưng đầy cuốn hút, hiện thân của nét đẹp quý phái",
+      "error": "Exception in middleware createProduct: duplicate key value violates unique constraint \"PRODUCT_URL_KEY_UNIQUE\"",
+      "timestamp": "2025-09-22T09:52:59.402Z"
+    },
+    {
+      "type": "product_import",
+      "product": "[KIAS x HannahOlala] 𝐆𝐨𝐥𝐝𝐞𝐧 𝐆𝐫𝐚𝐜𝐞 – Duyên dáng vàng son, khẳng định vẻ đẹp sang trọng vượt thời gian",
+      "error": "Exception in middleware createProduct: duplicate key value violates unique constraint \"PRODUCT_URL_KEY_UNIQUE\"",
+      "timestamp": "2025-09-22T09:52:59.438Z"
+    },
+    {
+      "type": "product_import",
+      "product": "[KIAS x HannahOlala] 𝐋𝐮𝐦𝐢𝐧𝐚 𝐆𝐫𝐞𝐲 – Sắc xám tỏa sáng, thanh lịch trong từng đường cắt",
+      "error": "Exception in middleware createProduct: duplicate key value violates unique constraint \"PRODUCT_URL_KEY_UNIQUE\"",
+      "timestamp": "2025-09-22T09:52:59.470Z"
+    },
+    {
+      "type": "product_import",
+      "product": "[KIAS x HannahOlala] 𝐍𝐨𝐢𝐫 𝐄́𝐥𝐢𝐭𝐞 – Bí ẩn, quyền lực, chuẩn mực của sự tinh tế",
+      "error": "Exception in middleware createProduct: duplicate key value violates unique constraint \"PRODUCT_URL_KEY_UNIQUE\"",
+      "timestamp": "2025-09-22T09:52:59.540Z"
+    },
+    {
+      "type": "product_import",
+      "product": "Orchid Haze",
+      "error": "Exception in middleware createProduct: duplicate key value violates unique constraint \"PRODUCT_URL_KEY_UNIQUE\"",
+      "timestamp": "2025-09-22T09:52:59.575Z"
+    },
+    {
+      "type": "product_import",
+      "product": "Blossom Blend – Bloom in Your Own Way",
+      "error": "Exception in middleware createProduct: duplicate key value violates unique constraint \"PRODUCT_URL_KEY_UNIQUE\"",
+      "timestamp": "2025-09-22T09:52:59.630Z"
+    }
+  ],
+  "summary": {
+    "totalProductsFound": 48,
+    "successRate": "37.50%",
+    "categoriesCreated": 0,
+    "errorsCount": 34
+  }
+}

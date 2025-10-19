@@ -1,0 +1,1094 @@
+{
+  "extractedAt": "2025-09-22T09:52:20.736Z",
+  "stats": {
+    "totalProducts": 48,
+    "successfulImports": 0,
+    "failedImports": 0,
+    "categoriesCreated": 0
+  },
+  "categories": [
+    {
+      "name": "Set Bộ",
+      "slug": "set-bo",
+      "url": "/",
+      "expectedCount": 14
+    },
+    {
+      "name": "Váy & Đầm",
+      "slug": "vay-dam",
+      "url": "/",
+      "expectedCount": 22
+    },
+    {
+      "name": "Quần",
+      "slug": "quan",
+      "url": "/",
+      "expectedCount": 5
+    },
+    {
+      "name": "Áo",
+      "slug": "ao",
+      "url": "/",
+      "expectedCount": 12
+    }
+  ],
+  "products": [
+    {
+      "name": "[KIAS x HannahOlala] 𝐌𝐨𝐝𝐞𝐫𝐧 𝐀𝐮𝐭𝐡𝐨𝐫𝐢𝐭𝐲 – Bản lĩnh thăng hoa trong tinh hoa thời trang",
+      "slug": "kias-x-hannaholala-bn-lnh-thng-hoa-trong-tinh-hoa-thi-trang",
+      "price": 2650000,
+      "originalPrice": null,
+      "category": "Set Bộ",
+      "categorySlug": "set-bo",
+      "productUrl": "https://kias.vn/san-pham/kias-x-hannaholala-%f0%9d%90%8c%f0%9d%90%a8%f0%9d%90%9d%f0%9d%90%9e%f0%9d%90%ab%f0%9d%90%a7-%f0%9d%90%80%f0%9d%90%ae%f0%9d%90%ad%f0%9d%90%a1%f0%9d%90%a8%f0%9d%90%ab%f0%9d%90%a2%f0%9d%90%ad/",
+      "images": [],
+      "isOnSale": false,
+      "rating": 0,
+      "description": "[KIAS x HannahOlala] 𝐌𝐨𝐝𝐞𝐫𝐧 𝐀𝐮𝐭𝐡𝐨𝐫𝐢𝐭𝐲 – Bản lĩnh thăng hoa trong tinh hoa thời trang",
+      "attributes": {
+        "material": "Vải cao cấp",
+        "origin": "Vietnam",
+        "care": "Giặt tay, không tẩy"
+      },
+      "seo": {
+        "metaTitle": "[KIAS x HannahOlala] 𝐌𝐨𝐝𝐞𝐫𝐧 𝐀𝐮𝐭𝐡𝐨𝐫𝐢𝐭𝐲 – Bản lĩnh thăng hoa trong tinh hoa thời trang - Set Bộ - KIAS",
+        "metaDescription": "[KIAS x HannahOlala] 𝐌𝐨𝐝𝐞𝐫𝐧 𝐀𝐮𝐭𝐡𝐨𝐫𝐢𝐭𝐲 – Bản lĩnh thăng hoa trong tinh hoa thời trang"
+      }
+    },
+    {
+      "name": "[KIAS x HannahOlala] 𝐋𝐚𝐜𝐞 𝐆𝐫𝐚𝐜𝐞 – Thanh khiết, kiêu sa, vẹn tròn tinh tế",
+      "slug": "kias-x-hannaholala-thanh-khit-kiu-sa-vn-trn-tinh-t",
+      "price": 850000,
+      "originalPrice": 1900000,
+      "category": "Set Bộ",
+      "categorySlug": "set-bo",
+      "productUrl": "https://kias.vn/san-pham/kias-x-hannaholala-%f0%9d%90%8b%f0%9d%90%9a%f0%9d%90%9c%f0%9d%90%9e-%f0%9d%90%86%f0%9d%90%ab%f0%9d%90%9a%f0%9d%90%9c%f0%9d%90%9e-thanh-khiet-kieu-sa-ven-tron-tinh-te/",
+      "images": [],
+      "isOnSale": false,
+      "rating": 0,
+      "description": "[KIAS x HannahOlala] 𝐋𝐚𝐜𝐞 𝐆𝐫𝐚𝐜𝐞 – Thanh khiết, kiêu sa, vẹn tròn tinh tế",
+      "attributes": {
+        "material": "Vải cao cấp",
+        "origin": "Vietnam",
+        "care": "Giặt tay, không tẩy"
+      },
+      "seo": {
+        "metaTitle": "[KIAS x HannahOlala] 𝐋𝐚𝐜𝐞 𝐆𝐫𝐚𝐜𝐞 – Thanh khiết, kiêu sa, vẹn tròn tinh tế - Set Bộ - KIAS",
+        "metaDescription": "[KIAS x HannahOlala] 𝐋𝐚𝐜𝐞 𝐆𝐫𝐚𝐜𝐞 – Thanh khiết, kiêu sa, vẹn tròn tinh tế"
+      }
+    },
+    {
+      "name": "[KIAS x HannahOlala] 𝐄𝐥𝐢𝐭𝐞 𝐂𝐡𝐚𝐫𝐦 – Thanh tao nhưng đầy cuốn hút, hiện thân của nét đẹp quý phái",
+      "slug": "kias-x-hannaholala-thanh-tao-nhng-y-cun-ht-hin-thn-ca-nt-p-qu-phi",
+      "price": 2450000,
+      "originalPrice": null,
+      "category": "Set Bộ",
+      "categorySlug": "set-bo",
+      "productUrl": "https://kias.vn/san-pham/kias-x-hannaholala-%f0%9d%90%84%f0%9d%90%a5%f0%9d%90%a2%f0%9d%90%ad%f0%9d%90%9e-%f0%9d%90%82%f0%9d%90%a1%f0%9d%90%9a%f0%9d%90%ab%f0%9d%90%a6-thanh-tao-nhung-day-cuon-hut-hien-than-cua-net-dep-quy/",
+      "images": [],
+      "isOnSale": false,
+      "rating": 0,
+      "description": "[KIAS x HannahOlala] 𝐄𝐥𝐢𝐭𝐞 𝐂𝐡𝐚𝐫𝐦 – Thanh tao nhưng đầy cuốn hút, hiện thân của nét đẹp quý phái",
+      "attributes": {
+        "material": "Vải cao cấp",
+        "origin": "Vietnam",
+        "care": "Giặt tay, không tẩy"
+      },
+      "seo": {
+        "metaTitle": "[KIAS x HannahOlala] 𝐄𝐥𝐢𝐭𝐞 𝐂𝐡𝐚𝐫𝐦 – Thanh tao nhưng đầy cuốn hút, hiện thân của nét đẹp quý phái - Set Bộ - KIAS",
+        "metaDescription": "[KIAS x HannahOlala] 𝐄𝐥𝐢𝐭𝐞 𝐂𝐡𝐚𝐫𝐦 – Thanh tao nhưng đầy cuốn hút, hiện thân của nét đẹp quý phái"
+      }
+    },
+    {
+      "name": "[KIAS x HannahOlala] 𝐆𝐨𝐥𝐝𝐞𝐧 𝐆𝐫𝐚𝐜𝐞 – Duyên dáng vàng son, khẳng định vẻ đẹp sang trọng vượt thời gian",
+      "slug": "kias-x-hannaholala-duyn-dng-vng-son-khng-nh-v-p-sang-trng-vt-thi-gian",
+      "price": 2450000,
+      "originalPrice": null,
+      "category": "Set Bộ",
+      "categorySlug": "set-bo",
+      "productUrl": "https://kias.vn/san-pham/kias-x-hannaholala-%f0%9d%90%86%f0%9d%90%a8%f0%9d%90%a5%f0%9d%90%9d%f0%9d%90%9e%f0%9d%90%a7-%f0%9d%90%86%f0%9d%90%ab%f0%9d%90%9a%f0%9d%90%9c%f0%9d%90%9e-duyen-dang-vang-son-khang-dinh-ve-dep-sang/",
+      "images": [],
+      "isOnSale": false,
+      "rating": 0,
+      "description": "[KIAS x HannahOlala] 𝐆𝐨𝐥𝐝𝐞𝐧 𝐆𝐫𝐚𝐜𝐞 – Duyên dáng vàng son, khẳng định vẻ đẹp sang trọng vượt thời gian",
+      "attributes": {
+        "material": "Vải cao cấp",
+        "origin": "Vietnam",
+        "care": "Giặt tay, không tẩy"
+      },
+      "seo": {
+        "metaTitle": "[KIAS x HannahOlala] 𝐆𝐨𝐥𝐝𝐞𝐧 𝐆𝐫𝐚𝐜𝐞 – Duyên dáng vàng son, khẳng định vẻ đẹp sang trọng vượt thời gian - Set Bộ - KIAS",
+        "metaDescription": "[KIAS x HannahOlala] 𝐆𝐨𝐥𝐝𝐞𝐧 𝐆𝐫𝐚𝐜𝐞 – Duyên dáng vàng son, khẳng định vẻ đẹp sang trọng vượt thời gian"
+      }
+    },
+    {
+      "name": "[KIAS x HannahOlala] 𝐋𝐮𝐦𝐢𝐧𝐚 𝐆𝐫𝐞𝐲 – Sắc xám tỏa sáng, thanh lịch trong từng đường cắt",
+      "slug": "kias-x-hannaholala-sc-xm-ta-sng-thanh-lch-trong-tng-ng-ct",
+      "price": 2780000,
+      "originalPrice": null,
+      "category": "Set Bộ",
+      "categorySlug": "set-bo",
+      "productUrl": "https://kias.vn/san-pham/kias-x-hannaholala-%f0%9d%90%8b%f0%9d%90%ae%f0%9d%90%a6%f0%9d%90%a2%f0%9d%90%a7%f0%9d%90%9a-%f0%9d%90%86%f0%9d%90%ab%f0%9d%90%9e%f0%9d%90%b2-sac-xam-toa-sang-thanh-lich-trong-tung-duong-cat/",
+      "images": [],
+      "isOnSale": false,
+      "rating": 0,
+      "description": "[KIAS x HannahOlala] 𝐋𝐮𝐦𝐢𝐧𝐚 𝐆𝐫𝐞𝐲 – Sắc xám tỏa sáng, thanh lịch trong từng đường cắt",
+      "attributes": {
+        "material": "Vải cao cấp",
+        "origin": "Vietnam",
+        "care": "Giặt tay, không tẩy"
+      },
+      "seo": {
+        "metaTitle": "[KIAS x HannahOlala] 𝐋𝐮𝐦𝐢𝐧𝐚 𝐆𝐫𝐞𝐲 – Sắc xám tỏa sáng, thanh lịch trong từng đường cắt - Set Bộ - KIAS",
+        "metaDescription": "[KIAS x HannahOlala] 𝐋𝐮𝐦𝐢𝐧𝐚 𝐆𝐫𝐞𝐲 – Sắc xám tỏa sáng, thanh lịch trong từng đường cắt"
+      }
+    },
+    {
+      "name": "[KIAS x HannahOlala] 𝐍𝐨𝐢𝐫 𝐄́𝐥𝐢𝐭𝐞 – Bí ẩn, quyền lực, chuẩn mực của sự tinh tế",
+      "slug": "kias-x-hannaholala-b-n-quyn-lc-chun-mc-ca-s-tinh-t",
+      "price": 2400000,
+      "originalPrice": null,
+      "category": "Set Bộ",
+      "categorySlug": "set-bo",
+      "productUrl": "https://kias.vn/san-pham/kias-x-hannaholala-%f0%9d%90%8d%f0%9d%90%a8%f0%9d%90%a2%f0%9d%90%ab-%f0%9d%90%84%f0%9d%90%a5%f0%9d%90%a2%f0%9d%90%ad%f0%9d%90%9e-bi-an-quyen-luc-chuan-muc-cua-su-tinh-te/",
+      "images": [],
+      "isOnSale": false,
+      "rating": 0,
+      "description": "[KIAS x HannahOlala] 𝐍𝐨𝐢𝐫 𝐄́𝐥𝐢𝐭𝐞 – Bí ẩn, quyền lực, chuẩn mực của sự tinh tế",
+      "attributes": {
+        "material": "Vải cao cấp",
+        "origin": "Vietnam",
+        "care": "Giặt tay, không tẩy"
+      },
+      "seo": {
+        "metaTitle": "[KIAS x HannahOlala] 𝐍𝐨𝐢𝐫 𝐄́𝐥𝐢𝐭𝐞 – Bí ẩn, quyền lực, chuẩn mực của sự tinh tế - Set Bộ - KIAS",
+        "metaDescription": "[KIAS x HannahOlala] 𝐍𝐨𝐢𝐫 𝐄́𝐥𝐢𝐭𝐞 – Bí ẩn, quyền lực, chuẩn mực của sự tinh tế"
+      }
+    },
+    {
+      "name": "Orchid Haze",
+      "slug": "orchid-haze",
+      "price": 660000,
+      "originalPrice": 1100000,
+      "category": "Set Bộ",
+      "categorySlug": "set-bo",
+      "productUrl": "https://kias.vn/san-pham/orchid-haze/",
+      "images": [],
+      "isOnSale": false,
+      "rating": 0,
+      "description": "Orchid Haze",
+      "attributes": {
+        "material": "Vải cao cấp",
+        "origin": "Vietnam",
+        "care": "Giặt tay, không tẩy"
+      },
+      "seo": {
+        "metaTitle": "Orchid Haze - Set Bộ - KIAS",
+        "metaDescription": "Orchid Haze"
+      }
+    },
+    {
+      "name": "Blossom Blend – Bloom in Your Own Way",
+      "slug": "blossom-blend-bloom-in-your-own-way",
+      "price": 690000,
+      "originalPrice": 1100000,
+      "category": "Set Bộ",
+      "categorySlug": "set-bo",
+      "productUrl": "https://kias.vn/san-pham/blossom-blend-bloom-in-your-own-way/",
+      "images": [],
+      "isOnSale": false,
+      "rating": 0,
+      "description": "Blossom Blend – Bloom in Your Own Way",
+      "attributes": {
+        "material": "Vải cao cấp",
+        "origin": "Vietnam",
+        "care": "Giặt tay, không tẩy"
+      },
+      "seo": {
+        "metaTitle": "Blossom Blend – Bloom in Your Own Way - Set Bộ - KIAS",
+        "metaDescription": "Blossom Blend – Bloom in Your Own Way"
+      }
+    },
+    {
+      "name": "[KIAS x HannahOlala] 𝐋𝐚𝐜𝐞 𝐆𝐫𝐚𝐜𝐞 – Thanh khiết, kiêu sa, vẹn tròn tinh tế",
+      "slug": "kias-x-hannaholala-thanh-khit-kiu-sa-vn-trn-tinh-t",
+      "price": 850000,
+      "originalPrice": 1900000,
+      "category": "Set Bộ",
+      "categorySlug": "set-bo",
+      "productUrl": "https://kias.vn/san-pham/kias-x-hannaholala-%f0%9d%90%8b%f0%9d%90%9a%f0%9d%90%9c%f0%9d%90%9e-%f0%9d%90%86%f0%9d%90%ab%f0%9d%90%9a%f0%9d%90%9c%f0%9d%90%9e-thanh-khiet-kieu-sa-ven-tron-tinh-te/",
+      "images": [],
+      "isOnSale": false,
+      "rating": 0,
+      "description": "[KIAS x HannahOlala] 𝐋𝐚𝐜𝐞 𝐆𝐫𝐚𝐜𝐞 – Thanh khiết, kiêu sa, vẹn tròn tinh tế",
+      "attributes": {
+        "material": "Vải cao cấp",
+        "origin": "Vietnam",
+        "care": "Giặt tay, không tẩy"
+      },
+      "seo": {
+        "metaTitle": "[KIAS x HannahOlala] 𝐋𝐚𝐜𝐞 𝐆𝐫𝐚𝐜𝐞 – Thanh khiết, kiêu sa, vẹn tròn tinh tế - Set Bộ - KIAS",
+        "metaDescription": "[KIAS x HannahOlala] 𝐋𝐚𝐜𝐞 𝐆𝐫𝐚𝐜𝐞 – Thanh khiết, kiêu sa, vẹn tròn tinh tế"
+      }
+    },
+    {
+      "name": "Elegant Flow – Phong cách thanh lịch hiện đại – L18",
+      "slug": "elegant-flow-phong-cch-thanh-lch-hin-i-l18",
+      "price": 1450000,
+      "originalPrice": null,
+      "category": "Set Bộ",
+      "categorySlug": "set-bo",
+      "productUrl": "https://kias.vn/san-pham/elegant-flow-phong-cach-thanh-lich-hien-dai-l18/",
+      "images": [],
+      "isOnSale": false,
+      "rating": 0,
+      "description": "Elegant Flow – Phong cách thanh lịch hiện đại – L18",
+      "attributes": {
+        "material": "Vải cao cấp",
+        "origin": "Vietnam",
+        "care": "Giặt tay, không tẩy"
+      },
+      "seo": {
+        "metaTitle": "Elegant Flow – Phong cách thanh lịch hiện đại – L18 - Set Bộ - KIAS",
+        "metaDescription": "Elegant Flow – Phong cách thanh lịch hiện đại – L18"
+      }
+    },
+    {
+      "name": "Summer Escape – Nét duyên dịu dàng",
+      "slug": "summer-escape-nt-duyn-du-dng",
+      "price": 1700000,
+      "originalPrice": 1275000,
+      "category": "Set Bộ",
+      "categorySlug": "set-bo",
+      "productUrl": "https://kias.vn/san-pham/summer-escape-net-duyen-diu-dang/",
+      "images": [],
+      "isOnSale": false,
+      "rating": 0,
+      "description": "Summer Escape – Nét duyên dịu dàng",
+      "attributes": {
+        "material": "Vải cao cấp",
+        "origin": "Vietnam",
+        "care": "Giặt tay, không tẩy"
+      },
+      "seo": {
+        "metaTitle": "Summer Escape – Nét duyên dịu dàng - Set Bộ - KIAS",
+        "metaDescription": "Summer Escape – Nét duyên dịu dàng"
+      }
+    },
+    {
+      "name": "Orchid Haze",
+      "slug": "orchid-haze",
+      "price": 660000,
+      "originalPrice": 1100000,
+      "category": "Set Bộ",
+      "categorySlug": "set-bo",
+      "productUrl": "https://kias.vn/san-pham/orchid-haze/",
+      "images": [],
+      "isOnSale": false,
+      "rating": 0,
+      "description": "Orchid Haze",
+      "attributes": {
+        "material": "Vải cao cấp",
+        "origin": "Vietnam",
+        "care": "Giặt tay, không tẩy"
+      },
+      "seo": {
+        "metaTitle": "Orchid Haze - Set Bộ - KIAS",
+        "metaDescription": "Orchid Haze"
+      }
+    },
+    {
+      "name": "[KIAS x HannahOlala] 𝐍𝐨𝐢𝐫 𝐄́𝐥𝐢𝐭𝐞 – Bí ẩn, quyền lực, chuẩn mực của sự tinh tế",
+      "slug": "kias-x-hannaholala-b-n-quyn-lc-chun-mc-ca-s-tinh-t",
+      "price": 2400000,
+      "originalPrice": null,
+      "category": "Set Bộ",
+      "categorySlug": "set-bo",
+      "productUrl": "https://kias.vn/san-pham/kias-x-hannaholala-%f0%9d%90%8d%f0%9d%90%a8%f0%9d%90%a2%f0%9d%90%ab-%f0%9d%90%84%f0%9d%90%a5%f0%9d%90%a2%f0%9d%90%ad%f0%9d%90%9e-bi-an-quyen-luc-chuan-muc-cua-su-tinh-te/",
+      "images": [],
+      "isOnSale": false,
+      "rating": 0,
+      "description": "[KIAS x HannahOlala] 𝐍𝐨𝐢𝐫 𝐄́𝐥𝐢𝐭𝐞 – Bí ẩn, quyền lực, chuẩn mực của sự tinh tế",
+      "attributes": {
+        "material": "Vải cao cấp",
+        "origin": "Vietnam",
+        "care": "Giặt tay, không tẩy"
+      },
+      "seo": {
+        "metaTitle": "[KIAS x HannahOlala] 𝐍𝐨𝐢𝐫 𝐄́𝐥𝐢𝐭𝐞 – Bí ẩn, quyền lực, chuẩn mực của sự tinh tế - Set Bộ - KIAS",
+        "metaDescription": "[KIAS x HannahOlala] 𝐍𝐨𝐢𝐫 𝐄́𝐥𝐢𝐭𝐞 – Bí ẩn, quyền lực, chuẩn mực của sự tinh tế"
+      }
+    },
+    {
+      "name": "[KIAS x HannahOlala] 𝐆𝐨𝐥𝐝𝐞𝐧 𝐆𝐫𝐚𝐜𝐞 – Duyên dáng vàng son, khẳng định vẻ đẹp sang trọng vượt thời gian",
+      "slug": "kias-x-hannaholala-duyn-dng-vng-son-khng-nh-v-p-sang-trng-vt-thi-gian",
+      "price": 2450000,
+      "originalPrice": null,
+      "category": "Set Bộ",
+      "categorySlug": "set-bo",
+      "productUrl": "https://kias.vn/san-pham/kias-x-hannaholala-%f0%9d%90%86%f0%9d%90%a8%f0%9d%90%a5%f0%9d%90%9d%f0%9d%90%9e%f0%9d%90%a7-%f0%9d%90%86%f0%9d%90%ab%f0%9d%90%9a%f0%9d%90%9c%f0%9d%90%9e-duyen-dang-vang-son-khang-dinh-ve-dep-sang/",
+      "images": [],
+      "isOnSale": false,
+      "rating": 0,
+      "description": "[KIAS x HannahOlala] 𝐆𝐨𝐥𝐝𝐞𝐧 𝐆𝐫𝐚𝐜𝐞 – Duyên dáng vàng son, khẳng định vẻ đẹp sang trọng vượt thời gian",
+      "attributes": {
+        "material": "Vải cao cấp",
+        "origin": "Vietnam",
+        "care": "Giặt tay, không tẩy"
+      },
+      "seo": {
+        "metaTitle": "[KIAS x HannahOlala] 𝐆𝐨𝐥𝐝𝐞𝐧 𝐆𝐫𝐚𝐜𝐞 – Duyên dáng vàng son, khẳng định vẻ đẹp sang trọng vượt thời gian - Set Bộ - KIAS",
+        "metaDescription": "[KIAS x HannahOlala] 𝐆𝐨𝐥𝐝𝐞𝐧 𝐆𝐫𝐚𝐜𝐞 – Duyên dáng vàng son, khẳng định vẻ đẹp sang trọng vượt thời gian"
+      }
+    },
+    {
+      "name": "[KIAS x HannahOlala] 𝐄𝐥𝐢𝐭𝐞 𝐂𝐡𝐚𝐫𝐦 – Thanh tao nhưng đầy cuốn hút, hiện thân của nét đẹp quý phái",
+      "slug": "kias-x-hannaholala-thanh-tao-nhng-y-cun-ht-hin-thn-ca-nt-p-qu-phi",
+      "price": 2450000,
+      "originalPrice": null,
+      "category": "Set Bộ",
+      "categorySlug": "set-bo",
+      "productUrl": "https://kias.vn/san-pham/kias-x-hannaholala-%f0%9d%90%84%f0%9d%90%a5%f0%9d%90%a2%f0%9d%90%ad%f0%9d%90%9e-%f0%9d%90%82%f0%9d%90%a1%f0%9d%90%9a%f0%9d%90%ab%f0%9d%90%a6-thanh-tao-nhung-day-cuon-hut-hien-than-cua-net-dep-quy/",
+      "images": [],
+      "isOnSale": false,
+      "rating": 0,
+      "description": "[KIAS x HannahOlala] 𝐄𝐥𝐢𝐭𝐞 𝐂𝐡𝐚𝐫𝐦 – Thanh tao nhưng đầy cuốn hút, hiện thân của nét đẹp quý phái",
+      "attributes": {
+        "material": "Vải cao cấp",
+        "origin": "Vietnam",
+        "care": "Giặt tay, không tẩy"
+      },
+      "seo": {
+        "metaTitle": "[KIAS x HannahOlala] 𝐄𝐥𝐢𝐭𝐞 𝐂𝐡𝐚𝐫𝐦 – Thanh tao nhưng đầy cuốn hút, hiện thân của nét đẹp quý phái - Set Bộ - KIAS",
+        "metaDescription": "[KIAS x HannahOlala] 𝐄𝐥𝐢𝐭𝐞 𝐂𝐡𝐚𝐫𝐦 – Thanh tao nhưng đầy cuốn hút, hiện thân của nét đẹp quý phái"
+      }
+    },
+    {
+      "name": "Set Áo Tay Dài + Quần Short Xanh Lá Pastel – H1",
+      "slug": "set-o-tay-di-qun-short-xanh-l-pastel-h1",
+      "price": 1250000,
+      "originalPrice": 938000,
+      "category": "Set Bộ",
+      "categorySlug": "set-bo",
+      "productUrl": "https://kias.vn/san-pham/set-ao-tay-dai-quan-short-xanh-la-pastel-h1/",
+      "images": [],
+      "isOnSale": false,
+      "rating": 0,
+      "description": "Set Áo Tay Dài + Quần Short Xanh Lá Pastel – H1",
+      "attributes": {
+        "material": "Vải cao cấp",
+        "origin": "Vietnam",
+        "care": "Giặt tay, không tẩy"
+      },
+      "seo": {
+        "metaTitle": "Set Áo Tay Dài + Quần Short Xanh Lá Pastel – H1 - Set Bộ - KIAS",
+        "metaDescription": "Set Áo Tay Dài + Quần Short Xanh Lá Pastel – H1"
+      }
+    },
+    {
+      "name": "Elegant Flow – Phong cách thanh lịch hiện đại – L18",
+      "slug": "elegant-flow-phong-cch-thanh-lch-hin-i-l18",
+      "price": 1450000,
+      "originalPrice": null,
+      "category": "Set Bộ",
+      "categorySlug": "set-bo",
+      "productUrl": "https://kias.vn/san-pham/elegant-flow-phong-cach-thanh-lich-hien-dai-l18/",
+      "images": [],
+      "isOnSale": false,
+      "rating": 0,
+      "description": "Elegant Flow – Phong cách thanh lịch hiện đại – L18",
+      "attributes": {
+        "material": "Vải cao cấp",
+        "origin": "Vietnam",
+        "care": "Giặt tay, không tẩy"
+      },
+      "seo": {
+        "metaTitle": "Elegant Flow – Phong cách thanh lịch hiện đại – L18 - Set Bộ - KIAS",
+        "metaDescription": "Elegant Flow – Phong cách thanh lịch hiện đại – L18"
+      }
+    },
+    {
+      "name": "Charm Petals – Áo vải Lụa Pháp – Chân váy vải Blend Ý",
+      "slug": "charm-petals-o-vi-la-php-chn-vy-vi-blend-",
+      "price": 650000,
+      "originalPrice": 1250000,
+      "category": "Set Bộ",
+      "categorySlug": "set-bo",
+      "productUrl": "https://kias.vn/san-pham/ao-vai-lua-phap-chan-vay-vai-blend-y/",
+      "images": [],
+      "isOnSale": false,
+      "rating": 0,
+      "description": "Charm Petals – Áo vải Lụa Pháp – Chân váy vải Blend Ý",
+      "attributes": {
+        "material": "Vải cao cấp",
+        "origin": "Vietnam",
+        "care": "Giặt tay, không tẩy"
+      },
+      "seo": {
+        "metaTitle": "Charm Petals – Áo vải Lụa Pháp – Chân váy vải Blend Ý - Set Bộ - KIAS",
+        "metaDescription": "Charm Petals – Áo vải Lụa Pháp – Chân váy vải Blend Ý"
+      }
+    },
+    {
+      "name": "[KIAS x HannahOlala] 𝐆𝐨𝐥𝐝𝐞𝐧 𝐆𝐫𝐚𝐜𝐞 – Duyên dáng vàng son, khẳng định vẻ đẹp sang trọng vượt thời gian",
+      "slug": "kias-x-hannaholala-duyn-dng-vng-son-khng-nh-v-p-sang-trng-vt-thi-gian",
+      "price": 2450000,
+      "originalPrice": null,
+      "category": "Set Bộ",
+      "categorySlug": "set-bo",
+      "productUrl": "https://kias.vn/san-pham/kias-x-hannaholala-%f0%9d%90%86%f0%9d%90%a8%f0%9d%90%a5%f0%9d%90%9d%f0%9d%90%9e%f0%9d%90%a7-%f0%9d%90%86%f0%9d%90%ab%f0%9d%90%9a%f0%9d%90%9c%f0%9d%90%9e-duyen-dang-vang-son-khang-dinh-ve-dep-sang/",
+      "images": [],
+      "isOnSale": false,
+      "rating": 0,
+      "description": "[KIAS x HannahOlala] 𝐆𝐨𝐥𝐝𝐞𝐧 𝐆𝐫𝐚𝐜𝐞 – Duyên dáng vàng son, khẳng định vẻ đẹp sang trọng vượt thời gian",
+      "attributes": {
+        "material": "Vải cao cấp",
+        "origin": "Vietnam",
+        "care": "Giặt tay, không tẩy"
+      },
+      "seo": {
+        "metaTitle": "[KIAS x HannahOlala] 𝐆𝐨𝐥𝐝𝐞𝐧 𝐆𝐫𝐚𝐜𝐞 – Duyên dáng vàng son, khẳng định vẻ đẹp sang trọng vượt thời gian - Set Bộ - KIAS",
+        "metaDescription": "[KIAS x HannahOlala] 𝐆𝐨𝐥𝐝𝐞𝐧 𝐆𝐫𝐚𝐜𝐞 – Duyên dáng vàng son, khẳng định vẻ đẹp sang trọng vượt thời gian"
+      }
+    },
+    {
+      "name": "Aura Radiant Moments – Vẻ đẹp tự tin tỏa sáng mỗi ngày",
+      "slug": "aura-radiant-moments-v-p-t-tin-ta-sng-mi-ngy",
+      "price": 580000,
+      "originalPrice": 1100000,
+      "category": "Set Bộ",
+      "categorySlug": "set-bo",
+      "productUrl": "https://kias.vn/san-pham/aura-radiant-moments-ve-dep-tu-tin-toa-sang-moi-ngay/",
+      "images": [],
+      "isOnSale": false,
+      "rating": 0,
+      "description": "Aura Radiant Moments – Vẻ đẹp tự tin tỏa sáng mỗi ngày",
+      "attributes": {
+        "material": "Vải cao cấp",
+        "origin": "Vietnam",
+        "care": "Giặt tay, không tẩy"
+      },
+      "seo": {
+        "metaTitle": "Aura Radiant Moments – Vẻ đẹp tự tin tỏa sáng mỗi ngày - Set Bộ - KIAS",
+        "metaDescription": "Aura Radiant Moments – Vẻ đẹp tự tin tỏa sáng mỗi ngày"
+      }
+    },
+    {
+      "name": "[KIAS x HannahOlala] 𝐋𝐚𝐜𝐞 𝐆𝐫𝐚𝐜𝐞 – Thanh khiết, kiêu sa, vẹn tròn tinh tế",
+      "slug": "kias-x-hannaholala-thanh-khit-kiu-sa-vn-trn-tinh-t",
+      "price": 850000,
+      "originalPrice": 1900000,
+      "category": "Set Bộ",
+      "categorySlug": "set-bo",
+      "productUrl": "https://kias.vn/san-pham/kias-x-hannaholala-%f0%9d%90%8b%f0%9d%90%9a%f0%9d%90%9c%f0%9d%90%9e-%f0%9d%90%86%f0%9d%90%ab%f0%9d%90%9a%f0%9d%90%9c%f0%9d%90%9e-thanh-khiet-kieu-sa-ven-tron-tinh-te/",
+      "images": [],
+      "isOnSale": false,
+      "rating": 0,
+      "description": "[KIAS x HannahOlala] 𝐋𝐚𝐜𝐞 𝐆𝐫𝐚𝐜𝐞 – Thanh khiết, kiêu sa, vẹn tròn tinh tế",
+      "attributes": {
+        "material": "Vải cao cấp",
+        "origin": "Vietnam",
+        "care": "Giặt tay, không tẩy"
+      },
+      "seo": {
+        "metaTitle": "[KIAS x HannahOlala] 𝐋𝐚𝐜𝐞 𝐆𝐫𝐚𝐜𝐞 – Thanh khiết, kiêu sa, vẹn tròn tinh tế - Set Bộ - KIAS",
+        "metaDescription": "[KIAS x HannahOlala] 𝐋𝐚𝐜𝐞 𝐆𝐫𝐚𝐜𝐞 – Thanh khiết, kiêu sa, vẹn tròn tinh tế"
+      }
+    },
+    {
+      "name": "[KIAS x HannahOlala] 𝐌𝐨𝐝𝐞𝐫𝐧 𝐀𝐮𝐭𝐡𝐨𝐫𝐢𝐭𝐲 – Bản lĩnh thăng hoa trong tinh hoa thời trang",
+      "slug": "kias-x-hannaholala-bn-lnh-thng-hoa-trong-tinh-hoa-thi-trang",
+      "price": 2650000,
+      "originalPrice": null,
+      "category": "Set Bộ",
+      "categorySlug": "set-bo",
+      "productUrl": "https://kias.vn/san-pham/kias-x-hannaholala-%f0%9d%90%8c%f0%9d%90%a8%f0%9d%90%9d%f0%9d%90%9e%f0%9d%90%ab%f0%9d%90%a7-%f0%9d%90%80%f0%9d%90%ae%f0%9d%90%ad%f0%9d%90%a1%f0%9d%90%a8%f0%9d%90%ab%f0%9d%90%a2%f0%9d%90%ad/",
+      "images": [],
+      "isOnSale": false,
+      "rating": 0,
+      "description": "[KIAS x HannahOlala] 𝐌𝐨𝐝𝐞𝐫𝐧 𝐀𝐮𝐭𝐡𝐨𝐫𝐢𝐭𝐲 – Bản lĩnh thăng hoa trong tinh hoa thời trang",
+      "attributes": {
+        "material": "Vải cao cấp",
+        "origin": "Vietnam",
+        "care": "Giặt tay, không tẩy"
+      },
+      "seo": {
+        "metaTitle": "[KIAS x HannahOlala] 𝐌𝐨𝐝𝐞𝐫𝐧 𝐀𝐮𝐭𝐡𝐨𝐫𝐢𝐭𝐲 – Bản lĩnh thăng hoa trong tinh hoa thời trang - Set Bộ - KIAS",
+        "metaDescription": "[KIAS x HannahOlala] 𝐌𝐨𝐝𝐞𝐫𝐧 𝐀𝐮𝐭𝐡𝐨𝐫𝐢𝐭𝐲 – Bản lĩnh thăng hoa trong tinh hoa thời trang"
+      }
+    },
+    {
+      "name": "[KIAS x HannahOlala] 𝐄𝐥𝐢𝐭𝐞 𝐂𝐡𝐚𝐫𝐦 – Thanh tao nhưng đầy cuốn hút, hiện thân của nét đẹp quý phái",
+      "slug": "kias-x-hannaholala-thanh-tao-nhng-y-cun-ht-hin-thn-ca-nt-p-qu-phi",
+      "price": 2450000,
+      "originalPrice": null,
+      "category": "Set Bộ",
+      "categorySlug": "set-bo",
+      "productUrl": "https://kias.vn/san-pham/kias-x-hannaholala-%f0%9d%90%84%f0%9d%90%a5%f0%9d%90%a2%f0%9d%90%ad%f0%9d%90%9e-%f0%9d%90%82%f0%9d%90%a1%f0%9d%90%9a%f0%9d%90%ab%f0%9d%90%a6-thanh-tao-nhung-day-cuon-hut-hien-than-cua-net-dep-quy/",
+      "images": [],
+      "isOnSale": false,
+      "rating": 0,
+      "description": "[KIAS x HannahOlala] 𝐄𝐥𝐢𝐭𝐞 𝐂𝐡𝐚𝐫𝐦 – Thanh tao nhưng đầy cuốn hút, hiện thân của nét đẹp quý phái",
+      "attributes": {
+        "material": "Vải cao cấp",
+        "origin": "Vietnam",
+        "care": "Giặt tay, không tẩy"
+      },
+      "seo": {
+        "metaTitle": "[KIAS x HannahOlala] 𝐄𝐥𝐢𝐭𝐞 𝐂𝐡𝐚𝐫𝐦 – Thanh tao nhưng đầy cuốn hút, hiện thân của nét đẹp quý phái - Set Bộ - KIAS",
+        "metaDescription": "[KIAS x HannahOlala] 𝐄𝐥𝐢𝐭𝐞 𝐂𝐡𝐚𝐫𝐦 – Thanh tao nhưng đầy cuốn hút, hiện thân của nét đẹp quý phái"
+      }
+    },
+    {
+      "name": "Summer Escape – Nét duyên dịu dàng",
+      "slug": "summer-escape-nt-duyn-du-dng",
+      "price": 1700000,
+      "originalPrice": 1275000,
+      "category": "Set Bộ",
+      "categorySlug": "set-bo",
+      "productUrl": "https://kias.vn/san-pham/summer-escape-net-duyen-diu-dang/",
+      "images": [],
+      "isOnSale": false,
+      "rating": 0,
+      "description": "Summer Escape – Nét duyên dịu dàng",
+      "attributes": {
+        "material": "Vải cao cấp",
+        "origin": "Vietnam",
+        "care": "Giặt tay, không tẩy"
+      },
+      "seo": {
+        "metaTitle": "Summer Escape – Nét duyên dịu dàng - Set Bộ - KIAS",
+        "metaDescription": "Summer Escape – Nét duyên dịu dàng"
+      }
+    },
+    {
+      "name": "[KIAS x HannahOlala] 𝐋𝐚𝐜𝐞 𝐆𝐫𝐚𝐜𝐞 – Thanh khiết, kiêu sa, vẹn tròn tinh tế",
+      "slug": "kias-x-hannaholala-thanh-khit-kiu-sa-vn-trn-tinh-t",
+      "price": 850000,
+      "originalPrice": 1900000,
+      "category": "Váy & Đầm",
+      "categorySlug": "vay-dam",
+      "productUrl": "https://kias.vn/san-pham/kias-x-hannaholala-%f0%9d%90%8b%f0%9d%90%9a%f0%9d%90%9c%f0%9d%90%9e-%f0%9d%90%86%f0%9d%90%ab%f0%9d%90%9a%f0%9d%90%9c%f0%9d%90%9e-thanh-khiet-kieu-sa-ven-tron-tinh-te/",
+      "images": [],
+      "isOnSale": false,
+      "rating": 0,
+      "description": "[KIAS x HannahOlala] 𝐋𝐚𝐜𝐞 𝐆𝐫𝐚𝐜𝐞 – Thanh khiết, kiêu sa, vẹn tròn tinh tế",
+      "attributes": {
+        "material": "Vải cao cấp",
+        "origin": "Vietnam",
+        "care": "Giặt tay, không tẩy"
+      },
+      "seo": {
+        "metaTitle": "[KIAS x HannahOlala] 𝐋𝐚𝐜𝐞 𝐆𝐫𝐚𝐜𝐞 – Thanh khiết, kiêu sa, vẹn tròn tinh tế - Váy & Đầm - KIAS",
+        "metaDescription": "[KIAS x HannahOlala] 𝐋𝐚𝐜𝐞 𝐆𝐫𝐚𝐜𝐞 – Thanh khiết, kiêu sa, vẹn tròn tinh tế"
+      }
+    },
+    {
+      "name": "[KIAS x HannahOlala] 𝐆𝐨𝐥𝐝𝐞𝐧 𝐆𝐫𝐚𝐜𝐞 – Duyên dáng vàng son, khẳng định vẻ đẹp sang trọng vượt thời gian",
+      "slug": "kias-x-hannaholala-duyn-dng-vng-son-khng-nh-v-p-sang-trng-vt-thi-gian",
+      "price": 2450000,
+      "originalPrice": null,
+      "category": "Váy & Đầm",
+      "categorySlug": "vay-dam",
+      "productUrl": "https://kias.vn/san-pham/kias-x-hannaholala-%f0%9d%90%86%f0%9d%90%a8%f0%9d%90%a5%f0%9d%90%9d%f0%9d%90%9e%f0%9d%90%a7-%f0%9d%90%86%f0%9d%90%ab%f0%9d%90%9a%f0%9d%90%9c%f0%9d%90%9e-duyen-dang-vang-son-khang-dinh-ve-dep-sang/",
+      "images": [],
+      "isOnSale": false,
+      "rating": 0,
+      "description": "[KIAS x HannahOlala] 𝐆𝐨𝐥𝐝𝐞𝐧 𝐆𝐫𝐚𝐜𝐞 – Duyên dáng vàng son, khẳng định vẻ đẹp sang trọng vượt thời gian",
+      "attributes": {
+        "material": "Vải cao cấp",
+        "origin": "Vietnam",
+        "care": "Giặt tay, không tẩy"
+      },
+      "seo": {
+        "metaTitle": "[KIAS x HannahOlala] 𝐆𝐨𝐥𝐝𝐞𝐧 𝐆𝐫𝐚𝐜𝐞 – Duyên dáng vàng son, khẳng định vẻ đẹp sang trọng vượt thời gian - Váy & Đầm - KIAS",
+        "metaDescription": "[KIAS x HannahOlala] 𝐆𝐨𝐥𝐝𝐞𝐧 𝐆𝐫𝐚𝐜𝐞 – Duyên dáng vàng son, khẳng định vẻ đẹp sang trọng vượt thời gian"
+      }
+    },
+    {
+      "name": "Aura Radiant Moments – Vẻ đẹp tự tin tỏa sáng mỗi ngày",
+      "slug": "aura-radiant-moments-v-p-t-tin-ta-sng-mi-ngy",
+      "price": 580000,
+      "originalPrice": 1100000,
+      "category": "Váy & Đầm",
+      "categorySlug": "vay-dam",
+      "productUrl": "https://kias.vn/san-pham/aura-radiant-moments-ve-dep-tu-tin-toa-sang-moi-ngay/",
+      "images": [],
+      "isOnSale": false,
+      "rating": 0,
+      "description": "Aura Radiant Moments – Vẻ đẹp tự tin tỏa sáng mỗi ngày",
+      "attributes": {
+        "material": "Vải cao cấp",
+        "origin": "Vietnam",
+        "care": "Giặt tay, không tẩy"
+      },
+      "seo": {
+        "metaTitle": "Aura Radiant Moments – Vẻ đẹp tự tin tỏa sáng mỗi ngày - Váy & Đầm - KIAS",
+        "metaDescription": "Aura Radiant Moments – Vẻ đẹp tự tin tỏa sáng mỗi ngày"
+      }
+    },
+    {
+      "name": "Charm Petals – Áo vải Lụa Pháp – Chân váy vải Blend Ý",
+      "slug": "charm-petals-o-vi-la-php-chn-vy-vi-blend-",
+      "price": 650000,
+      "originalPrice": 1250000,
+      "category": "Váy & Đầm",
+      "categorySlug": "vay-dam",
+      "productUrl": "https://kias.vn/san-pham/ao-vai-lua-phap-chan-vay-vai-blend-y/",
+      "images": [],
+      "isOnSale": false,
+      "rating": 0,
+      "description": "Charm Petals – Áo vải Lụa Pháp – Chân váy vải Blend Ý",
+      "attributes": {
+        "material": "Vải cao cấp",
+        "origin": "Vietnam",
+        "care": "Giặt tay, không tẩy"
+      },
+      "seo": {
+        "metaTitle": "Charm Petals – Áo vải Lụa Pháp – Chân váy vải Blend Ý - Váy & Đầm - KIAS",
+        "metaDescription": "Charm Petals – Áo vải Lụa Pháp – Chân váy vải Blend Ý"
+      }
+    },
+    {
+      "name": "Blend kim cương Ý",
+      "slug": "blend-kim-cng-",
+      "price": 1550000,
+      "originalPrice": null,
+      "category": "Váy & Đầm",
+      "categorySlug": "vay-dam",
+      "productUrl": "https://kias.vn/san-pham/blend-kim-cuong-y/",
+      "images": [],
+      "isOnSale": false,
+      "rating": 0,
+      "description": "Blend kim cương Ý",
+      "attributes": {
+        "material": "Vải cao cấp",
+        "origin": "Vietnam",
+        "care": "Giặt tay, không tẩy"
+      },
+      "seo": {
+        "metaTitle": "Blend kim cương Ý - Váy & Đầm - KIAS",
+        "metaDescription": "Blend kim cương Ý"
+      }
+    },
+    {
+      "name": "Elegant Flow – Phong cách thanh lịch hiện đại – L18",
+      "slug": "elegant-flow-phong-cch-thanh-lch-hin-i-l18",
+      "price": 1450000,
+      "originalPrice": null,
+      "category": "Váy & Đầm",
+      "categorySlug": "vay-dam",
+      "productUrl": "https://kias.vn/san-pham/elegant-flow-phong-cach-thanh-lich-hien-dai-l18/",
+      "images": [],
+      "isOnSale": false,
+      "rating": 0,
+      "description": "Elegant Flow – Phong cách thanh lịch hiện đại – L18",
+      "attributes": {
+        "material": "Vải cao cấp",
+        "origin": "Vietnam",
+        "care": "Giặt tay, không tẩy"
+      },
+      "seo": {
+        "metaTitle": "Elegant Flow – Phong cách thanh lịch hiện đại – L18 - Váy & Đầm - KIAS",
+        "metaDescription": "Elegant Flow – Phong cách thanh lịch hiện đại – L18"
+      }
+    },
+    {
+      "name": "Váy Wrapdress – Vẻ đẹp của sự tinh tế và quyền lực – L17",
+      "slug": "vy-wrapdress-v-p-ca-s-tinh-t-v-quyn-lc-l17",
+      "price": 1250000,
+      "originalPrice": null,
+      "category": "Váy & Đầm",
+      "categorySlug": "vay-dam",
+      "productUrl": "https://kias.vn/san-pham/vay-wrapdress-ve-dep-cua-su-tinh-te-va-quyen-luc-l17/",
+      "images": [],
+      "isOnSale": false,
+      "rating": 0,
+      "description": "Váy Wrapdress – Vẻ đẹp của sự tinh tế và quyền lực – L17",
+      "attributes": {
+        "material": "Vải cao cấp",
+        "origin": "Vietnam",
+        "care": "Giặt tay, không tẩy"
+      },
+      "seo": {
+        "metaTitle": "Váy Wrapdress – Vẻ đẹp của sự tinh tế và quyền lực – L17 - Váy & Đầm - KIAS",
+        "metaDescription": "Váy Wrapdress – Vẻ đẹp của sự tinh tế và quyền lực – L17"
+      }
+    },
+    {
+      "name": "váy Wrap họa tiết Paisley – L16",
+      "slug": "vy-wrap-ha-tit-paisley-l16",
+      "price": 1450000,
+      "originalPrice": null,
+      "category": "Váy & Đầm",
+      "categorySlug": "vay-dam",
+      "productUrl": "https://kias.vn/san-pham/vay-wrap-hoa-tiet-paisley-l16/",
+      "images": [],
+      "isOnSale": false,
+      "rating": 0,
+      "description": "váy Wrap họa tiết Paisley – L16",
+      "attributes": {
+        "material": "Vải cao cấp",
+        "origin": "Vietnam",
+        "care": "Giặt tay, không tẩy"
+      },
+      "seo": {
+        "metaTitle": "váy Wrap họa tiết Paisley – L16 - Váy & Đầm - KIAS",
+        "metaDescription": "váy Wrap họa tiết Paisley – L16"
+      }
+    },
+    {
+      "name": "[KIAS x HannahOlala] 𝐋𝐚𝐜𝐞 𝐆𝐫𝐚𝐜𝐞 – Thanh khiết, kiêu sa, vẹn tròn tinh tế",
+      "slug": "kias-x-hannaholala-thanh-khit-kiu-sa-vn-trn-tinh-t",
+      "price": 850000,
+      "originalPrice": 1900000,
+      "category": "Váy & Đầm",
+      "categorySlug": "vay-dam",
+      "productUrl": "https://kias.vn/san-pham/kias-x-hannaholala-%f0%9d%90%8b%f0%9d%90%9a%f0%9d%90%9c%f0%9d%90%9e-%f0%9d%90%86%f0%9d%90%ab%f0%9d%90%9a%f0%9d%90%9c%f0%9d%90%9e-thanh-khiet-kieu-sa-ven-tron-tinh-te/",
+      "images": [],
+      "isOnSale": false,
+      "rating": 0,
+      "description": "[KIAS x HannahOlala] 𝐋𝐚𝐜𝐞 𝐆𝐫𝐚𝐜𝐞 – Thanh khiết, kiêu sa, vẹn tròn tinh tế",
+      "attributes": {
+        "material": "Vải cao cấp",
+        "origin": "Vietnam",
+        "care": "Giặt tay, không tẩy"
+      },
+      "seo": {
+        "metaTitle": "[KIAS x HannahOlala] 𝐋𝐚𝐜𝐞 𝐆𝐫𝐚𝐜𝐞 – Thanh khiết, kiêu sa, vẹn tròn tinh tế - Váy & Đầm - KIAS",
+        "metaDescription": "[KIAS x HannahOlala] 𝐋𝐚𝐜𝐞 𝐆𝐫𝐚𝐜𝐞 – Thanh khiết, kiêu sa, vẹn tròn tinh tế"
+      }
+    },
+    {
+      "name": "Elegant Flow – Phong cách thanh lịch hiện đại – L18",
+      "slug": "elegant-flow-phong-cch-thanh-lch-hin-i-l18",
+      "price": 1450000,
+      "originalPrice": null,
+      "category": "Váy & Đầm",
+      "categorySlug": "vay-dam",
+      "productUrl": "https://kias.vn/san-pham/elegant-flow-phong-cach-thanh-lich-hien-dai-l18/",
+      "images": [],
+      "isOnSale": false,
+      "rating": 0,
+      "description": "Elegant Flow – Phong cách thanh lịch hiện đại – L18",
+      "attributes": {
+        "material": "Vải cao cấp",
+        "origin": "Vietnam",
+        "care": "Giặt tay, không tẩy"
+      },
+      "seo": {
+        "metaTitle": "Elegant Flow – Phong cách thanh lịch hiện đại – L18 - Váy & Đầm - KIAS",
+        "metaDescription": "Elegant Flow – Phong cách thanh lịch hiện đại – L18"
+      }
+    },
+    {
+      "name": "Vải Lụa Pháp cao cấp",
+      "slug": "vi-la-php-cao-cp",
+      "price": 1650000,
+      "originalPrice": 1200000,
+      "category": "Váy & Đầm",
+      "categorySlug": "vay-dam",
+      "productUrl": "https://kias.vn/san-pham/vai-lua-phap-cao-cap/",
+      "images": [],
+      "isOnSale": false,
+      "rating": 0,
+      "description": "Vải Lụa Pháp cao cấp",
+      "attributes": {
+        "material": "Vải cao cấp",
+        "origin": "Vietnam",
+        "care": "Giặt tay, không tẩy"
+      },
+      "seo": {
+        "metaTitle": "Vải Lụa Pháp cao cấp - Váy & Đầm - KIAS",
+        "metaDescription": "Vải Lụa Pháp cao cấp"
+      }
+    },
+    {
+      "name": "Vải Đũi Tơ cao cấp mềm mại – L2",
+      "slug": "vi-i-t-cao-cp-mm-mi-l2",
+      "price": 1500000,
+      "originalPrice": 1125000,
+      "category": "Váy & Đầm",
+      "categorySlug": "vay-dam",
+      "productUrl": "https://kias.vn/san-pham/vai-dui-to-cao-cap-mem-mai-l2/",
+      "images": [],
+      "isOnSale": false,
+      "rating": 5,
+      "description": "Vải Đũi Tơ cao cấp mềm mại – L2",
+      "attributes": {
+        "material": "Vải cao cấp",
+        "origin": "Vietnam",
+        "care": "Giặt tay, không tẩy"
+      },
+      "seo": {
+        "metaTitle": "Vải Đũi Tơ cao cấp mềm mại – L2 - Váy & Đầm - KIAS",
+        "metaDescription": "Vải Đũi Tơ cao cấp mềm mại – L2"
+      }
+    },
+    {
+      "name": "Summer Escape – Nét duyên dịu dàng",
+      "slug": "summer-escape-nt-duyn-du-dng",
+      "price": 1700000,
+      "originalPrice": 1275000,
+      "category": "Váy & Đầm",
+      "categorySlug": "vay-dam",
+      "productUrl": "https://kias.vn/san-pham/summer-escape-net-duyen-diu-dang/",
+      "images": [],
+      "isOnSale": false,
+      "rating": 0,
+      "description": "Summer Escape – Nét duyên dịu dàng",
+      "attributes": {
+        "material": "Vải cao cấp",
+        "origin": "Vietnam",
+        "care": "Giặt tay, không tẩy"
+      },
+      "seo": {
+        "metaTitle": "Summer Escape – Nét duyên dịu dàng - Váy & Đầm - KIAS",
+        "metaDescription": "Summer Escape – Nét duyên dịu dàng"
+      }
+    },
+    {
+      "name": "La Rose – Lụa silk Ý – L13",
+      "slug": "la-rose-la-silk-l13",
+      "price": 1350000,
+      "originalPrice": null,
+      "category": "Váy & Đầm",
+      "categorySlug": "vay-dam",
+      "productUrl": "https://kias.vn/san-pham/la-rose-lua-silk-y-l13/",
+      "images": [],
+      "isOnSale": false,
+      "rating": 0,
+      "description": "La Rose – Lụa silk Ý – L13",
+      "attributes": {
+        "material": "Vải cao cấp",
+        "origin": "Vietnam",
+        "care": "Giặt tay, không tẩy"
+      },
+      "seo": {
+        "metaTitle": "La Rose – Lụa silk Ý – L13 - Váy & Đầm - KIAS",
+        "metaDescription": "La Rose – Lụa silk Ý – L13"
+      }
+    },
+    {
+      "name": "Soft Blush – Voan tơ ý – L12",
+      "slug": "soft-blush-voan-t-l12",
+      "price": 1250000,
+      "originalPrice": 850000,
+      "category": "Váy & Đầm",
+      "categorySlug": "vay-dam",
+      "productUrl": "https://kias.vn/san-pham/soft-blush-voan-to-y-l12/",
+      "images": [],
+      "isOnSale": false,
+      "rating": 0,
+      "description": "Soft Blush – Voan tơ ý – L12",
+      "attributes": {
+        "material": "Vải cao cấp",
+        "origin": "Vietnam",
+        "care": "Giặt tay, không tẩy"
+      },
+      "seo": {
+        "metaTitle": "Soft Blush – Voan tơ ý – L12 - Váy & Đầm - KIAS",
+        "metaDescription": "Soft Blush – Voan tơ ý – L12"
+      }
+    },
+    {
+      "name": "Đầm vest Navy tôn dáng – L20",
+      "slug": "m-vest-navy-tn-dng-l20",
+      "price": 2250000,
+      "originalPrice": 1550000,
+      "category": "Váy & Đầm",
+      "categorySlug": "vay-dam",
+      "productUrl": "https://kias.vn/san-pham/dam-vest-navy-ton-dang-l20/",
+      "images": [],
+      "isOnSale": false,
+      "rating": 0,
+      "description": "Đầm vest Navy tôn dáng – L20",
+      "attributes": {
+        "material": "Vải cao cấp",
+        "origin": "Vietnam",
+        "care": "Giặt tay, không tẩy"
+      },
+      "seo": {
+        "metaTitle": "Đầm vest Navy tôn dáng – L20 - Váy & Đầm - KIAS",
+        "metaDescription": "Đầm vest Navy tôn dáng – L20"
+      }
+    },
+    {
+      "name": "[KIAS x HannahOlala] 𝐌𝐨𝐝𝐞𝐫𝐧 𝐀𝐮𝐭𝐡𝐨𝐫𝐢𝐭𝐲 – Bản lĩnh thăng hoa trong tinh hoa thời trang",
+      "slug": "kias-x-hannaholala-bn-lnh-thng-hoa-trong-tinh-hoa-thi-trang",
+      "price": 2650000,
+      "originalPrice": null,
+      "category": "Váy & Đầm",
+      "categorySlug": "vay-dam",
+      "productUrl": "https://kias.vn/san-pham/kias-x-hannaholala-%f0%9d%90%8c%f0%9d%90%a8%f0%9d%90%9d%f0%9d%90%9e%f0%9d%90%ab%f0%9d%90%a7-%f0%9d%90%80%f0%9d%90%ae%f0%9d%90%ad%f0%9d%90%a1%f0%9d%90%a8%f0%9d%90%ab%f0%9d%90%a2%f0%9d%90%ad/",
+      "images": [],
+      "isOnSale": false,
+      "rating": 0,
+      "description": "[KIAS x HannahOlala] 𝐌𝐨𝐝𝐞𝐫𝐧 𝐀𝐮𝐭𝐡𝐨𝐫𝐢𝐭𝐲 – Bản lĩnh thăng hoa trong tinh hoa thời trang",
+      "attributes": {
+        "material": "Vải cao cấp",
+        "origin": "Vietnam",
+        "care": "Giặt tay, không tẩy"
+      },
+      "seo": {
+        "metaTitle": "[KIAS x HannahOlala] 𝐌𝐨𝐝𝐞𝐫𝐧 𝐀𝐮𝐭𝐡𝐨𝐫𝐢𝐭𝐲 – Bản lĩnh thăng hoa trong tinh hoa thời trang - Váy & Đầm - KIAS",
+        "metaDescription": "[KIAS x HannahOlala] 𝐌𝐨𝐝𝐞𝐫𝐧 𝐀𝐮𝐭𝐡𝐨𝐫𝐢𝐭𝐲 – Bản lĩnh thăng hoa trong tinh hoa thời trang"
+      }
+    },
+    {
+      "name": "[KIAS x HannahOlala] 𝐋𝐚𝐜𝐞 𝐆𝐫𝐚𝐜𝐞 – Thanh khiết, kiêu sa, vẹn tròn tinh tế",
+      "slug": "kias-x-hannaholala-thanh-khit-kiu-sa-vn-trn-tinh-t",
+      "price": 850000,
+      "originalPrice": 1900000,
+      "category": "Váy & Đầm",
+      "categorySlug": "vay-dam",
+      "productUrl": "https://kias.vn/san-pham/kias-x-hannaholala-%f0%9d%90%8b%f0%9d%90%9a%f0%9d%90%9c%f0%9d%90%9e-%f0%9d%90%86%f0%9d%90%ab%f0%9d%90%9a%f0%9d%90%9c%f0%9d%90%9e-thanh-khiet-kieu-sa-ven-tron-tinh-te/",
+      "images": [],
+      "isOnSale": false,
+      "rating": 0,
+      "description": "[KIAS x HannahOlala] 𝐋𝐚𝐜𝐞 𝐆𝐫𝐚𝐜𝐞 – Thanh khiết, kiêu sa, vẹn tròn tinh tế",
+      "attributes": {
+        "material": "Vải cao cấp",
+        "origin": "Vietnam",
+        "care": "Giặt tay, không tẩy"
+      },
+      "seo": {
+        "metaTitle": "[KIAS x HannahOlala] 𝐋𝐚𝐜𝐞 𝐆𝐫𝐚𝐜𝐞 – Thanh khiết, kiêu sa, vẹn tròn tinh tế - Váy & Đầm - KIAS",
+        "metaDescription": "[KIAS x HannahOlala] 𝐋𝐚𝐜𝐞 𝐆𝐫𝐚𝐜𝐞 – Thanh khiết, kiêu sa, vẹn tròn tinh tế"
+      }
+    },
+    {
+      "name": "[KIAS x HannahOlala] 𝐄𝐥𝐢𝐭𝐞 𝐂𝐡𝐚𝐫𝐦 – Thanh tao nhưng đầy cuốn hút, hiện thân của nét đẹp quý phái",
+      "slug": "kias-x-hannaholala-thanh-tao-nhng-y-cun-ht-hin-thn-ca-nt-p-qu-phi",
+      "price": 2450000,
+      "originalPrice": null,
+      "category": "Váy & Đầm",
+      "categorySlug": "vay-dam",
+      "productUrl": "https://kias.vn/san-pham/kias-x-hannaholala-%f0%9d%90%84%f0%9d%90%a5%f0%9d%90%a2%f0%9d%90%ad%f0%9d%90%9e-%f0%9d%90%82%f0%9d%90%a1%f0%9d%90%9a%f0%9d%90%ab%f0%9d%90%a6-thanh-tao-nhung-day-cuon-hut-hien-than-cua-net-dep-quy/",
+      "images": [],
+      "isOnSale": false,
+      "rating": 0,
+      "description": "[KIAS x HannahOlala] 𝐄𝐥𝐢𝐭𝐞 𝐂𝐡𝐚𝐫𝐦 – Thanh tao nhưng đầy cuốn hút, hiện thân của nét đẹp quý phái",
+      "attributes": {
+        "material": "Vải cao cấp",
+        "origin": "Vietnam",
+        "care": "Giặt tay, không tẩy"
+      },
+      "seo": {
+        "metaTitle": "[KIAS x HannahOlala] 𝐄𝐥𝐢𝐭𝐞 𝐂𝐡𝐚𝐫𝐦 – Thanh tao nhưng đầy cuốn hút, hiện thân của nét đẹp quý phái - Váy & Đầm - KIAS",
+        "metaDescription": "[KIAS x HannahOlala] 𝐄𝐥𝐢𝐭𝐞 𝐂𝐡𝐚𝐫𝐦 – Thanh tao nhưng đầy cuốn hút, hiện thân của nét đẹp quý phái"
+      }
+    },
+    {
+      "name": "[KIAS x HannahOlala] 𝐆𝐨𝐥𝐝𝐞𝐧 𝐆𝐫𝐚𝐜𝐞 – Duyên dáng vàng son, khẳng định vẻ đẹp sang trọng vượt thời gian",
+      "slug": "kias-x-hannaholala-duyn-dng-vng-son-khng-nh-v-p-sang-trng-vt-thi-gian",
+      "price": 2450000,
+      "originalPrice": null,
+      "category": "Váy & Đầm",
+      "categorySlug": "vay-dam",
+      "productUrl": "https://kias.vn/san-pham/kias-x-hannaholala-%f0%9d%90%86%f0%9d%90%a8%f0%9d%90%a5%f0%9d%90%9d%f0%9d%90%9e%f0%9d%90%a7-%f0%9d%90%86%f0%9d%90%ab%f0%9d%90%9a%f0%9d%90%9c%f0%9d%90%9e-duyen-dang-vang-son-khang-dinh-ve-dep-sang/",
+      "images": [],
+      "isOnSale": false,
+      "rating": 0,
+      "description": "[KIAS x HannahOlala] 𝐆𝐨𝐥𝐝𝐞𝐧 𝐆𝐫𝐚𝐜𝐞 – Duyên dáng vàng son, khẳng định vẻ đẹp sang trọng vượt thời gian",
+      "attributes": {
+        "material": "Vải cao cấp",
+        "origin": "Vietnam",
+        "care": "Giặt tay, không tẩy"
+      },
+      "seo": {
+        "metaTitle": "[KIAS x HannahOlala] 𝐆𝐨𝐥𝐝𝐞𝐧 𝐆𝐫𝐚𝐜𝐞 – Duyên dáng vàng son, khẳng định vẻ đẹp sang trọng vượt thời gian - Váy & Đầm - KIAS",
+        "metaDescription": "[KIAS x HannahOlala] 𝐆𝐨𝐥𝐝𝐞𝐧 𝐆𝐫𝐚𝐜𝐞 – Duyên dáng vàng son, khẳng định vẻ đẹp sang trọng vượt thời gian"
+      }
+    },
+    {
+      "name": "[KIAS x HannahOlala] 𝐋𝐮𝐦𝐢𝐧𝐚 𝐆𝐫𝐞𝐲 – Sắc xám tỏa sáng, thanh lịch trong từng đường cắt",
+      "slug": "kias-x-hannaholala-sc-xm-ta-sng-thanh-lch-trong-tng-ng-ct",
+      "price": 2780000,
+      "originalPrice": null,
+      "category": "Váy & Đầm",
+      "categorySlug": "vay-dam",
+      "productUrl": "https://kias.vn/san-pham/kias-x-hannaholala-%f0%9d%90%8b%f0%9d%90%ae%f0%9d%90%a6%f0%9d%90%a2%f0%9d%90%a7%f0%9d%90%9a-%f0%9d%90%86%f0%9d%90%ab%f0%9d%90%9e%f0%9d%90%b2-sac-xam-toa-sang-thanh-lich-trong-tung-duong-cat/",
+      "images": [],
+      "isOnSale": false,
+      "rating": 0,
+      "description": "[KIAS x HannahOlala] 𝐋𝐮𝐦𝐢𝐧𝐚 𝐆𝐫𝐞𝐲 – Sắc xám tỏa sáng, thanh lịch trong từng đường cắt",
+      "attributes": {
+        "material": "Vải cao cấp",
+        "origin": "Vietnam",
+        "care": "Giặt tay, không tẩy"
+      },
+      "seo": {
+        "metaTitle": "[KIAS x HannahOlala] 𝐋𝐮𝐦𝐢𝐧𝐚 𝐆𝐫𝐞𝐲 – Sắc xám tỏa sáng, thanh lịch trong từng đường cắt - Váy & Đầm - KIAS",
+        "metaDescription": "[KIAS x HannahOlala] 𝐋𝐮𝐦𝐢𝐧𝐚 𝐆𝐫𝐞𝐲 – Sắc xám tỏa sáng, thanh lịch trong từng đường cắt"
+      }
+    },
+    {
+      "name": "[KIAS x HannahOlala] 𝐍𝐨𝐢𝐫 𝐄́𝐥𝐢𝐭𝐞 – Bí ẩn, quyền lực, chuẩn mực của sự tinh tế",
+      "slug": "kias-x-hannaholala-b-n-quyn-lc-chun-mc-ca-s-tinh-t",
+      "price": 2400000,
+      "originalPrice": null,
+      "category": "Váy & Đầm",
+      "categorySlug": "vay-dam",
+      "productUrl": "https://kias.vn/san-pham/kias-x-hannaholala-%f0%9d%90%8d%f0%9d%90%a8%f0%9d%90%a2%f0%9d%90%ab-%f0%9d%90%84%f0%9d%90%a5%f0%9d%90%a2%f0%9d%90%ad%f0%9d%90%9e-bi-an-quyen-luc-chuan-muc-cua-su-tinh-te/",
+      "images": [],
+      "isOnSale": false,
+      "rating": 0,
+      "description": "[KIAS x HannahOlala] 𝐍𝐨𝐢𝐫 𝐄́𝐥𝐢𝐭𝐞 – Bí ẩn, quyền lực, chuẩn mực của sự tinh tế",
+      "attributes": {
+        "material": "Vải cao cấp",
+        "origin": "Vietnam",
+        "care": "Giặt tay, không tẩy"
+      },
+      "seo": {
+        "metaTitle": "[KIAS x HannahOlala] 𝐍𝐨𝐢𝐫 𝐄́𝐥𝐢𝐭𝐞 – Bí ẩn, quyền lực, chuẩn mực của sự tinh tế - Váy & Đầm - KIAS",
+        "metaDescription": "[KIAS x HannahOlala] 𝐍𝐨𝐢𝐫 𝐄́𝐥𝐢𝐭𝐞 – Bí ẩn, quyền lực, chuẩn mực của sự tinh tế"
+      }
+    },
+    {
+      "name": "Orchid Haze",
+      "slug": "orchid-haze",
+      "price": 660000,
+      "originalPrice": 1100000,
+      "category": "Váy & Đầm",
+      "categorySlug": "vay-dam",
+      "productUrl": "https://kias.vn/san-pham/orchid-haze/",
+      "images": [],
+      "isOnSale": false,
+      "rating": 0,
+      "description": "Orchid Haze",
+      "attributes": {
+        "material": "Vải cao cấp",
+        "origin": "Vietnam",
+        "care": "Giặt tay, không tẩy"
+      },
+      "seo": {
+        "metaTitle": "Orchid Haze - Váy & Đầm - KIAS",
+        "metaDescription": "Orchid Haze"
+      }
+    },
+    {
+      "name": "Blossom Blend – Bloom in Your Own Way",
+      "slug": "blossom-blend-bloom-in-your-own-way",
+      "price": 690000,
+      "originalPrice": 1100000,
+      "category": "Váy & Đầm",
+      "categorySlug": "vay-dam",
+      "productUrl": "https://kias.vn/san-pham/blossom-blend-bloom-in-your-own-way/",
+      "images": [],
+      "isOnSale": false,
+      "rating": 0,
+      "description": "Blossom Blend – Bloom in Your Own Way",
+      "attributes": {
+        "material": "Vải cao cấp",
+        "origin": "Vietnam",
+        "care": "Giặt tay, không tẩy"
+      },
+      "seo": {
+        "metaTitle": "Blossom Blend – Bloom in Your Own Way - Váy & Đầm - KIAS",
+        "metaDescription": "Blossom Blend – Bloom in Your Own Way"
+      }
+    }
+  ],
+  "errors": []
+}

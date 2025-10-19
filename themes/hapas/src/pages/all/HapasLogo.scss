@@ -1,0 +1,200 @@
+/**
+ * HAPAS Logo Styles
+ * 
+ * Logo component styling matching HAPAS.VN branding:
+ * - Clean, professional appearance
+ * - Responsive sizing
+ * - Smooth hover effects
+ * - Vietnamese typography optimization
+ */
+
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.hapas-logo {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  transition: all $transition-fast;
+  
+  &:hover {
+    opacity: 0.8;
+    transform: scale(1.02);
+  }
+  
+  &:focus {
+    outline: 2px solid $color-primary;
+    outline-offset: 4px;
+    border-radius: $border-radius-sm;
+  }
+}
+
+// ===== IMAGE LOGO =====
+.logo-image {
+  height: auto;
+  max-width: 100%;
+  transition: all $transition-fast;
+  
+  // Default sizing
+  width: 120px;
+  height: 40px;
+  
+  // Responsive sizing
+  @include tablet {
+    width: 100px;
+    height: 33px;
+  }
+  
+  @include mobile {
+    width: 80px;
+    height: 27px;
+  }
+  
+  // Image optimization
+  object-fit: contain;
+  object-position: center;
+}
+
+// ===== TEXT LOGO FALLBACK =====
+.logo-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  
+  .brand-name {
+    @include vietnamese-text;
+    font-family: $font-heading;
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-bold;
+    color: $color-primary;
+    letter-spacing: -0.05em;
+    line-height: 1;
+    margin-bottom: $spacing-xs;
+    
+    @include tablet {
+      font-size: $font-size-xl;
+    }
+    
+    @include mobile {
+      font-size: $font-size-lg;
+    }
+  }
+  
+  .brand-tagline {
+    @include vietnamese-text;
+    font-family: $font-accent;
+    font-size: $font-size-xs;
+    color: $color-text-muted;
+    font-weight: $font-weight-normal;
+    line-height: 1.2;
+    font-style: italic;
+    
+    @include mobile {
+      display: none; // Hide tagline on mobile for space
+    }
+  }
+}
+
+// ===== LOGO VARIATIONS =====
+// Dark background variant
+.header.dark .hapas-logo {
+  .logo-image {
+    filter: brightness(0) invert(1); // Convert to white
+  }
+  
+  .brand-name {
+    color: $color-secondary;
+  }
+  
+  .brand-tagline {
+    color: rgba($color-secondary, 0.7);
+  }
+}
+
+// Compact variant for mobile
+.hapas-logo.compact {
+  .logo-image {
+    width: 60px;
+    height: 20px;
+  }
+  
+  .brand-name {
+    font-size: $font-size-base;
+  }
+  
+  .brand-tagline {
+    display: none;
+  }
+}
+
+// Large variant for hero sections
+.hapas-logo.large {
+  .logo-image {
+    width: 200px;
+    height: 67px;
+  }
+  
+  .brand-name {
+    font-size: $font-size-4xl;
+  }
+  
+  .brand-tagline {
+    font-size: $font-size-sm;
+  }
+}
+
+// ===== LOADING STATE =====
+.logo-image[src=""] {
+  display: none;
+}
+
+.logo-image:not([src]),
+.logo-image[src=""] {
+  + .logo-text {
+    display: flex !important;
+  }
+}
+
+// ===== ACCESSIBILITY =====
+@media (prefers-reduced-motion: reduce) {
+  .hapas-logo {
+    transition: none;
+    
+    &:hover {
+      transform: none;
+    }
+  }
+  
+  .logo-image {
+    transition: none;
+  }
+}
+
+// ===== HIGH CONTRAST MODE =====
+@media (prefers-contrast: high) {
+  .hapas-logo {
+    .brand-name {
+      color: $color-primary;
+      font-weight: $font-weight-bold;
+    }
+    
+    .brand-tagline {
+      color: $color-text-primary;
+    }
+  }
+}
+
+// ===== PRINT STYLES =====
+@media print {
+  .hapas-logo {
+    .logo-image {
+      max-width: 100px;
+      height: auto;
+    }
+    
+    .brand-tagline {
+      display: none;
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "timestamp": "2025-09-22T09:41:47.226Z",
+  "testType": "full_migration",
+  "stats": {
+    "totalProducts": 48,
+    "successfulImports": 3,
+    "failedImports": 0,
+    "categoriesCreated": 4
+  },
+  "errors": [],
+  "productsProcessed": 3,
+  "sampleProducts": [
+    {
+      "name": "[KIAS x HannahOlala] 𝐌𝐨𝐝𝐞𝐫𝐧 𝐀𝐮𝐭𝐡𝐨𝐫𝐢𝐭𝐲 – Bản lĩnh thăng hoa trong tinh hoa thời trang",
+      "price": 2650000,
+      "category": "Set Bộ",
+      "evershopId": 5
+    },
+    {
+      "name": "[KIAS x HannahOlala] 𝐋𝐚𝐜𝐞 𝐆𝐫𝐚𝐜𝐞 – Thanh khiết, kiêu sa, vẹn tròn tinh tế",
+      "price": 850000,
+      "category": "Set Bộ",
+      "evershopId": 6
+    },
+    {
+      "name": "[KIAS x HannahOlala] 𝐄𝐥𝐢𝐭𝐞 𝐂𝐡𝐚𝐫𝐦 – Thanh tao nhưng đầy cuốn hút, hiện thân của nét đẹp quý phái",
+      "price": 2450000,
+      "category": "Set Bộ",
+      "evershopId": 7
+    }
+  ],
+  "success": true
+}

@@ -1,0 +1,141 @@
+---
+description: KIAS.VN data migration rules and conflict resolution
+globs:
+  - "scripts/migrate-*.js"
+  - "scripts/*kias*.js"
+  - "data/kias-migration/**/*"
+alwaysApply: false
+---
+
+# KIAS Migration Context
+
+Importing products from KIAS.VN with:
+- 4 categories: Set Bộ, Váy & Đầm, Quần, Áo
+- ~48 products with Vietnamese names
+- Price range: 580,000₫ - 2,780,000₫
+- Challenge: URL key uniqueness constraints
+
+# Critical Issues to Fix
+
+## 1. Duplicate URL Key Prevention
+
+**Problem**: Products with same/similar names cause `PRODUCT_URL_KEY_UNIQUE` constraint violations
+
+**Solution**: Deterministic slug generation with conflict handling
+
+```javascript
+function generateUniqueSlug(name, existingSlugs = new Set()) {
+  let slug = name
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '') // Remove accents
+    .replace(/[^\w\s-]/g, '')         // Remove special chars
+    .replace(/\s+/g, '-')             // Spaces to hyphens
+    .replace(/-+/g, '-')              // Multiple hyphens to single
+    .trim();
+  
+  // If slug exists, append short hash or counter
+  if (existingSlugs.has(slug)) {
+    const suffix = Date.now().toString(36).slice(-4);
+    slug = `${slug}-${suffix}`;
+  }
+  
+  existingSlugs.add(slug);
+  return slug;
+}
+```
+
+## 2. Category Creation
+
+**Problem**: Category creation returns 500 errors
+
+**Solution**: Check existing categories first, create only if needed
+
+```javascript
+async function ensureCategory(categoryData, adminCookies) {
+  // Check if category exists
+  const existing = await axios.get(
+    `http://localhost:3000/api/categories?url_key=${categoryData.url_key}`,
+    { headers: { Cookie: adminCookies } }
+  );
+  
+  if (existing.data?.length > 0) {
+    return existing.data[0];
+  }
+  
+  // Create if not exists
+  const response = await axios.post(
+    'http://localhost:3000/api/categories',
+    categoryData,
+    { headers: { Cookie: adminCookies, 'Content-Type': 'application/json' } }
+  );
+  
+  return response.data.data;
+}
+```
+
+## 3. Product Import with Retry
+
+**Problem**: 409 conflicts on duplicate keys
+
+**Solution**: Graceful error handling with retry logic
+
+```javascript
+async function importProduct(productData, adminCookies, retries = 3) {
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    try {
+      const response = await axios.post(
+        'http://localhost:3000/api/products',
+        productData,
+        { headers: { Cookie: adminCookies, 'Content-Type': 'application/json' } }
+      );
+      
+      return { success: true, data: response.data };
+    } catch (error) {
+      if (error.response?.status === 409 && attempt < retries) {
+        // Append retry suffix to URL key
+        productData.url_key = `${productData.url_key}-r${attempt}`;
+        continue;
+      }
+      
+      return {
+        success: false,
+        error: error.response?.data?.error?.message || error.message,
+        product: productData.name
+      };
+    }
+  }
+}
+```
+
+## 4. Admin Authentication
+
+Ensure admin session cookie is obtained:
+
+```javascript
+async function loginAdmin() {
+  const response = await axios.post(
+    'http://localhost:3000/admin/user/login',
+    { email: 'admin@admin.com', password: '123456a@' },
+    { headers: { 'Content-Type': 'application/json' } }
+  );
+  
+  const cookies = response.headers['set-cookie'];
+  const sessionCookie = cookies?.find(c => c.startsWith('asid='));
+  
+  if (!sessionCookie) {
+    throw new Error('No session cookie received');
+  }
+  
+  return sessionCookie.split(';')[0];
+}
+```
+
+# Best Practices
+
+- Track imported items to avoid re-import
+- Log all errors with context (product name, operation)
+- Use delays between requests (2s) to respect server
+- Validate data before import
+- Generate detailed migration reports
+- Keep extracted data in `data/kias-migration/extracted-products.json`

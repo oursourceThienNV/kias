@@ -1,0 +1,388 @@
+---
+description: Database migration patterns and best practices
+globs:
+  - "**/migration/**/*.ts"
+  - "**/migration/**/*.js"
+alwaysApply: false
+---
+
+# Database Migrations Quick Reference
+
+Essential migration patterns for EverShop. For full guide, see `docs/EVERSHOP-MODULES-EXTENSIONS-WIDGETS-THEMES.md`.
+
+---
+
+## Migration Basics
+
+### File Naming
+`Version_X.Y.Z.ts` - Use semantic versioning
+
+Examples:
+- `Version_1.0.0.ts` - Initial schema
+- `Version_1.1.0.ts` - Add features
+- `Version_1.0.1.ts` - Bug fixes
+- `Version_2.0.0.ts` - Breaking changes
+
+### Template
+
+```typescript
+import { Pool } from 'pg';
+
+export async function up(pool: Pool): Promise<void> {
+  // Apply changes
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS table_name (
+      id SERIAL PRIMARY KEY,
+      name VARCHAR(255) NOT NULL
+    );
+  `);
+}
+
+export async function down(pool: Pool): Promise<void> {
+  // Rollback changes
+  await pool.query(`
+    DROP TABLE IF EXISTS table_name CASCADE;
+  `);
+}
+```
+
+---
+
+## Best Practices
+
+### ✅ Idempotency (CRITICAL)
+
+```typescript
+// ✅ Safe to run multiple times
+export async function up(pool: Pool): Promise<void> {
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS users (
+      id SERIAL PRIMARY KEY
+    );
+    
+    CREATE INDEX IF NOT EXISTS idx_users_email 
+    ON users(email);
+    
+    ALTER TABLE users 
+    ADD COLUMN IF NOT EXISTS status VARCHAR(50);
+  `);
+}
+
+// ❌ Fails on second run
+export async function up(pool: Pool): Promise<void> {
+  await pool.query(`
+    CREATE TABLE users (...);  // Error if exists!
+    CREATE INDEX idx_users_email ON users(email);
+  `);
+}
+```
+
+### ✅ Always Provide down()
+
+```typescript
+export async function down(pool: Pool): Promise<void> {
+  await pool.query(`
+    DROP TABLE IF EXISTS users CASCADE;
+  `);
+}
+```
+
+**Why:** Enables rollback if migration fails or needs reverting
+
+---
+
+## Common Patterns
+
+### Create Table
+
+```typescript
+export async function up(pool: Pool): Promise<void> {
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS product_review (
+      review_id SERIAL PRIMARY KEY,
+      product_id INTEGER NOT NULL REFERENCES product(product_id) ON DELETE CASCADE,
+      customer_id INTEGER REFERENCES customer(customer_id) ON DELETE SET NULL,
+      rating INTEGER CHECK (rating BETWEEN 1 AND 5),
+      title VARCHAR(255),
+      comment TEXT,
+      verified_purchase BOOLEAN DEFAULT FALSE,
+      helpful_count INTEGER DEFAULT 0,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+    
+    COMMENT ON TABLE product_review IS 'Customer product reviews';
+  `);
+}
+```
+
+### Add Index
+
+```typescript
+export async function up(pool: Pool): Promise<void> {
+  await pool.query(`
+    CREATE INDEX IF NOT EXISTS idx_review_product 
+    ON product_review(product_id);
+    
+    CREATE INDEX IF NOT EXISTS idx_review_rating 
+    ON product_review(rating);
+    
+    CREATE INDEX IF NOT EXISTS idx_review_created 
+    ON product_review(created_at DESC);
+  `);
+}
+```
+
+### Add Column
+
+```typescript
+export async function up(pool: Pool): Promise<void> {
+  await pool.query(`
+    ALTER TABLE product 
+    ADD COLUMN IF NOT EXISTS bestseller BOOLEAN DEFAULT FALSE;
+    
+    ALTER TABLE product 
+    ADD COLUMN IF NOT EXISTS view_count INTEGER DEFAULT 0;
+  `);
+}
+
+export async function down(pool: Pool): Promise<void> {
+  await pool.query(`
+    ALTER TABLE product DROP COLUMN IF EXISTS bestseller;
+    ALTER TABLE product DROP COLUMN IF EXISTS view_count;
+  `);
+}
+```
+
+### Modify Column
+
+```typescript
+export async function up(pool: Pool): Promise<void> {
+  await pool.query(`
+    -- Change column type
+    ALTER TABLE product 
+    ALTER COLUMN price TYPE DECIMAL(12,2);
+    
+    -- Add constraint
+    ALTER TABLE product 
+    ADD CONSTRAINT price_positive CHECK (price >= 0);
+    
+    -- Set default
+    ALTER TABLE product 
+    ALTER COLUMN status SET DEFAULT 'active';
+  `);
+}
+```
+
+### Data Migration
+
+```typescript
+export async function up(pool: Pool): Promise<void> {
+  // Transform existing data
+  await pool.query(`
+    UPDATE product 
+    SET url_key = LOWER(REPLACE(name, ' ', '-'))
+    WHERE url_key IS NULL;
+  `);
+  
+  // Populate new column
+  await pool.query(`
+    UPDATE product 
+    SET bestseller = TRUE 
+    WHERE sales_count > 1000;
+  `);
+}
+```
+
+---
+
+## Foreign Keys & Constraints
+
+### Add Foreign Key
+
+```typescript
+export async function up(pool: Pool): Promise<void> {
+  await pool.query(`
+    ALTER TABLE order_item 
+    ADD CONSTRAINT fk_order_item_product 
+    FOREIGN KEY (product_id) 
+    REFERENCES product(product_id) 
+    ON DELETE RESTRICT;
+  `);
+}
+
+export async function down(pool: Pool): Promise<void> {
+  await pool.query(`
+    ALTER TABLE order_item 
+    DROP CONSTRAINT IF EXISTS fk_order_item_product;
+  `);
+}
+```
+
+### Add Check Constraint
+
+```typescript
+export async function up(pool: Pool): Promise<void> {
+  await pool.query(`
+    ALTER TABLE product 
+    ADD CONSTRAINT price_range 
+    CHECK (price >= 0 AND price <= 1000000);
+  `);
+}
+```
+
+---
+
+## Running Migrations
+
+```bash
+# Run all pending migrations
+npm run migrate up
+
+# Rollback last migration
+npm run migrate down
+
+# Check migration status
+npm run migrate status
+```
+
+---
+
+## Common Mistakes
+
+### ❌ Not Idempotent
+
+```typescript
+// Fails on re-run
+export async function up(pool: Pool): Promise<void> {
+  await pool.query(`CREATE TABLE users (...);`);
+}
+```
+
+### ✅ Idempotent
+
+```typescript
+export async function up(pool: Pool): Promise<void> {
+  await pool.query(`CREATE TABLE IF NOT EXISTS users (...);`);
+}
+```
+
+### ❌ Missing down()
+
+```typescript
+export async function up(pool: Pool): Promise<void> {
+  // Changes...
+}
+// No down() function - can't rollback!
+```
+
+### ✅ With down()
+
+```typescript
+export async function down(pool: Pool): Promise<void> {
+  await pool.query(`DROP TABLE IF EXISTS users CASCADE;`);
+}
+```
+
+### ❌ Destructive without backup
+
+```typescript
+// Dangerous!
+export async function up(pool: Pool): Promise<void> {
+  await pool.query(`DROP TABLE old_data CASCADE;`);
+}
+```
+
+### ✅ Safe migration
+
+```typescript
+export async function up(pool: Pool): Promise<void> {
+  // Rename instead of drop
+  await pool.query(`
+    ALTER TABLE old_data RENAME TO old_data_backup;
+  `);
+}
+```
+
+---
+
+## Advanced Patterns
+
+### Transaction Wrapper
+
+```typescript
+export async function up(pool: Pool): Promise<void> {
+  const client = await pool.connect();
+  
+  try {
+    await client.query('BEGIN');
+    
+    await client.query(`CREATE TABLE ...`);
+    await client.query(`CREATE INDEX ...`);
+    await client.query(`UPDATE ...`);
+    
+    await client.query('COMMIT');
+  } catch (err) {
+    await client.query('ROLLBACK');
+    throw err;
+  } finally {
+    client.release();
+  }
+}
+```
+
+### Conditional Migration
+
+```typescript
+export async function up(pool: Pool): Promise<void> {
+  // Check if column exists
+  const result = await pool.query(`
+    SELECT column_name 
+    FROM information_schema.columns 
+    WHERE table_name = 'product' 
+    AND column_name = 'new_field';
+  `);
+  
+  if (result.rows.length === 0) {
+    await pool.query(`
+      ALTER TABLE product 
+      ADD COLUMN new_field VARCHAR(255);
+    `);
+  }
+}
+```
+
+---
+
+## Quick Reference
+
+**CREATE TABLE:**
+```sql
+CREATE TABLE IF NOT EXISTS name (...)
+```
+
+**ADD COLUMN:**
+```sql
+ALTER TABLE name ADD COLUMN IF NOT EXISTS col TYPE
+```
+
+**ADD INDEX:**
+```sql
+CREATE INDEX IF NOT EXISTS idx_name ON table(column)
+```
+
+**ADD FOREIGN KEY:**
+```sql
+ALTER TABLE t ADD CONSTRAINT fk_name FOREIGN KEY (col) REFERENCES other(col)
+```
+
+**DROP TABLE:**
+```sql
+DROP TABLE IF EXISTS name CASCADE
+```
+
+---
+
+📚 **Full Documentation:** `docs/EVERSHOP-MODULES-EXTENSIONS-WIDGETS-THEMES.md` § 9 (Database Migrations)
+
+**Last Updated:** October 2025

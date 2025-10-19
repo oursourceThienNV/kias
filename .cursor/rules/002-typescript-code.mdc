@@ -1,0 +1,278 @@
+---
+description: TypeScript coding standards and EverShop-specific patterns
+globs:
+  - "**/*.ts"
+  - "**/*.tsx"
+alwaysApply: false
+---
+
+# TypeScript Quick Reference
+
+Essential TypeScript patterns for EverShop development. For comprehensive guide, see `docs/EVERSHOP-MODULES-EXTENSIONS-WIDGETS-THEMES.md`.
+
+---
+
+## Core Rules
+
+✅ **ALWAYS:**
+- Use `strict: true` - no `any` types
+- Explicit types for all function signatures
+- Type all component props with interfaces
+- Use type guards instead of assertions
+
+❌ **NEVER:**
+- Use `any` - use `unknown` with guards
+- Unsafe type assertions - `as` without validation
+- Implicit return types on exported functions
+- Mix CommonJS and ESM (`require` in TypeScript)
+
+---
+
+## EverShop Patterns
+
+### Middleware Typing
+
+```typescript
+// ✅ 3-arg middleware (success flow)
+export default function middleware(
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void {
+  // Logic
+  next();
+}
+
+// ✅ 4-arg middleware (error handler)
+export default function errorHandler(
+  err: Error,
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void {
+  res.status(500).json({ error: err.message });
+}
+
+// ❌ No types
+export default function middleware(req, res, next) { }
+```
+
+### Component Props
+
+```typescript
+// ✅ Explicit interface
+interface ProductCardProps {
+  product: {
+    productId: string;
+    name: string;
+    price: number;
+  };
+  onAddToCart?: (id: string) => void;
+}
+
+export default function ProductCard({ 
+  product, 
+  onAddToCart 
+}: ProductCardProps) {
+  return <div>{product.name}</div>;
+}
+
+// ❌ No types
+export default function ProductCard({ product, onAddToCart }) { }
+```
+
+### Service Functions
+
+```typescript
+// ✅ Typed service
+export class ProductService {
+  static async findBySlug(slug: string): Promise<Product | null> {
+    const result = await pool.query<Product>(
+      'SELECT * FROM product WHERE url_key = $1',
+      [slug]
+    );
+    return result.rows[0] || null;
+  }
+}
+
+// ❌ No types
+export class ProductService {
+  static async findBySlug(slug) {
+    return await pool.query('SELECT * FROM product WHERE url_key = $1', [slug]);
+  }
+}
+```
+
+---
+
+## Common Patterns
+
+### GraphQL Query Results
+
+```typescript
+// ✅ Type the query result
+interface ProductQueryResult {
+  product: {
+    productId: string;
+    name: string;
+    price: number;
+  };
+}
+
+export default function ProductView({ product }: ProductQueryResult) {
+  return <h1>{product.name}</h1>;
+}
+```
+
+### Error Handling
+
+```typescript
+// ✅ Result pattern for expected errors
+type Result<T> = 
+  | { success: true; data: T }
+  | { success: false; error: string };
+
+export async function createProduct(
+  input: ProductInput
+): Promise<Result<Product>> {
+  try {
+    const product = await ProductService.create(input);
+    return { success: true, data: product };
+  } catch (err) {
+    return { success: false, error: err.message };
+  }
+}
+
+// ✅ Throw for unexpected errors
+export async function getProduct(id: string): Promise<Product> {
+  if (!id) throw new Error('ID required');
+  
+  const product = await ProductService.findById(id);
+  if (!product) throw new NotFoundError(`Product ${id} not found`);
+  
+  return product;
+}
+```
+
+### Type Guards
+
+```typescript
+// ✅ Custom type guard
+function isProduct(obj: unknown): obj is Product {
+  return (
+    typeof obj === 'object' &&
+    obj !== null &&
+    'productId' in obj &&
+    'name' in obj
+  );
+}
+
+// Usage
+if (isProduct(data)) {
+  // TypeScript knows data is Product here
+  console.log(data.name);
+}
+```
+
+---
+
+## Migration Files
+
+```typescript
+// migration/Version_1.0.0.ts
+import { Pool } from 'pg';
+
+export async function up(pool: Pool): Promise<void> {
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS custom_table (
+      id SERIAL PRIMARY KEY,
+      name VARCHAR(255) NOT NULL
+    );
+  `);
+}
+
+export async function down(pool: Pool): Promise<void> {
+  await pool.query(`DROP TABLE IF EXISTS custom_table CASCADE;`);
+}
+```
+
+---
+
+## Quick Tips
+
+**Interface vs Type:**
+- `interface` for object shapes (extensible)
+- `type` for unions, intersections, utilities
+
+**Generics:**
+- Use `T, K, V` for simple cases
+- Use descriptive names for complex: `TEntity, TInput`
+
+**Enums:**
+- Prefer `const enum` for performance
+- Or use string literal unions: `type Status = 'active' | 'disabled'`
+
+**Import Order:**
+1. Node built-ins
+2. External packages  
+3. EverShop core (`@evershop/*`)
+4. Internal modules
+5. Relative imports
+6. Types (separate group)
+7. Styles (last)
+
+---
+
+## Common Mistakes
+
+❌ **Unsafe assertion:**
+```typescript
+const product = data as Product; // No runtime check!
+```
+
+✅ **Use type guard:**
+```typescript
+if (isProduct(data)) {
+  const product = data; // Safe
+}
+```
+
+❌ **Ignoring null/undefined:**
+```typescript
+function getName(product: Product) {
+  return product.name.toUpperCase(); // Crashes if null
+}
+```
+
+✅ **Handle nullable:**
+```typescript
+function getName(product: Product): string {
+  return product.name?.toUpperCase() ?? 'N/A';
+}
+```
+
+❌ **Missing async error handling:**
+```typescript
+export default async function handler(req, res) {
+  const data = await fetchData(); // Can crash server!
+  res.json(data);
+}
+```
+
+✅ **Proper error handling:**
+```typescript
+export default async function handler(req, res, next) {
+  try {
+    const data = await fetchData();
+    res.json(data);
+  } catch (err) {
+    next(err);
+  }
+}
+```
+
+---
+
+📚 **Full Documentation:** `docs/EVERSHOP-MODULES-EXTENSIONS-WIDGETS-THEMES.md` § 2 (TypeScript Patterns)
+
+**Last Updated:** October 2025

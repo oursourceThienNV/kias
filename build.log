@@ -1,0 +1,8 @@
+
+> evershop@1.2.2 build
+> node ./packages/evershop/dist/bin/build/index.js
+
+ℹ Compiling Client
+ℹ Compiling Server
+✔ Server: Compiled successfully in 36.59s
+✔ Client: Compiled successfully in 36.62s

@@ -1,0 +1,130 @@
+/**
+ * HAPAS Theme Font Loading
+ * 
+ * Proper Vietnamese font support with Google Fonts
+ * Includes Vietnamese character subset for proper rendering
+ */
+
+// Import Google Fonts with Vietnamese subset
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap&subset=vietnamese,latin');
+
+// Font Face Declarations for Vietnamese Support
+@font-face {
+  font-family: 'Inter Vietnamese';
+  src: url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap&subset=vietnamese') format('woff2');
+  font-display: swap;
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+// Vietnamese Character Support CSS
+.vietnamese-text,
+.hapas-vietnamese {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  font-feature-settings: 
+    "kern" 1,           // Kerning
+    "liga" 1,           // Ligatures  
+    "calt" 1,           // Contextual alternates
+    "ss01" 1;           // Stylistic set 1
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  
+  // Vietnamese diacritics optimization
+  letter-spacing: -0.01em;
+  word-break: break-word;
+  hyphens: auto;
+  
+  // Ensure proper line height for Vietnamese characters
+  line-height: 1.6;
+}
+
+// Navigation specific Vietnamese font styling
+.main-navigation,
+.hapas-navigation,
+.basic-menu,
+.hapas-basic-menu {
+  .vietnamese-text,
+  a, span, div {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif !important;
+    font-weight: 500;
+    font-feature-settings: "kern" 1, "liga" 1;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    
+    // Specific Vietnamese character support
+    &:lang(vi) {
+      font-family: 'Inter', 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif !important;
+    }
+  }
+}
+
+// Product names Vietnamese support
+.product-name,
+.product-title,
+h1, h2, h3, h4, h5, h6 {
+  &.vietnamese-text {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1.4;
+  }
+}
+
+// Ensure all text elements support Vietnamese
+* {
+  &[lang="vi"],
+  &.vietnamese,
+  &.hapas-vietnamese {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif !important;
+    font-feature-settings: "kern" 1, "liga" 1;
+    text-rendering: optimizeLegibility;
+  }
+}
+
+// Font loading optimization
+@supports (font-display: swap) {
+  @font-face {
+    font-family: 'Inter Fallback';
+    src: local('Inter'), local('Segoe UI'), local('Roboto'), local('Helvetica Neue'), local('Arial');
+    font-display: swap;
+    font-weight: 300 700;
+    font-style: normal;
+  }
+}
+
+// Critical font loading for above-the-fold content
+.header,
+.navigation,
+.main-navigation,
+.hapas-header,
+.hapas-navigation {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif !important;
+  
+  * {
+    font-family: inherit !important;
+  }
+}
+
+// Preload critical fonts
+.font-preload {
+  &::before {
+    content: '';
+    font-family: 'Inter';
+    font-weight: 400;
+    font-style: normal;
+    position: absolute;
+    left: -9999px;
+    visibility: hidden;
+  }
+  
+  &::after {
+    content: '';
+    font-family: 'Inter';
+    font-weight: 500;
+    font-style: normal;
+    position: absolute;
+    left: -9999px;
+    visibility: hidden;
+  }
+}

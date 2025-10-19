@@ -1,0 +1,339 @@
+/**
+ * HAPAS Header Styles
+ * 
+ * Matching HAPAS.VN header design:
+ * - Clean, minimalist aesthetic
+ * - Centered logo with navigation on sides
+ * - Sticky header with blur effect
+ * - Vietnamese typography optimization
+ * - Mobile responsive design
+ */
+
+@import '../styles/variables';
+@import '../styles/mixins';
+
+.hapas-header {
+  position: sticky;
+  top: 0;
+  z-index: $z-sticky;
+  background: $header-bg;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid $color-border-light;
+  height: $header-height;
+  transition: all $transition-fast;
+  
+  &.scrolled {
+    box-shadow: $shadow-sm;
+    background: rgba(255, 255, 255, 0.98);
+  }
+  
+  .container {
+    height: 100%;
+  }
+  
+  .header-content {
+    @include flex-between;
+    height: 100%;
+    position: relative;
+  }
+}
+
+// ===== HEADER SECTIONS =====
+.header-left,
+.header-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  
+  @include mobile {
+    flex: 0 0 auto;
+  }
+}
+
+.header-left {
+  justify-content: flex-start;
+}
+
+.header-right {
+  justify-content: flex-end;
+}
+
+.header-center {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  .logo-area {
+    display: flex;
+    align-items: center;
+  }
+}
+
+// ===== NAVIGATION STYLES =====
+.main-navigation {
+  .nav-menu {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: $spacing-8;
+    
+    @include tablet {
+      gap: $spacing-6;
+    }
+  }
+  
+  .nav-item {
+    position: relative;
+  }
+  
+  .nav-link {
+    @include vietnamese-text;
+    color: $nav-link-color;
+    font-weight: $font-weight-medium;
+    font-size: $font-size-sm;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: $spacing-3 $spacing-4;
+    border-radius: $border-radius-sm;
+    transition: all $transition-fast;
+    position: relative;
+    
+    &:hover {
+      color: $nav-link-hover-color;
+      background-color: $color-bg-accent;
+    }
+    
+    &.active {
+      color: $nav-link-active-color;
+      font-weight: $font-weight-semibold;
+      
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 20px;
+        height: 2px;
+        background: $color-primary;
+        border-radius: $border-radius-full;
+      }
+    }
+    
+    // Hover underline effect
+    &::before {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 2px;
+      background: $color-primary;
+      border-radius: $border-radius-full;
+      transition: width $transition-fast;
+    }
+    
+    &:hover::before {
+      width: 20px;
+    }
+  }
+}
+
+// ===== HEADER ACTIONS =====
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: $spacing-4;
+  margin-left: $spacing-6;
+  
+  .actions-area {
+    display: flex;
+    align-items: center;
+    gap: $spacing-4;
+  }
+}
+
+// ===== MOBILE MENU =====
+.mobile-menu-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  
+  .hamburger-line {
+    width: 20px;
+    height: 2px;
+    background: $color-primary;
+    margin: 2px 0;
+    transition: all $transition-fast;
+    border-radius: $border-radius-full;
+  }
+  
+  &:hover .hamburger-line {
+    background: lighten($color-primary, 20%);
+  }
+}
+
+.mobile-navigation {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: $color-bg-primary;
+  border-bottom: 1px solid $color-border;
+  box-shadow: $shadow-lg;
+  transform: translateY(-100%);
+  opacity: 0;
+  visibility: hidden;
+  transition: all $transition-normal;
+  
+  &.open {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  .mobile-nav-menu {
+    list-style: none;
+    margin: 0;
+    padding: $spacing-4 0;
+  }
+  
+  .mobile-nav-item {
+    border-bottom: 1px solid $color-border-light;
+    
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+  
+  .mobile-nav-link {
+    @include vietnamese-text;
+    display: block;
+    padding: $spacing-4 $spacing-6;
+    color: $color-text-primary;
+    text-decoration: none;
+    font-weight: $font-weight-medium;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: all $transition-fast;
+    
+    &:hover {
+      background-color: $color-bg-accent;
+      color: $color-primary;
+    }
+    
+    .nav-description {
+      display: block;
+      font-size: $font-size-xs;
+      color: $color-text-muted;
+      text-transform: none;
+      letter-spacing: normal;
+      margin-top: $spacing-1;
+      font-weight: $font-weight-normal;
+    }
+  }
+}
+
+.mobile-menu-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: $z-modal-backdrop;
+}
+
+// ===== RESPONSIVE DESIGN =====
+@include tablet {
+  .main-navigation .nav-menu {
+    gap: $spacing-4;
+  }
+  
+  .main-navigation .nav-link {
+    padding: $spacing-2 $spacing-3;
+    font-size: $font-size-xs;
+  }
+  
+  .header-actions {
+    margin-left: $spacing-4;
+    gap: $spacing-3;
+  }
+}
+
+@include mobile {
+  .hapas-header {
+    height: 60px;
+  }
+  
+  .desktop-only {
+    display: none !important;
+  }
+  
+  .mobile-only {
+    display: flex !important;
+  }
+  
+  .mobile-menu-toggle {
+    display: flex;
+  }
+  
+  .mobile-navigation {
+    display: block;
+  }
+  
+  .mobile-menu-overlay {
+    display: block;
+  }
+  
+  .header-left,
+  .header-right {
+    flex: 0 0 auto;
+  }
+  
+  .header-center {
+    flex: 1;
+    
+    .logo-area img {
+      height: 32px;
+    }
+  }
+  
+  .header-actions {
+    margin-left: $spacing-3;
+    gap: $spacing-2;
+  }
+}
+
+// ===== UTILITY CLASSES =====
+.desktop-only {
+  @include mobile {
+    display: none;
+  }
+}
+
+.mobile-only {
+  display: none;
+  
+  @include mobile {
+    display: block;
+  }
+}
+
+// ===== VIETNAMESE TEXT OPTIMIZATION =====
+.vietnamese-text {
+  @include vietnamese-text;
+}

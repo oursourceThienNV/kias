@@ -1,0 +1,458 @@
+---
+alwaysApply: true
+---
+# Cursor Rules Best Practices
+
+This document outlines best practices for writing effective Cursor rules based on real-world experience and lessons learned from the HAPAS e-commerce project.
+
+---
+
+## Rule Structure
+
+### Frontmatter (Metadata)
+
+```yaml
+---
+description: Brief description of what this rule covers
+globs:
+  - "path/to/files/**/*"
+  - "specific-file.ext"
+alwaysApply: true  # or false
+---
+```
+
+**Guidelines:**
+- ✅ Use clear, concise descriptions (one sentence)
+- ✅ Use specific glob patterns to target relevant files
+- ✅ Set `alwaysApply: true` only for critical, project-wide rules
+- ❌ Avoid overly broad globs that match too many files
+
+### Content Organization
+
+Structure your rules with clear sections:
+
+1. **Overview** - What this rule covers
+2. **Key Concepts** - Important terminology and patterns
+3. **Do's and Don'ts** - Clear examples of correct and incorrect patterns
+4. **Common Issues** - Known problems and solutions
+5. **Best Practices** - Recommendations for optimal implementation
+
+---
+
+## Writing Effective Rules
+
+### 1. Be Specific and Actionable
+
+**❌ Bad:**
+```
+Use components properly.
+```
+
+**✅ Good:**
+```
+Global Components Placement:
+- Place new global components in `themes/{name}/src/pages/all/`
+- Override core components in `themes/{name}/src/components/`
+- Export `layout` with `areaId` and `sortOrder` for area registration
+```
+
+### 2. Provide Context and Rationale
+
+Don't just tell WHAT to do, explain WHY:
+
+**❌ Bad:**
+```
+Don't use @import for SCSS variables.
+```
+
+**✅ Good:**
+```
+Don't use @import for SCSS variables.
+
+WHY: EverShop's theme compilation uses copyfiles (not sass preprocessor),
+so @import statements aren't resolved. This causes "Undefined variable" errors.
+
+INSTEAD: Use CSS variables (var(--variable-name)) or Tailwind CSS.
+```
+
+### 3. Use Examples Liberally
+
+Code examples are worth a thousand words:
+
+```markdown
+## Pattern: CSS Variables
+
+**Step 1:** Define in global stylesheet:
+```scss
+:root {
+  --color-primary: #000000;
+}
+```
+
+**Step 2:** Import once in pages/all/GlobalStyles.tsx:
+```tsx
+import '../../styles/theme.scss';
+```
+
+**Step 3:** Use in components:
+```scss
+.component {
+  color: var(--color-primary);
+}
+```
+```
+
+### 4. Include Anti-Patterns
+
+Show what NOT to do:
+
+```markdown
+## ❌ Anti-Pattern: Component in Wrong Location
+
+```tsx
+// themes/hapas/src/components/MainNavigation.tsx
+// This won't be discovered for area registration!
+
+export const layout = {
+  areaId: 'headerBottom',
+  sortOrder: 10
+};
+```
+
+## ✅ Correct: Component in pages/all/
+
+```tsx
+// themes/hapas/src/pages/all/MainNavigation.tsx
+// This WILL be discovered!
+
+export const layout = {
+  areaId: 'headerBottom',
+  sortOrder: 10
+};
+```
+```
+
+### 5. Document Root Causes
+
+When documenting issues, include root cause analysis:
+
+```markdown
+## Issue: "Undefined variable" in SCSS
+
+**Symptoms:**
+- Build error: "Undefined variable $variableName"
+- SCSS files with @import statements
+
+**Root Cause:**
+1. Theme compilation uses `copyfiles` to copy .scss files
+2. No sass preprocessor step to resolve @import
+3. Files copied AS-IS with broken import paths
+4. Webpack can't find referenced files at runtime
+
+**Solution:**
+Use CSS variables instead (see Pattern: CSS Variables above)
+```
+
+---
+
+## Content Guidelines
+
+### Language and Tone
+
+- ✅ Use clear, technical language
+- ✅ Be direct and concise
+- ✅ Use active voice ("Place components in..." not "Components should be placed in...")
+- ❌ Avoid ambiguous terms ("properly", "correctly" without explanation)
+- ❌ Don't assume knowledge - explain technical terms
+
+### Formatting
+
+**Headings:**
+- Use # for main sections
+- Use ## for subsections
+- Use ### for detailed points
+- Keep hierarchy consistent
+
+**Lists:**
+- Use ✅ for correct patterns/best practices
+- Use ❌ for incorrect patterns/anti-patterns
+- Use ⚠️ for warnings or important notes
+- Use 💡 for tips or insights
+
+**Code Blocks:**
+- Always specify language: ```tsx, ```scss, ```bash
+- Include file paths as comments when relevant
+- Keep examples concise but complete
+- Show imports and exports for context
+
+### Examples Structure
+
+```markdown
+### Pattern Name
+
+**Context:** When/why you'd use this pattern
+
+**Implementation:**
+
+```language
+// Step-by-step code example
+```
+
+**Result:** What you get from using this pattern
+
+**Common Pitfalls:**
+- Thing to watch out for #1
+- Thing to watch out for #2
+```
+
+---
+
+## Rule Maintenance
+
+### When to Create a New Rule
+
+Create a new rule when:
+- ✅ You discover a recurring pattern or issue
+- ✅ There's a common mistake that needs prevention
+- ✅ You learn something that would have saved time earlier
+- ✅ A feature has specific conventions not obvious from code
+
+Don't create a rule when:
+- ❌ It's a one-time fix
+- ❌ It's already covered in existing documentation
+- ❌ It's self-evident from the code structure
+
+### When to Update Existing Rules
+
+Update rules when:
+- ✅ You discover the root cause of a previously documented issue
+- ✅ A better pattern or solution emerges
+- ✅ The existing rule is incomplete or misleading
+- ✅ Framework/library conventions change
+
+### Version Control
+
+- Commit rule changes with clear messages explaining what changed and why
+- When significantly revising a rule, consider keeping the old content in a "Legacy Notes" section
+- Reference specific commits or PRs that relate to the rule
+
+---
+
+## Lessons Learned from HAPAS Project
+
+### Key Insights
+
+1. **Research Before Implementing**
+   - Examine core module patterns first
+   - Read official documentation thoroughly
+   - Test assumptions with simple examples
+
+2. **Document Root Causes, Not Just Solutions**
+   - Understanding WHY something doesn't work prevents future mistakes
+   - Root cause analysis helps others learn the platform
+   - Include investigation process, not just conclusions
+
+3. **Follow Platform Conventions**
+   - When in doubt, check how core modules do it
+   - Don't assume patterns from other frameworks will work
+   - Platform-specific conventions exist for good reasons
+
+4. **Test Incrementally**
+   - Start with simplest possible implementation
+   - Verify each step before adding complexity
+   - Don't build entire feature without testing component discovery
+
+### Example: SCSS Variables Issue
+
+**What we learned:**
+- EverShop doesn't support @import for SCSS variables
+- Core modules use CSS variables or Tailwind exclusively
+- Theme compilation uses copyfiles, not sass preprocessing
+
+**How we documented it:**
+1. Created comprehensive root cause document
+2. Updated theme component rules with correct patterns
+3. Added anti-patterns section showing what fails
+4. Included step-by-step solution with examples
+5. Explained WHY it doesn't work, not just WHAT to do instead
+
+**Impact:**
+- Future developers won't make same mistake
+- Understanding root cause helps with similar issues
+- Clear examples provide copy-paste solutions
+
+---
+
+## Rule Categories
+
+Organize rules by concern:
+
+### 1. Architecture Rules
+- Component structure and placement
+- Module organization
+- Directory conventions
+
+### 2. Code Style Rules
+- TypeScript/JavaScript patterns
+- React component patterns
+- Naming conventions
+
+### 3. Framework-Specific Rules
+- EverShop conventions
+- Area system usage
+- GraphQL query patterns
+
+### 4. Build and Deployment Rules
+- Compilation process
+- Environment-specific configs
+- Production considerations
+
+### 5. Troubleshooting Rules
+- Common issues and solutions
+- Debugging strategies
+- Performance considerations
+
+---
+
+## Template for New Rules
+
+```markdown
+---
+description: One-sentence description
+globs:
+  - "relevant/path/**/*"
+alwaysApply: false
+---
+
+# Rule Title
+
+Brief overview of what this rule covers and why it exists.
+
+## Context
+
+When/where this rule applies.
+
+## The Pattern
+
+### Correct Approach
+
+✅ What to do:
+```language
+// Code example
+```
+
+### Anti-Pattern
+
+❌ What NOT to do:
+```language
+// Code example that fails
+```
+
+**Why this fails:** Explanation of root cause
+
+## Common Issues
+
+### Issue: Problem Description
+
+**Symptoms:**
+- Observable symptom 1
+- Observable symptom 2
+
+**Root Cause:**
+Technical explanation
+
+**Solution:**
+Step-by-step fix
+
+## Best Practices
+
+1. Recommendation 1 with rationale
+2. Recommendation 2 with rationale
+3. Recommendation 3 with rationale
+
+## Examples
+
+Real-world example showing the pattern in use.
+
+## Related Rules
+
+- [Related Rule 1](#)
+- [Related Rule 2](#)
+
+---
+
+**Last Updated:** Date
+**Related Issues/PRs:** Links if applicable
+```
+
+---
+
+## Effective Use of globs
+
+### Specific Patterns
+
+```yaml
+globs:
+  - "themes/hapas/src/pages/**/*"           # All page components
+  - "themes/hapas/src/pages/all/*.tsx"      # Only global components
+  - "extensions/*/src/**/*"                 # All extensions
+  - "scripts/*.js"                          # Root-level scripts only
+```
+
+### When to Use Broad globs
+
+```yaml
+globs:
+  - "**/*.tsx"    # Use sparingly - only for universal TypeScript rules
+  - "**/*.scss"   # Only for universal styling rules
+```
+
+### Multiple Patterns
+
+```yaml
+globs:
+  - "themes/*/src/pages/**/*"     # Covers all themes
+  - "packages/*/src/modules/**/*" # Covers all packages
+```
+
+---
+
+## Measuring Rule Effectiveness
+
+A good rule should:
+
+1. **Prevent repeated mistakes** - Check if the same issue occurs again
+2. **Speed up development** - Developers reference it when stuck
+3. **Improve code quality** - Code aligns with best practices
+4. **Facilitate onboarding** - New developers understand conventions quickly
+
+If a rule doesn't meet these criteria, consider revising or removing it.
+
+---
+
+## Summary
+
+**DO:**
+- ✅ Be specific and actionable
+- ✅ Provide context and rationale
+- ✅ Use examples liberally
+- ✅ Document root causes
+- ✅ Show anti-patterns
+- ✅ Keep rules focused and scannable
+- ✅ Update rules based on learnings
+
+**DON'T:**
+- ❌ Be vague or ambiguous
+- ❌ Just list commands without explanation
+- ❌ Assume prior knowledge
+- ❌ Create rules for one-time issues
+- ❌ Let rules become outdated
+- ❌ Use overly broad glob patterns
+
+**Remember:** Good rules save time, prevent mistakes, and help developers understand the "why" behind conventions, not just the "what".
+
+---
+
+**Created:** October 8, 2025  
+**Based on:** HAPAS E-commerce Project Learnings  
+**Status:** Living Document - Update as new patterns emerge

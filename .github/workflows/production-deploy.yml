@@ -1,0 +1,202 @@
+name: Production Deployment
+
+on:
+  push:
+    branches: [ master, main, prod ]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment environment'
+        required: true
+        default: 'production'
+        type: choice
+        options:
+        - production
+        - staging
+
+env:
+  DEPLOY_PATH: /var/www/hapas_ecommerce
+  LOG_PATH: /home/hapas/logs
+  
+jobs:
+  deploy:
+    name: Deploy to Production
+    runs-on: self-hosted
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/prod'
+    
+    steps:
+      - name: Check runner user
+        run: |
+          echo "Running as user: $(whoami)"
+          echo "Home directory: $HOME"
+          echo "Working directory: $(pwd)"
+          
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          
+      - name: Verify deployment environment
+        run: |
+          echo "Deployment triggered by: ${{ github.actor }}"
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Commit: ${{ github.sha }}"
+          echo "Commit message: ${{ github.event.head_commit.message }}"
+          
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          
+      - name: Pre-deployment checks
+        run: |
+          # Check if deployment scripts exist
+          if [ ! -f "$DEPLOY_PATH/scripts/deploy.sh" ]; then
+            echo "❌ Deployment script not found!"
+            exit 1
+          fi
+          
+          # Check Docker access
+          docker --version || exit 1
+          docker-compose --version || exit 1
+          
+          # Check available disk space
+          available_space=$(df $DEPLOY_PATH | awk 'NR==2 {print $4}')
+          if [ "$available_space" -lt 1048576 ]; then # Less than 1GB
+            echo "⚠️ Warning: Low disk space"
+          fi
+          
+          echo "✅ Pre-deployment checks passed"
+          
+      - name: Create deployment backup
+        run: |
+          echo "🔄 Creating pre-deployment backup..."
+          mkdir -p /home/hapas/backups/github-actions
+          
+          # Backup current deployment
+          backup_name="pre-deploy-$(date +%Y%m%d-%H%M%S)-${{ github.sha }}"
+          
+          # Database backup (if running)
+          if docker ps | grep -q "hapas-ecommerce-db"; then
+            echo "📁 Backing up database..."
+            docker exec hapas-ecommerce-db pg_dump -U hapas hapas_ecommerce > "/home/hapas/backups/github-actions/${backup_name}.sql" || echo "⚠️ Database backup skipped"
+          fi
+          
+          echo "✅ Backup completed: $backup_name"
+          
+      - name: Deploy application
+        run: |
+          echo "🚀 Starting deployment..."
+          cd $DEPLOY_PATH
+          
+          # Set environment variables
+          export NODE_ENV=production
+          export COMPOSE_FILE=docker-compose.prod.yml
+          
+          # Run deployment script
+          chmod +x scripts/deploy.sh
+          ./scripts/deploy.sh --backup
+          
+      - name: Post-deployment verification
+        run: |
+          echo "🔍 Verifying deployment..."
+          cd $DEPLOY_PATH
+          
+          # Wait for services to be ready
+          sleep 30
+          
+          # Run health check
+          chmod +x scripts/health-check.sh
+          if ./scripts/health-check.sh; then
+            echo "✅ Health check passed"
+          else
+            echo "❌ Health check failed"
+            exit 1
+          fi
+          
+          # Check application response
+          if curl -f -s -m 30 http://localhost:3001/ > /dev/null; then
+            echo "✅ Application is responding"
+          else
+            echo "❌ Application is not responding"
+            exit 1
+          fi
+          
+      - name: Update deployment status
+        if: success()
+        run: |
+          echo "📊 Deployment completed successfully!"
+          echo "Commit: ${{ github.sha }}"
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Deployed at: $(date)"
+          echo "Application URL: http://localhost:3001"
+          
+          # Log deployment details
+          mkdir -p $LOG_PATH
+          cat >> $LOG_PATH/deployment-history.log << EOL
+          [$(date '+%Y-%m-%d %H:%M:%S')] SUCCESS - Deploy ${{ github.sha }} by ${{ github.actor }}
+          Branch: ${{ github.ref_name }}
+          Commit message: ${{ github.event.head_commit.message }}
+          EOL
+          
+      - name: Deployment failure handling
+        if: failure()
+        run: |
+          echo "❌ Deployment failed!"
+          
+          # Log failure
+          mkdir -p $LOG_PATH
+          cat >> $LOG_PATH/deployment-history.log << EOL
+          [$(date '+%Y-%m-%d %H:%M:%S')] FAILED - Deploy ${{ github.sha }} by ${{ github.actor }}
+          Branch: ${{ github.ref_name }}
+          Commit message: ${{ github.event.head_commit.message }}
+          EOL
+          
+          # Show recent logs
+          echo "📋 Recent container logs:"
+          docker logs hapas-ecommerce-app --tail 50 || echo "No app logs available"
+          docker logs hapas-ecommerce-db --tail 20 || echo "No db logs available"
+          
+          # Attempt automatic rollback (optional)
+          if [ "${{ github.event_name }}" == "push" ]; then
+            echo "🔄 Attempting automatic rollback..."
+            cd $DEPLOY_PATH
+            ./scripts/deploy.sh --rollback || echo "⚠️ Rollback failed"
+          fi
+          
+      - name: Cleanup
+        if: always()
+        run: |
+          echo "🧹 Cleaning up..."
+          
+          # Clean up Docker resources
+          docker system prune -f > /dev/null 2>&1 || true
+          
+          # Remove old backups (keep last 10)
+          find /home/hapas/backups/github-actions -name "*.sql" -type f | sort -r | tail -n +11 | xargs rm -f || true
+          
+          echo "✅ Cleanup completed"
+
+  notify:
+    name: Deployment Notification
+    runs-on: self-hosted
+    needs: deploy
+    if: always()
+    
+    steps:
+      - name: Send notification
+        run: |
+          if [ "${{ needs.deploy.result }}" == "success" ]; then
+            echo "🎉 Deployment successful!"
+            echo "Repository: ${{ github.repository }}"
+            echo "Branch: ${{ github.ref_name }}"
+            echo "Commit: ${{ github.sha }}"
+            echo "Author: ${{ github.actor }}"
+          else
+            echo "💥 Deployment failed!"
+            echo "Repository: ${{ github.repository }}"
+            echo "Branch: ${{ github.ref_name }}"
+            echo "Commit: ${{ github.sha }}"
+            echo "Author: ${{ github.actor }}"
+          fi

@@ -1,0 +1,116 @@
+version: '3.8'
+
+services:
+  hapas-app-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: hapas-ecommerce-app-dev
+    environment:
+      - NODE_ENV=development
+      - DB_HOST=hapas-database
+      - DB_PORT=5432
+      - DB_PASSWORD=hapasdev123
+      - DB_USER=hapas
+      - DB_NAME=hapas_ecommerce
+      - PORT=3000
+      - HOST=0.0.0.0
+    networks:
+      - hapas-production
+    depends_on:
+      - hapas-database
+    ports:
+      - "3001:3000"
+    volumes:
+      - ./.evershop:/app/.evershop
+      - ./media:/app/media
+      - ./public:/app/public
+      - ./.log:/app/.log
+  
+  hapas-database:
+    image: postgres:16
+    container_name: hapas-ecommerce-db
+    environment:
+      - POSTGRES_DB=hapas_ecommerce
+      - POSTGRES_USER=hapas
+      - POSTGRES_PASSWORD=hapasdev123
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - hapas-db-data:/var/lib/postgresql/data
+    networks:
+      - hapas-production
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U hapas -d hapas_ecommerce"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Database Admin UI - pgweb (Lightweight, recommended for quick tasks)
+  pgweb:
+    image: sosedoff/pgweb:latest
+    container_name: hapas-pgweb
+    restart: unless-stopped
+    environment:
+      - DATABASE_URL=postgres://hapas:hapasdev123@hapas-database:5432/hapas_ecommerce?sslmode=disable
+    ports:
+      - "8081:8081"
+    networks:
+      - hapas-production
+    depends_on:
+      hapas-database:
+        condition: service_healthy
+    profiles:
+      - tools
+      - pgweb
+
+  # Database Admin UI - Supabase Studio (Modern UI with schema visualization)
+  # Uncomment if you prefer Supabase Studio over pgweb
+  # postgres-meta:
+  #   image: supabase/postgres-meta:v0.68.0
+  #   container_name: hapas-supabase-meta
+  #   restart: unless-stopped
+  #   environment:
+  #     PG_META_HOST: hapas-database
+  #     PG_META_PORT: 5432
+  #     PG_META_DB: hapas_ecommerce
+  #     PG_META_USER: hapas
+  #     PG_META_PASSWORD: hapasdev123
+  #   networks:
+  #     - hapas-production
+  #   depends_on:
+  #     hapas-database:
+  #       condition: service_healthy
+  #   profiles:
+  #     - tools
+  #     - supabase
+  #
+  # supabase-studio:
+  #   image: supabase/studio:20240101-5d1ff88
+  #   container_name: hapas-supabase-studio
+  #   restart: unless-stopped
+  #   ports:
+  #     - "3002:3000"
+  #   environment:
+  #     STUDIO_PG_META_URL: http://postgres-meta:8080
+  #     POSTGRES_PASSWORD: hapasdev123
+  #     DEFAULT_ORGANIZATION_NAME: HAPAS E-commerce
+  #     DEFAULT_PROJECT_NAME: HAPAS Development
+  #     SUPABASE_PUBLIC_URL: http://localhost:3002
+  #     NEXT_PUBLIC_ENABLE_LOGS: "true"
+  #   depends_on:
+  #     - postgres-meta
+  #   networks:
+  #     - hapas-production
+  #   profiles:
+  #     - tools
+  #     - supabase
+
+volumes:
+  hapas-db-data:
+
+networks:
+  hapas-production:
+    name: HapasEcommerceProduction
+    driver: bridge

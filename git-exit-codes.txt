@@ -1,0 +1,2 @@
+commitExit=1
+pushExit=0

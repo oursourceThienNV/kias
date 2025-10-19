@@ -1,0 +1,184 @@
+/**
+ * Main Navigation Styles - HAPAS Theme
+ * 
+ * Theo EverShop SCSS best practices:
+ * - Dùng CSS variables (var(--variable)) thay vì SCSS variables ($variable)
+ * - KHÔNG dùng @import để load variables
+ * - Variables được định nghĩa trong themes/hapas/src/styles/theme.scss
+ * 
+ * Reference: https://evershop.io/docs/development/theme/styling
+ */
+
+/* Component không cần Tailwind vì đã có component styles riêng */
+
+.hapas-main-navigation {
+  background-color: var(--color-bg-primary);
+  border-bottom: 1px solid var(--color-border);
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  
+  .page-width {
+    width: 100%;
+  }
+}
+
+.nav-list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xl);
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  
+  @media (max-width: 1024px) {
+    gap: var(--spacing-lg);
+  }
+  
+  @media (max-width: 768px) {
+    display: none; // Mobile menu handled separately
+  }
+}
+
+.nav-item {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.nav-link,
+.nav-button {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-sm) 0;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-text-primary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  
+  &:hover {
+    color: var(--color-text-secondary);
+  }
+  
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+    border-radius: var(--border-radius-sm);
+  }
+}
+
+// Arrow icon trong dropdown button
+.nav-button svg {
+  transition: transform var(--transition-fast);
+}
+
+.nav-item:hover .nav-button svg,
+.nav-button[aria-expanded="true"] svg {
+  transform: rotate(180deg);
+}
+
+// Dropdown submenu
+.nav-submenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 200px;
+  background-color: var(--color-bg-primary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-lg);
+  padding: var(--spacing-sm);
+  list-style: none;
+  margin: 0;
+  z-index: var(--z-dropdown);
+  
+  // Default hidden state
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-8px);
+  transition: opacity var(--transition-fast),
+              visibility var(--transition-fast),
+              transform var(--transition-fast);
+  
+  // Visible state
+  &.visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+  
+  li {
+    margin: 0;
+  }
+}
+
+.nav-submenu-link {
+  display: block;
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  border-radius: var(--border-radius-sm);
+  transition: background-color var(--transition-fast),
+              color var(--transition-fast);
+  
+  &:hover {
+    background-color: var(--color-bg-accent);
+    color: var(--color-text-primary);
+  }
+  
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: -2px;
+  }
+}
+
+/* ===== Accessibility & Reduced Motion ===== */
+@media (prefers-reduced-motion: reduce) {
+  .nav-link,
+  .nav-button,
+  .nav-submenu,
+  .nav-submenu-link,
+  .nav-button svg {
+    transition: none;
+  }
+}
+
+/* ===== Mobile Responsive ===== */
+@media (max-width: 768px) {
+  .hapas-main-navigation {
+    height: auto;
+  }
+  
+  .nav-list {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: var(--spacing-md) 0;
+  }
+  
+  .nav-item {
+    width: 100%;
+    height: auto;
+  }
+  
+  .nav-submenu {
+    position: static;
+    box-shadow: none;
+    border: none;
+    border-left: 2px solid var(--color-border);
+    margin-left: var(--spacing-md);
+    padding-left: var(--spacing-md);
+  }
+}

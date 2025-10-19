@@ -1,0 +1,85 @@
+version: '3.8'
+
+services:
+  hapas-app:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    image: hapas_ecommerce-hapas-app
+    container_name: hapas-ecommerce-app
+    env_file:
+      - .env.docker
+    environment:
+      - NODE_ENV=production
+      - DB_HOST=hapas-database
+      - DB_PORT=5432
+      - DB_PASSWORD=hapasdev123
+      - DB_USER=hapas
+      - DB_NAME=hapas_ecommerce
+      - PORT=3000
+      - HOST=0.0.0.0
+    networks:
+      - hapas-production
+    depends_on:
+      - hapas-database
+    ports:
+      - "3001:3000"
+    volumes:
+      - ./media:/app/media
+      - ./public:/app/public
+      - hapas-logs:/app/logs
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+  
+  hapas-database:
+    image: postgres:16
+    container_name: hapas-ecommerce-db
+    environment:
+      - POSTGRES_DB=hapas_ecommerce
+      - POSTGRES_USER=hapas
+      - POSTGRES_PASSWORD=hapasdev123
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - hapas-db-data:/var/lib/postgresql/data
+    networks:
+      - hapas-production
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U hapas -d hapas_ecommerce"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Database Admin UI - pgweb (Only enable when needed for maintenance)
+  # WARNING: In production, ONLY run this temporarily and restrict access via firewall!
+  pgweb:
+    image: sosedoff/pgweb:latest
+    container_name: hapas-pgweb-prod
+    restart: "no"
+    environment:
+      - DATABASE_URL=postgres://hapas:hapasdev123@hapas-database:5432/hapas_ecommerce?sslmode=disable
+    ports:
+      # Only bind to localhost for security
+      - "127.0.0.1:8081:8081"
+    networks:
+      - hapas-production
+    depends_on:
+      hapas-database:
+        condition: service_healthy
+    profiles:
+      - admin-tools
+    # Security note: Access via SSH tunnel in production:
+    # ssh -L 8081:localhost:8081 user@production-server
+
+volumes:
+  hapas-db-data:
+  hapas-logs:
+
+networks:
+  hapas-production:
+    name: HapasEcommerceProduction
+    driver: bridge

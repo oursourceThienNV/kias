@@ -1,0 +1,164 @@
+{
+  "timestamp": "2025-10-16T14:12:37.536Z",
+  "stats": {
+    "categoriesCreated": 0,
+    "attributesCreated": 0,
+    "productsScraped": 70,
+    "productsImported": 0,
+    "productsFailed": 70,
+    "imagesDownloaded": 0,
+    "imagesFailed": 0,
+    "cmsPagesCreated": 0,
+    "cmsPagesFailed": 6
+  },
+  "summary": {
+    "totalProductsScraped": 70,
+    "totalProductsImported": 0,
+    "successRate": "0.00%",
+    "totalErrors": 14
+  },
+  "categories": [],
+  "attributes": [],
+  "errors": [
+    {
+      "type": "attribute_creation",
+      "attribute": "Chất liệu",
+      "error": {
+        "error": {
+          "status": 500,
+          "message": "Exception in middleware createAttribute: duplicate key value violates unique constraint \"ATTRIBUTE_CODE_UNIQUE\""
+        }
+      }
+    },
+    {
+      "type": "attribute_creation",
+      "attribute": "Kích cỡ",
+      "error": {
+        "error": {
+          "status": 500,
+          "message": "Exception in middleware createAttribute: duplicate key value violates unique constraint \"ATTRIBUTE_CODE_UNIQUE\""
+        }
+      }
+    },
+    {
+      "type": "category_creation",
+      "category": "Set Bộ",
+      "error": {
+        "error": {
+          "status": 500,
+          "message": "Exception in middleware createCategory: duplicate key value violates unique constraint \"CATEGORY_URL_KEY_UNIQUE\""
+        }
+      }
+    },
+    {
+      "type": "category_creation",
+      "category": "Váy & Đầm",
+      "error": {
+        "error": {
+          "status": 500,
+          "message": "Exception in middleware createCategory: duplicate key value violates unique constraint \"CATEGORY_URL_KEY_UNIQUE\""
+        }
+      }
+    },
+    {
+      "type": "category_creation",
+      "category": "Quần",
+      "error": {
+        "error": {
+          "status": 500,
+          "message": "Exception in middleware createCategory: duplicate key value violates unique constraint \"CATEGORY_URL_KEY_UNIQUE\""
+        }
+      }
+    },
+    {
+      "type": "category_creation",
+      "category": "Áo",
+      "error": {
+        "error": {
+          "status": 500,
+          "message": "Exception in middleware createCategory: duplicate key value violates unique constraint \"CATEGORY_URL_KEY_UNIQUE\""
+        }
+      }
+    },
+    {
+      "type": "category_creation",
+      "category": "Hàng mới về",
+      "error": {
+        "error": {
+          "status": 500,
+          "message": "Exception in middleware createCategory: duplicate key value violates unique constraint \"CATEGORY_URL_KEY_UNIQUE\""
+        }
+      }
+    },
+    {
+      "type": "category_creation",
+      "category": "Giá mới hấp dẫn",
+      "error": {
+        "error": {
+          "status": 500,
+          "message": "Exception in middleware createCategory: duplicate key value violates unique constraint \"CATEGORY_URL_KEY_UNIQUE\""
+        }
+      }
+    },
+    {
+      "type": "cms_page_creation",
+      "page": "Xu hướng thời trang Xuân Hè 2025",
+      "error": {
+        "error": {
+          "status": 500,
+          "message": "Exception in middleware createPage: duplicate key value violates unique constraint \"URL_KEY_UNIQUE\""
+        }
+      }
+    },
+    {
+      "type": "cms_page_creation",
+      "page": "Bí quyết phối đồ công sở thanh lịch",
+      "error": {
+        "error": {
+          "status": 500,
+          "message": "Exception in middleware createPage: duplicate key value violates unique constraint \"URL_KEY_UNIQUE\""
+        }
+      }
+    },
+    {
+      "type": "cms_page_creation",
+      "page": "BST Set Bộ Cao Cấp 2025",
+      "error": {
+        "error": {
+          "status": 500,
+          "message": "Exception in middleware createPage: duplicate key value violates unique constraint \"URL_KEY_UNIQUE\""
+        }
+      }
+    },
+    {
+      "type": "cms_page_creation",
+      "page": "Chất liệu vải cao cấp - Điều làm nên KIAS",
+      "error": {
+        "error": {
+          "status": 500,
+          "message": "Exception in middleware createPage: duplicate key value violates unique constraint \"URL_KEY_UNIQUE\""
+        }
+      }
+    },
+    {
+      "type": "cms_page_creation",
+      "page": "Phong cách tối giản - Xu hướng bền vững",
+      "error": {
+        "error": {
+          "status": 500,
+          "message": "Exception in middleware createPage: duplicate key value violates unique constraint \"URL_KEY_UNIQUE\""
+        }
+      }
+    },
+    {
+      "type": "cms_page_creation",
+      "page": "Hướng dẫn bảo quản quần áo cao cấp",
+      "error": {
+        "error": {
+          "status": 500,
+          "message": "Exception in middleware createPage: duplicate key value violates unique constraint \"URL_KEY_UNIQUE\""
+        }
+      }
+    }
+  ]
+}

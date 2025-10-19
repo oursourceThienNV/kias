@@ -1,0 +1,23 @@
+FROM node:20-alpine
+
+RUN apk add --no-cache curl wget git python3 make g++
+
+WORKDIR /app
+
+COPY . .
+
+ENV NODE_ENV=development
+ENV HUSKY=0
+
+RUN npm install
+
+RUN npm run compile && npm run compile:db
+
+RUN mkdir -p /app/media /app/public /app/logs /app/.evershop && \
+    chown -R node:node /app
+
+EXPOSE 3000
+
+USER node
+
+CMD ["npm", "run", "dev"]
