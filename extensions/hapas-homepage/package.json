@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "type": "module",
   "description": "HAPAS Homepage Extension - Data wiring for HAPAS theme homepage components",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
     "clean": "rimraf dist",
@@ -20,4 +21,3 @@
     }
   }
 }
-

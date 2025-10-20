@@ -5,23 +5,34 @@
 
 import { readFile } from 'fs/promises';
 import { join } from 'path';
-import { pathToFileURL } from 'url';
 
 export default async function homepageMiddleware(request, response, next) {
   try {
-    // Convert path to file URL for cross-platform ES module compatibility (Windows fix)
-    const contextHelperPath = join(process.cwd(), 'packages/evershop/dist/modules/graphql/services/contextHelper.js');
-    const { setContextValue } = await import(pathToFileURL(contextHelperPath).href);
+    // Default mapping config in case file doesn't exist
+    let mappingConfig = {
+      homepage: {
+        hero: {
+          slides: []
+        }
+      },
+      categoryMapping: []
+    };
     
-    // Load KIAS-HAPAS mapping config
-    const configPath = join(process.cwd(), 'config', 'kias-hapas-mapping.json');
-    const configContent = await readFile(configPath, 'utf-8');
-    const mappingConfig = JSON.parse(configContent);
+    try {
+      // Try to load KIAS-HAPAS mapping config
+      const configPath = join(process.cwd(), 'config', 'kias-hapas-mapping.json');
+      const configContent = await readFile(configPath, 'utf-8');
+      mappingConfig = JSON.parse(configContent);
+    } catch (configError) {
+      // Config file doesn't exist or is invalid, use defaults
+      console.log('[HAPAS Homepage Middleware]: Using default config - kias-hapas-mapping.json not found');
+    }
     
-    // Set context values for theme components
-    //setContextValue(request, 'kiasHapasMapping', mappingConfig);
-    setContextValue(request, 'slides', mappingConfig.homepage?.hero?.slides || []);
-    setContextValue(request, 'categoryTiles', mappingConfig.categoryMapping || []);
+    // Set context values for theme components using direct assignment
+    request.locals = request.locals || {};
+    request.locals.context = request.locals.context || {};
+    request.locals.context.slides = mappingConfig.homepage?.hero?.slides || [];
+    request.locals.context.categoryTiles = mappingConfig.categoryMapping || [];
     
     next();
   } catch (e) {

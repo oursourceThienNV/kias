@@ -13,9 +13,9 @@ async function resetAdminPassword() {
   const client = new Client({
     host: 'localhost',
     port: 5433,
-    database: 'postgres',
-    user: 'postgres',
-    password: 'postgres'
+    database: 'hapas_ecommerce',
+    user: 'hapas',
+    password: 'hapasdev123'
   });
   
   try {
@@ -23,7 +23,7 @@ async function resetAdminPassword() {
     console.log('✅ Connected to database');
     
     // Generate new password hash
-    const newPassword = 'admin123';
+    const newPassword = '123456a@';
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
     
@@ -37,7 +37,7 @@ async function resetAdminPassword() {
     if (result.rowCount > 0) {
       console.log('✅ Admin password updated successfully!');
       console.log('📧 Email: admin@admin.com');
-      console.log('🔑 Password: admin123');
+      console.log('🔑 Password: 123456a@');
     } else {
       console.log('❌ No admin user found with email admin@admin.com');
     }

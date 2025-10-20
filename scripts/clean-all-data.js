@@ -33,10 +33,10 @@ const __dirname = path.dirname(__filename);
 const CONFIG = {
   DB: {
     host: 'localhost',
-    port: 5432,
-    database: 'evershop',
-    user: 'postgres',
-    password: 'postgres'
+    port: 5433,
+    database: 'hapas_ecommerce',
+    user: 'hapas',
+    password: 'hapasdev123'
   },
   MEDIA_DIR: path.join(__dirname, '../media/catalog/product')
 };
