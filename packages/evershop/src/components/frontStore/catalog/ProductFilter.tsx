@@ -297,7 +297,7 @@ export const PriceFilterRenderer: React.FC<{
 
   return (
     <DefaultFilterRenderer title={_('Price')}>
-      <div className="price-filter border-b border-gray-200 pb-2 mb-2">
+      <div className="price-filter pb-2 mb-2">
         <div className="price-slider mb-4">
           <RangeSlider.default
             min={priceRange.min}
