@@ -1,6 +1,6 @@
 import Area from '@components/common/Area.js';
 import { useCategory } from '@components/frontStore/catalog/categoryContext.js';
-import { ProductList } from '@components/frontStore/catalog/ProductList.js';
+import { LoadMoreProducts } from '@components/frontStore/catalog/LoadMoreProducts.js';
 import { _ } from '@evershop/evershop/lib/locale/translate/_';
 import React from 'react';
 
@@ -16,15 +16,14 @@ export function CategoryProducts() {
         className="category__products__before"
       />
       <div>
-        <ProductList
+        <LoadMoreProducts
           products={products.items}
           layout="grid"
-          gridColumns={3}
+          gridColumns={4}
           showAddToCart={true}
+          initialCount={8}
+          loadMoreCount={8}
         />
-        <span className="product-count italic block mt-5">
-          {_('${count} products', { count: products.total.toString() })}
-        </span>
       </div>
       <Area id="categoryProductsAfter" className="category__products__after" />
     </>

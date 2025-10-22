@@ -13,6 +13,18 @@ export interface CategoryProducts {
   total: number;
 }
 
+export interface CategoryChild {
+  categoryId: number;
+  name: string;
+  uuid: string;
+  url?: string;
+  urlKey?: string;
+  image?: {
+    alt: string;
+    url: string;
+  };
+}
+
 export interface CategoryData {
   categoryId: number;
   uuid: string;
@@ -26,7 +38,7 @@ export interface CategoryData {
   showProducts: boolean;
   products: CategoryProducts;
   availableAttributes: FilterableAttribute[];
-  children: CategoryFilter[];
+  children: CategoryChild[];
   priceRange: {
     min: number;
     minText: string;

@@ -1,0 +1,128 @@
+.close-x-btn {
+	font-size: 1.5rem;
+	width: 48px;
+	height: 48px;
+	line-height: 1;
+	font-weight: 700;
+	z-index: 10;
+	
+	@media (min-width: 768px) {
+		font-size: 2rem;
+		width: 56px;
+		height: 56px;
+	}
+}
+
+input[type="checkbox"] {
+	accent-color: #111827;
+	border-color: #111827;
+	width: 16px;
+	height: 16px;
+	cursor: pointer;
+	
+	@media (min-width: 768px) {
+		width: 18px;
+		height: 18px;
+	}
+}
+
+.price-panel {
+	.filter-title,
+	.price-filter .flex.justify-between {
+		display: none;
+	}
+
+	.range-slider {
+		height: 5px;
+		background: #f3f4f6;
+		border-radius: 9999px;
+		margin-top: 6px;
+		margin-bottom: 12px;
+
+		@media (min-width: 768px) {
+			height: 6px;
+			margin-top: 8px;
+			margin-bottom: 18px;
+		}
+
+		.range-slider__range {
+			background: #d1d5db;
+		}
+
+		.range-slider__thumb {
+			width: 16px;
+			height: 16px;
+			background: #ffffff;
+			border: 2px solid #e5e7eb;
+			box-shadow: none;
+			
+			@media (min-width: 768px) {
+				width: 18px;
+				height: 18px;
+			}
+		}
+	}
+
+	.mt-4 {
+		margin-top: 10px;
+		
+		@media (min-width: 768px) {
+			margin-top: 12px;
+		}
+	}
+
+	.text-gray-600 {
+		color: #6b7280;
+		font-size: 11px;
+		
+		@media (min-width: 768px) {
+			font-size: 13px;
+		}
+	}
+
+	input.w-28 {
+		width: 90px;
+		font-size: 12px;
+		font-weight: 500;
+		color: #111827;
+		
+		@media (min-width: 768px) {
+			width: 112px;
+			font-size: 14px;
+		}
+	}
+
+	label {
+		color: #6b7280;
+		font-size: 12px;
+		font-weight: 500;
+
+		@media (min-width: 768px) {
+			font-size: 14px;
+		}
+
+		input[type="checkbox"] {
+			margin-right: 6px;
+			
+			@media (min-width: 768px) {
+				margin-right: 8px;
+			}
+		}
+	}
+
+	label input[type="checkbox"]:checked + span,
+	input[type="checkbox"]:checked + label,
+	input[type="checkbox"]:checked + .checkbox-label,
+	label input[type="checkbox"]:checked ~ .checkbox-label {
+		color: #111827;
+	}
+
+	label:has(input[type="checkbox"]:checked) {
+		color: #111827 !important;
+	}
+
+	input[type="checkbox"]:checked {
+		accent-color: #111827;
+		border-color: #111827;
+	}
+}

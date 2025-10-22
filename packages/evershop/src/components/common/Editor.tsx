@@ -156,7 +156,7 @@ export function Editor({ rows }: EditorProps) {
         const rowClasses = getRowClasses(row.size);
         return (
           <div
-            className={`row__container mt-7 grid ${rowClasses} grid-cols-1 gap-5`}
+            className={`row__container grid ${rowClasses} grid-cols-1 gap-5`}
             key={index}
           >
             {row.columns.map((column, index) => {

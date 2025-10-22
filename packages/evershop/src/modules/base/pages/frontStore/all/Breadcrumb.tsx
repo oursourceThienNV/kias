@@ -10,22 +10,26 @@ interface BreadcrumbProps {
 }
 
 function Breadcrumb({ pageInfo: { breadcrumbs } }: BreadcrumbProps) {
-  return breadcrumbs.length ? (
-    <div className="breadcrumb page-width my-5">
-      {breadcrumbs.map((breadcrumb, index) =>
-        index === breadcrumbs.length - 1 ? (
-          <span key={index}>{breadcrumb.title}</span>
-        ) : (
-          <span key={index}>
-            <a href={breadcrumb.url} className="text-interactive">
-              {breadcrumb.title}
-            </a>
-            <span>{' / '}</span>
-          </span>
-        )
-      )}
-    </div>
-  ) : null;
+  // Tắt breadcrumb - không sử dụng
+  return null;
+  
+  // Code cũ (giữ lại để restore sau nếu cần):
+  // return breadcrumbs.length ? (
+  //   <div className="breadcrumb page-width my-5">
+  //     {breadcrumbs.map((breadcrumb, index) =>
+  //       index === breadcrumbs.length - 1 ? (
+  //         <span key={index}>{breadcrumb.title}</span>
+  //       ) : (
+  //         <span key={index}>
+  //           <a href={breadcrumb.url} className="text-interactive">
+  //             {breadcrumb.title}
+  //           </a>
+  //           <span>{' / '}</span>
+  //         </span>
+  //       )
+  //     )}
+  //   </div>
+  // ) : null;
 }
 
 export const query = `
