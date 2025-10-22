@@ -1,0 +1,390 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.hapas-friend-section {
+  padding: 4rem 0;
+  background: #f8f9fa; // Nền xám nhạt như trong hình
+  
+  @media (max-width: $breakpoint-md) {
+    padding: 3rem 0;
+  }
+  
+  @media (max-width: $breakpoint-sm) {
+    padding: 2rem 0;
+  }
+}
+
+.hapas-friend-large {
+  // Large images - no special effects on click
+  align-self: flex-start; /* Align to top */
+  width: 400px !important; /* Force consistent width */
+  height: 533px !important; /* Force consistent height */
+  flex-shrink: 0; /* Prevent shrinking */
+  
+  @media (max-width: $breakpoint-lg) {
+    width: 320px !important;
+    height: 427px !important;
+  }
+  
+  @media (max-width: $breakpoint-md) {
+    width: 280px !important;
+    height: 373px !important;
+  }
+  
+  @media (max-width: $breakpoint-sm) {
+    width: 240px !important;
+    height: 320px !important;
+  }
+  
+  .hapas-friend-image {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover; /* Ensure consistent aspect ratio */
+  }
+  
+  // Image container
+  .relative.overflow-hidden {
+    width: 100% !important;
+    height: 533px !important;
+    aspect-ratio: 3/4 !important;
+    
+    @media (max-width: $breakpoint-lg) {
+      height: 427px !important;
+    }
+    
+    @media (max-width: $breakpoint-md) {
+      height: 373px !important;
+    }
+    
+    @media (max-width: $breakpoint-sm) {
+      height: 320px !important;
+    }
+  }
+  
+  // Name overlay styling
+  .name-overlay {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    color: black;
+    font-size: 11px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    
+    @media (max-width: $breakpoint-sm) {
+      font-size: 10px;
+      bottom: 6px;
+      right: 6px;
+    }
+  }
+}
+
+.hapas-friend-small {
+  // Small images - can be offset randomly
+  align-self: center; /* Center vertically relative to large images */
+  width: 200px !important; /* Force consistent width */
+  height: 300px !important; /* Force consistent height */
+  flex-shrink: 0; /* Prevent shrinking */
+  
+  @media (max-width: $breakpoint-lg) {
+    width: 160px !important;
+    height: 240px !important;
+  }
+  
+  @media (max-width: $breakpoint-md) {
+    width: 140px !important;
+    height: 210px !important;
+  }
+  
+  @media (max-width: $breakpoint-sm) {
+    width: 120px !important;
+    height: 180px !important;
+  }
+  
+  .hapas-friend-image {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover; /* Ensure consistent aspect ratio */
+  }
+  
+  // Image container
+  .relative.overflow-hidden {
+    width: 100% !important;
+    height: 300px !important;
+    aspect-ratio: 2/3 !important;
+    
+    @media (max-width: $breakpoint-lg) {
+      height: 240px !important;
+    }
+    
+    @media (max-width: $breakpoint-md) {
+      height: 210px !important;
+    }
+    
+    @media (max-width: $breakpoint-sm) {
+      height: 180px !important;
+    }
+  }
+  
+  // Name overlay styling
+  .name-overlay {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    color: black;
+    font-size: 11px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    
+    @media (max-width: $breakpoint-sm) {
+      font-size: 10px;
+      bottom: 6px;
+      right: 6px;
+    }
+  }
+}
+
+.hapas-friend-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-bottom: 2.5rem;
+  
+  @media (max-width: $breakpoint-sm) {
+    margin-bottom: 2rem;
+  }
+}
+
+.hapas-friend-title {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  margin: 0;
+  color: #1a2b4d; // Màu xanh đậm như trong hình
+  
+  @media (max-width: $breakpoint-md) {
+    font-size: 1.75rem;
+  }
+  
+  @media (max-width: $breakpoint-sm) {
+    font-size: 1.5rem;
+  }
+}
+
+.hapas-friend-view-all {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #000000;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    color: #666666;
+    
+    svg {
+      transform: translateX(4px);
+    }
+  }
+  
+  svg {
+    transition: transform 0.3s ease;
+  }
+}
+
+.hapas-friend-carousel {
+  position: relative;
+  overflow: hidden;
+  user-select: none; /* Prevent text selection while dragging */
+  display: flex;
+  align-items: center; /* Center items vertically */
+  gap: 1rem;
+  
+  /* Hide scrollbars */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+  
+  /* Drag cursor states */
+  &.dragging {
+    cursor: grabbing !important;
+  }
+  
+  &:not(.dragging) {
+    cursor: grab;
+  }
+  
+  @media (max-width: $breakpoint-md) {
+    gap: 0.75rem;
+  }
+  
+  @media (max-width: $breakpoint-sm) {
+    gap: 0.5rem;
+  }
+}
+
+.hapas-friend-track {
+  display: flex;
+  gap: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.hapas-friend-item {
+  flex-shrink: 0;
+  background: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    
+    .hapas-friend-image img {
+      transform: scale(1.05);
+    }
+  }
+}
+
+.hapas-friend-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.hapas-friend-image {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  background: #f5f5f5;
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+.hapas-friend-content {
+  padding: 1rem;
+  
+  @media (max-width: $breakpoint-sm) {
+    padding: 0.75rem;
+  }
+}
+
+.hapas-friend-name {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: #000000;
+  margin: 0 0 0.5rem 0;
+  transition: color 0.3s ease;
+  
+  @media (max-width: $breakpoint-sm) {
+    font-size: 0.875rem;
+  }
+}
+
+.hapas-friend-description {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: #666666;
+  margin: 0;
+  
+  @media (max-width: $breakpoint-sm) {
+    font-size: 0.75rem;
+  }
+}
+
+/* Slider thumb styles */
+.hapas-friend-slider {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  position: relative;
+}
+
+.hapas-friend-slider-track {
+  position: relative;
+  width: 50vw;
+  height: 1rem;
+  background: transparent;
+  select: none;
+  z-index: 20;
+}
+
+.hapas-friend-slider-rail {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 0.25rem;
+  background: #e5e7eb;
+  border-radius: 9999px;
+  transform: translateY(-50%);
+}
+
+.hapas-friend-slider-thumb {
+  position: absolute;
+  top: 50%;
+  width: 0.75rem;
+  height: 0.75rem;
+  background: #4b5563;
+  border-radius: 50%;
+  cursor: grab;
+  transition: all 0.2s ease-out;
+  transform: translateY(-50%);
+  margin-left: -0.375rem;
+  z-index: 30;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
+  &:hover {
+    background: #374151;
+    transform: translateY(-50%) scale(1.1);
+  }
+  
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: $breakpoint-lg) {
+  .hapas-friend-track {
+    gap: 0.75rem;
+  }
+}
+
+@media (max-width: $breakpoint-md) {
+  .hapas-friend-track {
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: $breakpoint-sm) {
+  .hapas-friend-track {
+    gap: 0.25rem;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .hapas-friend-item,
+  .hapas-friend-image img,
+  .hapas-friend-name,
+  .hapas-friend-slider-thumb {
+    transition: none;
+  }
+}

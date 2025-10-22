@@ -1,12 +1,12 @@
 /**
  * Logo Component - Override Core EverShop Logo
- * 
+ *
  * This file overrides packages/evershop/src/modules/base/pages/frontStore/all/Logo.tsx
  * By having the same name, EverShop will use this theme version instead of core
  */
 
-import React from 'react';
-import { ComponentLayout } from '@evershop/evershop';
+import React from "react";
+import { ComponentLayout } from "@evershop/evershop";
 
 interface LogoConfig {
   src?: string;
@@ -21,17 +21,15 @@ interface LogoProps {
   };
 }
 
-export default function Logo({ 
-  themeConfig
-}: LogoProps) {
+export default function Logo({ themeConfig }: LogoProps) {
   const [imageError, setImageError] = React.useState(false);
-  const logoSrc = themeConfig?.logo?.src || '/logo.png';
-  const logoAlt = themeConfig?.logo?.alt || 'HAPAS';
+  const logoSrc = themeConfig?.logo?.src || "/logo.png";
+  const logoAlt = themeConfig?.logo?.alt || "HAPAS";
 
   return (
     <div className="flex items-center justify-center">
-      <a 
-        href="/" 
+      <a
+        href="/"
         className="flex items-center no-underline"
         aria-label="HAPAS E-commerce - Trang chủ"
       >
@@ -56,8 +54,8 @@ export default function Logo({
 }
 
 export const layout: ComponentLayout = {
-  areaId: 'headerMiddleCenter',
-  sortOrder: 10
+  areaId: "headerMiddleCenter",
+  sortOrder: 10,
 };
 
 export const query = `
@@ -72,4 +70,3 @@ export const query = `
     }
   }
 `;
-

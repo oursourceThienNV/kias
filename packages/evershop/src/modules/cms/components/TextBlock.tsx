@@ -1,6 +1,6 @@
-import { Editor } from '@components/common/Editor.js';
-import { Row } from '@components/common/form/Editor.js';
-import React from 'react';
+import { Editor } from "@components/common/Editor.js";
+import { Row } from "@components/common/form/Editor.js";
+import React from "react";
 
 interface TextBlockProps {
   textWidget: {
@@ -9,7 +9,7 @@ interface TextBlockProps {
   };
 }
 export default function TextBlock({
-  textWidget: { text, className }
+  textWidget: { text, className },
 }: TextBlockProps) {
   return (
     <div className={`text-block-widget ${className}`}>

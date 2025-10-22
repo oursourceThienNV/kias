@@ -1,6 +1,102 @@
 @import '../../styles/variables';
 @import '../../styles/mixins';
 
+.story-banner-responsive {
+  @media (max-width: $breakpoint-lg) {
+    height: 80vh !important;
+  }
+  
+  @media (max-width: $breakpoint-md) {
+    height: 70vh !important;
+    margin-top: 30px !important;
+  }
+  
+  @media (max-width: $breakpoint-sm) {
+    height: 60vh !important;
+    margin-top: 20px !important;
+  }
+  
+  // Left content responsive
+  .absolute.left-5 {
+    @media (max-width: $breakpoint-md) {
+      left: 1.5rem !important;
+      bottom: 1.5rem !important;
+      max-width: 400px !important;
+    }
+    
+    @media (max-width: $breakpoint-sm) {
+      left: 1rem !important;
+      bottom: 1rem !important;
+      max-width: 280px !important;
+    }
+    
+    p {
+      @media (max-width: $breakpoint-md) {
+        font-size: 13px !important;
+        line-height: 1.5 !important;
+      }
+      
+      @media (max-width: $breakpoint-sm) {
+        font-size: 12px !important;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+    }
+    
+    a {
+      @media (max-width: $breakpoint-sm) {
+        font-size: 12px !important;
+        margin-top: 0.75rem !important;
+        
+        svg {
+          width: 14px;
+          height: 14px;
+        }
+      }
+    }
+  }
+  
+  // Right bestseller card responsive
+  .absolute.right-5 {
+    @media (max-width: $breakpoint-md) {
+      right: 1.5rem !important;
+      bottom: 1.5rem !important;
+    }
+    
+    @media (max-width: $breakpoint-sm) {
+      right: 1rem !important;
+      bottom: 1rem !important;
+    }
+    
+    .mb-2 {
+      @media (max-width: $breakpoint-sm) {
+        font-size: 11px !important;
+        margin-bottom: 0.5rem !important;
+        
+        svg {
+          width: 12px;
+          height: 12px;
+        }
+      }
+    }
+    
+    a {
+      @media (max-width: $breakpoint-md) {
+        width: 180px !important;
+        height: 220px !important;
+      }
+      
+      @media (max-width: $breakpoint-sm) {
+        width: 140px !important;
+        height: 180px !important;
+        border-radius: 8px !important;
+      }
+    }
+  }
+}
+
 .hapas-story-banner {
   padding: 5rem 0;
   background: #ffffff;

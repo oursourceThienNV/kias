@@ -1,5 +1,9 @@
 ﻿.hapas-category-section {
     padding: 3.5rem 0;
+    
+    @media (max-width: 640px) {
+        padding: 2rem 0;
+    }
 }
 
 @media (min-width: 768px) {
@@ -7,8 +11,17 @@
         padding: 5rem 0;
     }
 }
+
 .hapas-category-tiles {
     margin-top: 50px;
+    
+    @media (max-width: 768px) {
+        margin-top: 30px;
+    }
+    
+    @media (max-width: 640px) {
+        margin-top: 20px;
+    }
 }
 
 .hapas-category-section .container {
@@ -16,6 +29,10 @@
     margin: 0 auto;
     padding-inline: 1rem;
     box-sizing: border-box;
+    
+    @media (max-width: 640px) {
+        padding-inline: 0.75rem;
+    }
 }
 
 /* HEADER */
@@ -24,6 +41,10 @@
     justify-content: space-between;
     align-items: flex-end;
     margin-bottom: 2rem;
+    
+    @media (max-width: 640px) {
+        margin-bottom: 1.5rem;
+    }
 }
 
 .hapas-category-section .category-header h2 {
@@ -31,11 +52,19 @@
     font-weight: 600;
     text-transform: uppercase;
     color: #1a1a1a;
+    
+    @media (max-width: 640px) {
+        font-size: 20px;
+    }
 }
 
 @media (min-width: 768px) {
     .hapas-category-section .category-header h2 {
         font-size: 36px;
+    }
+    
+    @media (max-width: 1024px) {
+        font-size: 28px;
     }
 }
 
@@ -47,6 +76,11 @@
     font-size: 15px;
     text-decoration: none;
     transition: color 0.2s ease;
+    
+    @media (max-width: 640px) {
+        font-size: 13px;
+        gap: 0.25rem;
+    }
 }
 
 .hapas-category-section .view-more:hover {
@@ -55,6 +89,11 @@
 
 .hapas-category-section .view-more svg {
     transform: translateY(1px);
+    
+    @media (max-width: 640px) {
+        width: 14px;
+        height: 14px;
+    }
 }
 
 /* GRID */
@@ -110,6 +149,42 @@
     display: block;
 }
 
+/* Slider thumb responsive */
+.container {
+    .flex.justify-center {
+        @media (max-width: 768px) {
+            margin-top: 1.5rem;
+        }
+        
+        @media (max-width: 640px) {
+            margin-top: 1rem;
+        }
+        
+        .relative.w-\[50vw\] {
+            @media (max-width: 768px) {
+                width: 70vw !important;
+            }
+            
+            @media (max-width: 640px) {
+                width: 80vw !important;
+            }
+            
+            .h-1 {
+                @media (max-width: 640px) {
+                    height: 2px !important;
+                }
+            }
+            
+            .w-3.h-3 {
+                @media (max-width: 640px) {
+                    width: 12px !important;
+                    height: 12px !important;
+                }
+            }
+        }
+    }
+}
+
 /* ICONS ROW */
 .hapas-category-section .category-icons {
     display: flex;
@@ -121,6 +196,15 @@
     scrollbar-width: thin;
     scroll-behavior: smooth;
     padding-bottom: 0.5rem;
+    
+    @media (max-width: 768px) {
+        margin-top: 2rem;
+    }
+    
+    @media (max-width: 640px) {
+        margin-top: 1.5rem;
+        gap: 1rem;
+    }
 }
 
 .hapas-category-section .icon-item {
@@ -131,6 +215,10 @@
     text-decoration: none;
     color: #333;
     transition: transform 0.2s ease;
+    
+    @media (max-width: 640px) {
+        min-width: 80px;
+    }
 }
 
 .hapas-category-section .icon-item:hover {
@@ -140,6 +228,11 @@
 .hapas-category-section .icon-item .label {
     font-size: 0.95rem;
     margin-bottom: 0.5rem;
+    
+    @media (max-width: 640px) {
+        font-size: 0.75rem;
+        margin-bottom: 0.375rem;
+    }
 }
 
 .hapas-category-section .icon-item img {
@@ -148,4 +241,12 @@
     object-fit: contain;
     user-select: none;
     display: block;
+    
+    @media (max-width: 768px) {
+        height: 48px;
+    }
+    
+    @media (max-width: 640px) {
+        height: 40px;
+    }
 }
