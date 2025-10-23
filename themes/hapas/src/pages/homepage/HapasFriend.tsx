@@ -19,8 +19,8 @@ interface HapasFriendProps {
 }
 
 export default function HapasFriend({
-  title = "BẠN THÂN HAPAS",
-  viewAllHref = "/hapas-friends",
+  title = "BẠN THÂN KIAS",
+  viewAllHref = "/kias-friends",
 }: HapasFriendProps) {
   // Mock data - các hình ảnh bạn thân HAPAS với kích thước khác nhau
   const mockFriends: HapasFriend[] = [
@@ -29,7 +29,7 @@ export default function HapasFriend({
       name: "xoài non",
       image: {
         url: "https://file.hstatic.net/200000978078/file/_hng1844__1_.jpg",
-        alt: "HAPAS Friend 1",
+        alt: "KIAS Friend 1",
       },
       description: "Styling với túi Satchel",
       size: "large",
@@ -39,7 +39,7 @@ export default function HapasFriend({
       name: "Hàn Hằng",
       image: {
         url: "https://file.hstatic.net/200000978078/file/denim1_402306f2df9245ec87416290f8b2dab6.png",
-        alt: "HAPAS Friend 2",
+        alt: "KIAS Friend 2",
       },
       description: "Outfit casual với túi Hobo",
       size: "small",
@@ -49,7 +49,7 @@ export default function HapasFriend({
       name: "Châu Bùi",
       image: {
         url: "https://file.hstatic.net/200000978078/file/snapinsta.to_473530229_1152220669831166_5116063194426879013_n__1_.jpg",
-        alt: "HAPAS Friend 3",
+        alt: "KIAS Friend 3",
       },
       description: "Look thanh lịch với túi Tote",
       size: "small",
@@ -59,7 +59,7 @@ export default function HapasFriend({
       name: "Trung Nguyễn",
       image: {
         url: "https://file.hstatic.net/200000978078/file/_dsc1379__1_.jpg",
-        alt: "HAPAS Friend 4",
+        alt: "KIAS Friend 4",
       },
       description: "Phong cách trẻ trung với túi Crossbody",
       size: "large",
@@ -69,7 +69,7 @@ export default function HapasFriend({
       name: "Phương Nguyễn",
       image: {
         url: "https://file.hstatic.net/200000978078/file/shra__1_.png",
-        alt: "HAPAS Friend 5",
+        alt: "KIAS Friend 5",
       },
       description: "Backpack cho phong cách năng động",
       size: "small",
@@ -79,7 +79,7 @@ export default function HapasFriend({
       name: "Hà Huyền My",
       image: {
         url: "https://file.hstatic.net/200000978078/file/5_a325c0f87982487da5e3e88fec6bd164.jpg",
-        alt: "HAPAS Friend 6",
+        alt: "KIAS Friend 6",
       },
       description: "Clutch cho buổi tối sang trọng",
       size: "small",
@@ -89,7 +89,7 @@ export default function HapasFriend({
       name: "Ngọc Lê",
       image: {
         url: "https://file.hstatic.net/200000978078/file/4_3e9f15e4e7ef45e789acb780dcdde820.jpg",
-        alt: "HAPAS Friend 7",
+        alt: "KIAS Friend 7",
       },
       description: "Mix & match với nhiều phong cách",
       size: "small",
