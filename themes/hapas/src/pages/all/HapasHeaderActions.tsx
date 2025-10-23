@@ -1,5 +1,6 @@
 import React from 'react';
 import type { ComponentLayout } from '@evershop/evershop';
+import { MiniCart } from '@components/frontStore/cart/MiniCart.js';
 
 interface HeaderActionsRightProps {
     cartCount?: number;
@@ -34,24 +35,30 @@ export default function HeaderActionsRight({
                     </svg>
                 </a>
 
-                {/* Cart */}
-                <a
-                    href="/cart"
-                    aria-label={`Giỏ hàng${cartCount ? ` (${cartCount})` : ''}`}
-                    className="relative flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 no-underline hover:opacity-80 transition-opacity"
-                    style={{ color: navy }}
-                >
-                    <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-                        <path d="M2 2h2l1.5 6h11l1.5-4.5H4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                        <circle cx="8.2" cy="16.2" r="1" fill="currentColor" />
-                        <circle cx="14.2" cy="16.2" r="1" fill="currentColor" />
-                    </svg>
-                    {cartCount > 0 && (
-                        <span className="absolute -top-1 -right-1 min-w-[16px] h-[16px] px-1 rounded-full text-[10px] leading-[16px] font-bold text-white" style={{ backgroundColor: navy }}>
-                            {cartCount > 99 ? '99+' : cartCount}
-                        </span>
+                {/* Cart (MiniCart with slide drawer) */}
+                <MiniCart
+                    showItemCount
+                    renderCartIcon={({ totalQty, onClick, isOpen }) => (
+                        <button
+                            type="button"
+                            onClick={onClick}
+                            aria-label={`Giỏ hàng${totalQty ? ` (${totalQty})` : ''}`}
+                            className={`relative flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 hover:opacity-80 transition-opacity ${isOpen ? 'opacity-80' : ''}`}
+                            style={{ color: navy }}
+                        >
+                            <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                                <path d="M2 2h2l1.5 6h11l1.5-4.5H4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                <circle cx="8.2" cy="16.2" r="1" fill="currentColor" />
+                                <circle cx="14.2" cy="16.2" r="1" fill="currentColor" />
+                            </svg>
+                            {totalQty > 0 && (
+                                <span className="absolute -top-1 -right-1 min-w-[16px] h-[16px] px-1 rounded-full text-[10px] leading-[16px] font-bold text-white" style={{ backgroundColor: navy }}>
+                                    {totalQty > 99 ? '99+' : totalQty}
+                                </span>
+                            )}
+                        </button>
                     )}
-                </a>
+                />
 
                 {/* Wishlist */}
                 <a
