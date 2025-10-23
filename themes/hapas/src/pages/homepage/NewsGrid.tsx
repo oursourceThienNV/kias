@@ -247,7 +247,7 @@ export default function NewsGrid({
         <div className="news-grid-header">
           <h2
             id="news-grid-title"
-            className="text-[20px] md:text-[28px] lg:text-[36px] font-[Montserrat] font-semibold tracking-wide uppercase"
+            className="text-[20px] md:text-[28px] lg:text-[36px] font-[Montserrat] font-semibold tracking-wide uppercase  text-[#79192A]"
           >
             {title}
           </h2>

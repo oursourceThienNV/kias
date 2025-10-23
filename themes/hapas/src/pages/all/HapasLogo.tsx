@@ -24,7 +24,7 @@ interface HapasLogoProps {
 
 export default function HapasLogo({
   logoConfig = {
-    src: "/logo/HapasLogo.jpg",
+    src: "/logo/logo-kias.webp",
     alt: "HAPAS E-commerce",
     width: 120,
     height: 40,

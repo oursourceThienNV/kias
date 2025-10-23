@@ -373,7 +373,7 @@ export default function HapasFriend({
         <div className="mb-6 md:mb-8">
           <h2
             id="hapas-friend-title"
-            className="text-[20px] md:text-[28px] lg:text-[36px] font-[Montserrat] font-semibold tracking-wide uppercase text-[#1a2b4d]"
+            className="text-[20px] md:text-[28px] lg:text-[36px] font-[Montserrat] font-semibold tracking-wide uppercase text-[#79192A]"
           >
             {title}
           </h2>

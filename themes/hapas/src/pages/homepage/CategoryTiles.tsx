@@ -258,7 +258,7 @@ export default function CategoryTiles({
         <div>
           <h2
             id="category-tiles-title"
-            className="text-[20px] md:text-[28px] lg:text-[36px] font-[Montserrat] font-semibold tracking-wide uppercase"
+            className="text-[20px] md:text-[28px] lg:text-[36px] font-[Montserrat] font-semibold tracking-wide uppercase text-[#79192A]"
           >
             {title}
           </h2>
