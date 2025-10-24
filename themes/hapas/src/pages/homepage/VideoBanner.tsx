@@ -1,13 +1,14 @@
-import React from 'react';
-import './VideoBanner.scss';
+import React from "react";
+import "./VideoBanner.scss";
 const ASSETS = {
   heroPoster: "/assets/images/hero-poster.jpg",
-  heroVideo: "https://file.hstatic.net/200000978078/file/frame_ngang__final___2_.mp4",
+  heroVideo:
+    "https://file.hstatic.net/200000978078/file/frame_ngang__final___2_.mp4",
 };
 
 export default function VideoBanner() {
   return (
-    <section className="container my-4">
+    <section className=".container-video-banner px-0">
       <div className="hero">
         <video
           className="hero-video"
@@ -24,6 +25,6 @@ export default function VideoBanner() {
 }
 
 export const layout = {
-  areaId: 'content',
-  sortOrder: 2
+  areaId: "content",
+  sortOrder: 2,
 };

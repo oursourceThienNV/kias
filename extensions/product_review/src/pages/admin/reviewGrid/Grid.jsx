@@ -139,7 +139,8 @@ function Actions({ reviews = [], selectedIds = [] }) {
                   e.preventDefault();
                   action.onAction();
                 }}
-                className="font-semibold pt-3 pb-3 pl-6 pr-6 block border-l border-divider self-center">
+                className="font-semibold pt-3 pb-3 pl-6 pr-6 block border-l border-divider self-center"
+              >
                 <span>{action.name}</span>
               </a>
             ))}
@@ -404,10 +405,10 @@ ReviewGrid.propTypes = {
   }).isRequired,
 };
 
-export const layout = {
-  areaId: "content",
-  sortOrder: 20,
-};
+// export const layout = {
+//   areaId: "content",
+//   sortOrder: 20,
+// };
 
 export const query = `
   query Query($filters: [FilterInput]) {

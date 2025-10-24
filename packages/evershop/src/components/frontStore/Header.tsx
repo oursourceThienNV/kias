@@ -1,11 +1,14 @@
-import Area from '@components/common/Area.js';
-import React from 'react';
+import Area from "@components/common/Area.js";
+import React from "react";
 
 export function Header() {
   return (
     <header className="header">
       <Area id="headerTop" className="header__top" />
-          <div className="header__middle grid grid-cols-3" style={{ height: '70px' }}>
+      <div
+        className="header__middle grid grid-cols-3 text-[#79192A]"
+        style={{ height: "70px" }}
+      >
         <Area
           id="headerMiddleLeft"
           className="header__middle__left flex justify-start items-center"
