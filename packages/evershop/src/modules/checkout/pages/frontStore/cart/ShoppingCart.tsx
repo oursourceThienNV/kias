@@ -4,6 +4,7 @@ import { useCartState } from "@components/frontStore/cart/cartContext.js";
 import { CartItems } from "@components/frontStore/cart/CartItems.js";
 import { CartTotalSummary } from "@components/frontStore/cart/CartTotalSummary.js";
 import { ShoppingCartEmpty } from "@components/frontStore/cart/ShoppingCartEmpty.js";
+import ProductRecommendations from "@components/frontStore/catalog/ProductRecommendations.js";
 import { _ } from "@evershop/evershop/lib/locale/translate/_";
 import React from "react";
 
@@ -66,7 +67,7 @@ export default function ShoppingCart({ checkoutUrl }: ShoppingCartProps) {
             </div>
           </div>
 
-          <h1 className="text-[38px] font-medium text-[#20265B] mb-6">
+          <h1 className="text-[38px] font-medium text-[#79192A] mb-6">
             GIỎ HÀNG
           </h1>
 
@@ -143,12 +144,12 @@ export default function ShoppingCart({ checkoutUrl }: ShoppingCartProps) {
                     <circle cx="12" cy="12" r="12" fill="#E5E7EB" />
                     <path
                       d="M12 7v7"
-                      stroke="#20265B"
+                      stroke="#79192A"
                       strokeWidth="2"
                       strokeLinecap="round"
                       strokeLinejoin="round"
                     />
-                    <circle cx="12" cy="17" r="1" fill="#20265B" />
+                    <circle cx="12" cy="17" r="1" fill="#79192A" />
                   </svg>
                   <span className="text-[#00000] text-[14px] font-semibold">
                     HAPAS cam kết bảo hành sản phẩm trong vòng 6 tháng
@@ -174,7 +175,7 @@ export default function ShoppingCart({ checkoutUrl }: ShoppingCartProps) {
                 <Area id="shoppingCartBeforeCheckoutButton" noOuter />
                 <button
                   onClick={() => (window.location.href = checkoutUrl)}
-                  className="w-full bg-[#20265B] hover:bg-[#1e3a8a] text-white py-2 rounded font-semibold text-[14px] transition-colors"
+                  className="w-full bg-[#79192A] hover:bg-[#1e3a8a] text-white py-2 rounded font-semibold text-[14px] transition-colors"
                 >
                   TIẾN HÀNH ĐẶT HÀNG
                 </button>
@@ -184,10 +185,10 @@ export default function ShoppingCart({ checkoutUrl }: ShoppingCartProps) {
               <div className="mt-6">
                 <div className="bg-[#E6F4FF] border border-[#B6E0FE] rounded p-4 flex items-start gap-3">
                   <div>
-                    <div className="font-bold text-[#20265B] mb-1">
+                    <div className="font-bold text-[#000000] mb-1">
                       Chính sách mua hàng:
                     </div>
-                    <div className="text-[15px] text-[#20265B]">
+                    <div className="text-[15px] text-[#000000]">
                       Hiện chúng tôi chỉ áp dụng thanh toán với đơn hàng có giá
                       trị tối thiểu <b>0₫</b> trở lên.
                     </div>
@@ -195,6 +196,9 @@ export default function ShoppingCart({ checkoutUrl }: ShoppingCartProps) {
                 </div>
               </div>
             </div>
+          </div>
+          <div className="mt-8">
+            <ProductRecommendations title='Tặng bạn ưu đãi mua kèm' />
           </div>
         </div>
       ) : (
