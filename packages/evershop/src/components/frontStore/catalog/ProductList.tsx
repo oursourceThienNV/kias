@@ -461,7 +461,7 @@ const LoadingSkeleton = ({
 const EmptyState = ({ message }: { message: string | ReactNode }) => {
   return (
     <div className="empty-product-list">
-      {typeof message === "string" ? <p >{message}</p> : message}
+      {typeof message === "string" ? <p>{message}</p> : message}
     </div>
   );
 };

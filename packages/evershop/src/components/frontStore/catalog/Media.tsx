@@ -1,12 +1,12 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React, { useState, useRef } from 'react';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import { Image } from '@components/common/Image.js';
-import { useProduct } from '@components/frontStore/catalog/productContext.js';
-import './Media.scss';
+import React, { useState, useRef } from "react";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { Image } from "@components/common/Image.js";
+import { useProduct } from "@components/frontStore/catalog/productContext.js";
+import "./Media.scss";
 
 const SliderComponent = Slider as any;
 
@@ -62,6 +62,69 @@ const NextArrow = (props: any) => {
   );
 };
 
+// Arrow cho thumbnail slider (màu đen)
+const ThumbPrevArrow = (props: any) => (
+  <button
+    type="button"
+    className="thumb-arrow thumb-prev-arrow"
+    onClick={props.onClick}
+    style={{
+      display: "block",
+      margin: "0 auto",
+      background: "none",
+      border: "none",
+      cursor: "pointer",
+      padding: 0,
+      outline: "none",
+    }}
+    aria-label="Scroll up"
+  >
+    <svg
+      width="28"
+      height="28"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="black"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <polyline points="18 15 12 9 6 15" />
+    </svg>
+  </button>
+);
+
+const ThumbNextArrow = (props: any) => (
+  <button
+    type="button"
+    className="thumb-arrow thumb-next-arrow"
+    onClick={props.onClick}
+    style={{
+      display: "block",
+      margin: "0 auto",
+      background: "none",
+      border: "none",
+      cursor: "pointer",
+      padding: 0,
+      outline: "none",
+    }}
+    aria-label="Scroll down"
+  >
+    <svg
+      width="28"
+      height="28"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="black"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <polyline points="6 9 12 15 18 9" />
+    </svg>
+  </button>
+);
+
 interface ImageWithDimensionsProps {
   url: string;
   alt?: string;
@@ -85,9 +148,9 @@ interface MediaProps {
 }
 
 export const Media: React.FC<MediaProps> = ({
-  imageSize = { width: 600, height: 600 },
-  thumbnailSize = { width: 100, height: 100 },
-  modalSize = { width: 1200, height: 1200 }
+  imageSize = { width: 800, height: 800 }, // tăng kích thước hình chính
+  thumbnailSize = { width: 70, height: 90 }, // giảm bề ngang thumbnail
+  modalSize = { width: 1200, height: 1200 },
 }) => {
   const product = useProduct();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -106,7 +169,7 @@ export const Media: React.FC<MediaProps> = ({
       url: product.image.url,
       alt: product.image.alt || product.name,
       width: imageSize.width,
-      height: imageSize.height
+      height: imageSize.height,
     });
   }
 
@@ -116,78 +179,88 @@ export const Media: React.FC<MediaProps> = ({
         url: img.url,
         alt: img.alt || product.name,
         width: imageSize.width,
-        height: imageSize.height
+        height: imageSize.height,
       });
     });
   }
 
   if (allImages.length === 0) {
     allImages.push({
-      url: '/default-product-image.png',
+      url: "/default-product-image.png",
       alt: product.name,
       width: imageSize.width,
-      height: imageSize.height
+      height: imageSize.height,
     });
   }
 
+  // Thêm ref cho thumbnail slider nếu muốn điều khiển đồng bộ
+  const thumbSliderRef = useRef<SliderType>(null);
+
+  // Slider thumbnail settings (vertical)
+  const thumbSliderSettings = {
+    vertical: true,
+    verticalSwiping: true,
+    slidesToShow: Math.min(
+      Math.floor(imageSize.height / thumbnailSize.height),
+      allImages.length
+    ),
+    slidesToScroll: 1,
+    focusOnSelect: true,
+    arrows: allImages.length > 1,
+    infinite: false,
+    prevArrow: <ThumbPrevArrow />,
+    nextArrow: <ThumbNextArrow />,
+    beforeChange: (_: number, next: number) => {
+      if (mainSliderRef.current) {
+        mainSliderRef.current.slickGoTo(next);
+      }
+    },
+    asNavFor: mainSliderRef.current,
+    className: "thumbnail-slider-vertical",
+  };
+
+  // Xoá prevArrow, nextArrow khỏi mainSliderSettings, giữ swipe: true
   const mainSliderSettings = {
-    dots: allImages.length > 1,
-    dotsClass: 'slick-dots slick-thumb',
     infinite: true,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    arrows: allImages.length > 1,
+    arrows: false, // Không hiện nút
     fade: false,
-    prevArrow: <PrevArrow />,
-    nextArrow: <NextArrow />,
+    swipe: true, // Cho phép trượt chuột
+    vertical: true, // Thêm dòng này
+    verticalSwiping: true, // Thêm dòng này
     beforeChange: (_: number, next: number) => {
       setActiveSlide(next);
     },
-    customPaging: function (i: number) {
-      return (
-        <div className="thumbnail-wrapper">
-          <Image
-            src={allImages[i].url}
-            alt={`Thumbnail ${i + 1}`}
-            width={thumbnailSize.width}
-            height={thumbnailSize.height}
-            objectFit="contain"
-          />
-        </div>
-      );
-    }
+    asNavFor: thumbSliderRef.current,
   };
 
+  // (Có thể giữ arrows cho modal hoặc cũng bỏ đi nếu muốn đồng nhất)
   const modalSliderSettings = {
-    dots: allImages.length > 1,
-    dotsClass: 'slick-dots slick-thumb',
     infinite: true,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    arrows: true,
-    prevArrow: <PrevArrow />,
-    nextArrow: <NextArrow />,
-    initialSlide: activeSlide,
-    adaptiveHeight: true,
-    lazyLoad: 'ondemand',
+    arrows: false, // Không hiện nút trong modal nếu muốn
     fade: false,
     swipe: true,
+    initialSlide: activeSlide,
+    adaptiveHeight: true,
+    lazyLoad: "ondemand",
     beforeChange: () => setIsImageLoading(true),
     afterChange: () => setIsImageLoading(false),
-    customPaging: function (i: number) {
-      return (
-        <div className="thumbnail-wrapper">
-          <Image
-            src={allImages[i].url}
-            alt={`Thumbnail ${i + 1}`}
-            width={thumbnailSize.width}
-            height={thumbnailSize.height}
-            objectFit="contain"
-          />
-        </div>
-      );
+  };
+
+  // Hàm xử lý wheel cho slider chính (ngăn cuộn trang)
+  const handleMainSliderWheel = (e: React.WheelEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!mainSliderRef.current) return;
+    if (e.deltaY > 0) {
+      mainSliderRef.current.slickNext();
+    } else if (e.deltaY < 0) {
+      mainSliderRef.current.slickPrev();
     }
   };
 
@@ -201,51 +274,124 @@ export const Media: React.FC<MediaProps> = ({
       }
     }, 100);
 
-    document.addEventListener('keydown', handleKeyDown);
-    document.body.style.overflow = 'hidden';
+    document.addEventListener("keydown", handleKeyDown);
+    document.body.style.overflow = "hidden";
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
-    document.removeEventListener('keydown', handleKeyDown);
-    document.body.style.overflow = '';
+    document.removeEventListener("keydown", handleKeyDown);
+    document.body.style.overflow = "";
   };
 
   const handleKeyDown = (e: KeyboardEvent) => {
-    if (e.key === 'Escape') {
+    if (e.key === "Escape") {
       closeModal();
-    } else if (e.key === 'ArrowRight' && modalSliderRef.current) {
+    } else if (e.key === "ArrowRight" && modalSliderRef.current) {
       modalSliderRef.current.slickNext();
-    } else if (e.key === 'ArrowLeft' && modalSliderRef.current) {
+    } else if (e.key === "ArrowLeft" && modalSliderRef.current) {
       modalSliderRef.current.slickPrev();
     }
   };
 
   return (
-    <div className="product-media-container">
-      <div className="main-image-container">
-        <SliderComponent.default
-          ref={mainSliderRef}
-          {...mainSliderSettings}
-          className="product-slider"
-        >
+    <div
+      className="product-media-container horizontal-layout"
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "flex-start",
+      }}
+    >
+      {/* Thumbnails bên trái */}
+      <div
+        className="thumbnail-slider-container media-thumbnails"
+        style={{
+          height: imageSize.height + 10,
+          marginRight: 12, // thu hẹp khoảng cách
+          minWidth: thumbnailSize.width,
+          maxWidth: thumbnailSize.width,
+          overflow: "hidden",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <SliderComponent.default ref={thumbSliderRef} {...thumbSliderSettings}>
           {allImages.map((image, index) => (
             <div
               key={index}
-              className="product-image"
-              onClick={() => openModal(index)}
-              style={{ width: imageSize.width, height: imageSize.height }}
+              className={`thumbnail-wrapper${
+                activeSlide === index ? " active" : ""
+              }`}
+              style={{
+                width: thumbnailSize.width,
+                height: thumbnailSize.height,
+                cursor: "pointer",
+                border:
+                  activeSlide === index
+                    ? "2px solid #0070f3"
+                    : "2px solid transparent",
+                boxSizing: "border-box",
+                marginBottom: 8,
+              }}
+              onClick={() => {
+                setActiveSlide(index);
+                if (mainSliderRef.current) {
+                  mainSliderRef.current.slickGoTo(index);
+                }
+              }}
             >
               <Image
                 src={image.url}
-                alt={image.alt || 'Product image'}
-                width={imageSize.width}
-                height={imageSize.height}
-                objectFit="scale-down"
+                alt={image.alt || `Thumbnail ${index + 1}`}
+                width={thumbnailSize.width}
+                height={thumbnailSize.height}
+                objectFit="contain"
+                style={{ borderRadius: 0 }}
               />
             </div>
           ))}
         </SliderComponent.default>
+      </div>
+
+      {/* Hình ảnh chính */}
+      <div className="main-image-container">
+        <div
+          tabIndex={0}
+          onWheel={handleMainSliderWheel}
+          onWheelCapture={handleMainSliderWheel}
+          style={{
+            width: imageSize.width,
+            height: imageSize.height,
+            overflow: "hidden", // đảm bảo không bị overflow: visible
+            // Có thể thêm border hoặc boxShadow nếu muốn nổi bật hơn
+          }}
+        >
+          <SliderComponent.default
+            ref={mainSliderRef}
+            {...mainSliderSettings}
+            className="product-slider"
+          >
+            {allImages.map((image, index) => (
+              <div
+                key={index}
+                className="product-image"
+                onClick={() => openModal(index)}
+                style={{ width: imageSize.width, height: imageSize.height }}
+              >
+                <Image
+                  src={image.url}
+                  alt={image.alt || "Product image"}
+                  width={imageSize.width}
+                  height={imageSize.height}
+                  objectFit="scale-down"
+                  style={{ borderRadius: 0 }}
+                />
+              </div>
+            ))}
+          </SliderComponent.default>
+        </div>
       </div>
 
       {isModalOpen && (
@@ -300,7 +446,7 @@ export const Media: React.FC<MediaProps> = ({
                   <div key={index} className="modal-image">
                     <Image
                       src={image.url}
-                      alt={image.alt || 'Product image'}
+                      alt={image.alt || "Product image"}
                       width={fullscreenWidth}
                       height={fullscreenHeight}
                       objectFit="contain"
@@ -312,6 +458,19 @@ export const Media: React.FC<MediaProps> = ({
           </div>
         </div>
       )}
+
+      {/* Responsive Styles */}
+      <style>{`
+        @media (max-width: 768px) {
+          .media-thumbnails {
+            display: none !important;
+          }
+          
+          .main-image-container {
+            margin-right: 0 !important;
+          }
+        }
+      `}</style>
     </div>
   );
 };
