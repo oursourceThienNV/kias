@@ -55,7 +55,7 @@ export function CategoryInfo() {
                 <h1
                   className="text-2xl md:text-4xl uppercase mb-3 md:mb-4"
                   style={{
-                    color: "#20265B",
+                    color: "#79192A",
                     letterSpacing: "0.04em",
                     lineHeight: "1.2",
                   }}
@@ -80,7 +80,7 @@ export function CategoryInfo() {
                 <h1
                   className="text-2xl md:text-4xl font-bold uppercase"
                   style={{
-                    color: "#20265B",
+                    color: "#79192A",
                     letterSpacing: "0.04em",
                     lineHeight: "1.2",
                   }}

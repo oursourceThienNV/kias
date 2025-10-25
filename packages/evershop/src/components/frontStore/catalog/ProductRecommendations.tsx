@@ -356,24 +356,26 @@ export default function ProductRecommendations({
                   </div>
                 )}
               </a>
-              <div className="mt-3 text-sm text-gray-900 font-medium">
-                {product.name}
-              </div>
-              <div className="mt-2 flex items-center gap-2">
-                {product.price.special?.value ? (
-                  <>
-                    <span className="text-base font-bold text-red-500">
-                      {formatPrice(product.price.special.value)}
-                    </span>
-                    <span className="text-sm text-gray-400 line-through">
+              <div className="mt-3 text-center">
+                <div className="text-sm text-gray-900 font-medium line-clamp-2">
+                  {product.name}
+                </div>
+                <div className="flex items-center justify-center gap-2">
+                  {product.price.special?.value ? (
+                    <>
+                      <span className="text-base font-bold text-red-500">
+                        {formatPrice(product.price.special.value)}
+                      </span>
+                      <span className="text-sm text-gray-400 line-through">
+                        {formatPrice(product.price.regular.value)}
+                      </span>
+                    </>
+                  ) : (
+                    <span className="text-base font-bold text-gray-900">
                       {formatPrice(product.price.regular.value)}
                     </span>
-                  </>
-                ) : (
-                  <span className="text-base font-bold text-gray-900">
-                    {formatPrice(product.price.regular.value)}
-                  </span>
-                )}
+                  )}
+                </div>
               </div>
             </div>
           );

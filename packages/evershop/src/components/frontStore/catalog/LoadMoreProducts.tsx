@@ -112,16 +112,16 @@ export function LoadMoreProducts({
           <button
             onClick={handleLoadMore}
             disabled={isLoading}
-            className="load-more-button relative overflow-hidden px-12 py-4 text-sm font-medium uppercase tracking-wide border border-[#2B3A67] transition-all duration-300 cursor-pointer"
+            className="load-more-button relative overflow-hidden px-12 py-4 text-sm font-medium uppercase tracking-wide border border-[#79192A] transition-all duration-300 cursor-pointer"
             style={{
               letterSpacing: '0.05em',
-              backgroundColor: isLoading ? '#2B3A67' : 'transparent',
-              color: isLoading ? 'white' : '#2B3A67',
+              backgroundColor: isLoading ? '#79192A' : 'transparent',
+              color: isLoading ? 'white' : '#79192A',
             }}
           >
             {/* Lớp fill animation từ trái sang phải */}
             <span
-              className="absolute inset-0 bg-[#2B3A67] transition-transform duration-2000 ease-out"
+              className="absolute inset-0 bg-[#79192A] transition-transform duration-2000 ease-out"
               style={{
                 transform: isLoading ? 'translateX(0)' : 'translateX(-100%)',
                 zIndex: 0,

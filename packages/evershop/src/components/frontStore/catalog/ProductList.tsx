@@ -286,7 +286,7 @@ const DefaultProductItem = ({
                         actions.addToCart();
                       }}
                     >
-                      {state.isLoading ? "Đang thêm..." : "THÊM VÀO GIỎ HÀNG"}
+                      THÊM VÀO GIỎ HÀNG
                     </button>
                   )}
                 </AddToCart>
