@@ -20,7 +20,7 @@ export default function ProductView({ product }: ProductData) {
         <Area id="productPageTop" className="product__page__top" />
         <div className="product__page__middle page-width">
           {/* Hàng 1: Media + Thông tin sản phẩm & Accordion */}
-          <div className="grid grid-cols-1 gap-7 md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 md:gap-7 md:grid-cols-2 product-detail-grid">
             <Area
               id="productPageMiddleLeft"
               className="product__detail__left"
@@ -43,6 +43,11 @@ export default function ProductView({ product }: ProductData) {
                       const [quantity, setQuantity] = React.useState(1);
                       const [size, setSize] = React.useState(24);
 
+                      // State cho accordion
+                      const [openAccordion, setOpenAccordion] = React.useState<
+                        null | "details" | "warranty"
+                      >(null);
+
                       // Hàm xử lý tăng/giảm số lượng
                       const handleDecrease = () => {
                         setQuantity((q) => (q > 1 ? q - 1 : 1));
@@ -50,9 +55,6 @@ export default function ProductView({ product }: ProductData) {
                       const handleIncrease = () => {
                         setQuantity((q) => q + 1);
                       };
-
-                      // Hàm xử lý đổi size (nếu cần mở rộng sau này)
-                      // const handleSizeChange = (newSize: number) => setSize(newSize);
 
                       return (
                         <div
@@ -285,8 +287,24 @@ export default function ProductView({ product }: ProductData) {
                           <hr style={{ margin: "20px 0" }} />
                           {/* Accordion thông tin */}
                           <div>
-                            <ProductDetailsAccordion />
-                            <WarrantyAccordion />
+                            <ProductDetailsAccordion
+                              open={openAccordion === "details"}
+                              onClick={() =>
+                                setOpenAccordion(
+                                  openAccordion === "details" ? null : "details"
+                                )
+                              }
+                            />
+                            <WarrantyAccordion
+                              open={openAccordion === "warranty"}
+                              onClick={() =>
+                                setOpenAccordion(
+                                  openAccordion === "warranty"
+                                    ? null
+                                    : "warranty"
+                                )
+                              }
+                            />
                           </div>
                         </div>
                       );
@@ -320,10 +338,46 @@ export default function ProductView({ product }: ProductData) {
 
         {/* Responsive Styles */}
         <style>{`
+          /* Product detail grid */
+          .product-detail-grid {
+            width: 100%;
+          }
+          
+          .product__detail__left {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+          }
+          
+          .product__detail__right {
+            width: 100%;
+          }
+          
           @media (max-width: 768px) {
+            .product__page__middle {
+              padding-left: 12px;
+              padding-right: 12px;
+            }
+            
+            .product-detail-grid {
+              gap: 1rem !important;
+            }
+            
+            .product__detail__left {
+              width: 100%;
+              padding: 0;
+            }
+            
+            .product__detail__right {
+              width: 100%;
+              padding: 0;
+            }
+            
             .product-info-box {
               padding: 24px 20px !important;
               border-radius: 10px !important;
+              margin: 0 !important;
             }
             
             .product-name-text {
@@ -353,12 +407,41 @@ export default function ProductView({ product }: ProductData) {
           }
           
           @media (max-width: 640px) {
+            .product__page__middle {
+              padding-left: 8px;
+              padding-right: 8px;
+            }
+            
+            .product-detail-grid {
+              gap: 0.75rem !important;
+            }
+            
             .product-info-box {
               padding: 20px 16px !important;
             }
             
             .product-name-text {
               font-size: 18px !important;
+            }
+            
+            .product-price-text {
+              font-size: 18px !important;
+            }
+          }
+          
+          @media (max-width: 480px) {
+            .product__page__middle {
+              padding-left: 4px;
+              padding-right: 4px;
+            }
+            
+            .product-info-box {
+              padding: 16px 12px !important;
+              border-radius: 8px !important;
+            }
+            
+            .product-name-text {
+              font-size: 16px !important;
             }
             
             .product-price-text {
@@ -438,8 +521,13 @@ function ProductPrice({ quantity = 1 }: { quantity?: number }) {
 }
 
 // Accordion chi tiết sản phẩm với data cứng
-function ProductDetailsAccordion() {
-  const [open, setOpen] = React.useState(false);
+function ProductDetailsAccordion({
+  open,
+  onClick,
+}: {
+  open: boolean;
+  onClick: () => void;
+}) {
   return (
     <div style={{ marginBottom: 8, overflow: "hidden" }}>
       <div
@@ -452,7 +540,7 @@ function ProductDetailsAccordion() {
           padding: "12px 0",
           transition: "all 0.3s ease",
         }}
-        onClick={() => setOpen((v) => !v)}
+        onClick={onClick}
       >
         <span
           style={{
@@ -510,8 +598,13 @@ function ProductDetailsAccordion() {
 }
 
 // Accordion chính sách bảo hành với data cứng từ ảnh
-function WarrantyAccordion() {
-  const [open, setOpen] = React.useState(false);
+function WarrantyAccordion({
+  open,
+  onClick,
+}: {
+  open: boolean;
+  onClick: () => void;
+}) {
   return (
     <div style={{ marginBottom: 8, overflow: "hidden" }}>
       <div
@@ -524,7 +617,7 @@ function WarrantyAccordion() {
           padding: "12px 0",
           transition: "all 0.3s ease",
         }}
-        onClick={() => setOpen((v) => !v)}
+        onClick={onClick}
       >
         <span
           style={{
