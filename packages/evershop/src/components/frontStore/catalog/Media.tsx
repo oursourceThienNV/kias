@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -158,6 +158,57 @@ export const Media: React.FC<MediaProps> = ({
   const [isImageLoading, setIsImageLoading] = useState(false);
   const mainSliderRef = useRef<SliderType>(null);
   const modalSliderRef = useRef<SliderType>(null);
+  // ref for main image container to attach non-passive wheel listener
+  const mainContainerRef = useRef<HTMLDivElement | null>(null);
+  // Responsive: track window width
+  const [windowWidth, setWindowWidth] = useState<number>(
+    typeof window !== "undefined" ? window.innerWidth : 1200
+  );
+
+  useEffect(() => {
+    const onResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  // Attach wheel listener with passive: false so preventDefault() works
+  useEffect(() => {
+    const el = mainContainerRef.current;
+    if (!el) return;
+    const onWheel = (e: WheelEvent) => {
+      // prevent page scroll while interacting with slider
+      e.preventDefault();
+      e.stopPropagation();
+      if (!mainSliderRef.current) return;
+      if ((e as any).deltaY > 0) {
+        mainSliderRef.current.slickNext();
+      } else if ((e as any).deltaY < 0) {
+        mainSliderRef.current.slickPrev();
+      }
+    };
+    el.addEventListener("wheel", onWheel, { passive: false });
+    return () => {
+      el.removeEventListener("wheel", onWheel);
+    };
+  }, [mainContainerRef, mainSliderRef]);
+
+  const isMobile = windowWidth <= 768;
+
+  // compute sizes used for rendering (responsive)
+  const currentImageSize = isMobile
+    ? {
+        width: Math.max(
+          280,
+          Math.min(imageSize.width, Math.round(windowWidth * 0.95))
+        ),
+        height: Math.max(
+          280,
+          Math.round(Math.min(imageSize.height, Math.round(windowWidth * 0.95)))
+        ),
+      }
+    : imageSize;
+
+  const currentThumbSize = isMobile ? { width: 56, height: 56 } : thumbnailSize;
 
   const allImages: ImageWithDimensionsProps[] = [];
 
@@ -168,8 +219,8 @@ export const Media: React.FC<MediaProps> = ({
     allImages.push({
       url: product.image.url,
       alt: product.image.alt || product.name,
-      width: imageSize.width,
-      height: imageSize.height,
+      width: currentImageSize.width,
+      height: currentImageSize.height,
     });
   }
 
@@ -178,8 +229,8 @@ export const Media: React.FC<MediaProps> = ({
       allImages.push({
         url: img.url,
         alt: img.alt || product.name,
-        width: imageSize.width,
-        height: imageSize.height,
+        width: currentImageSize.width,
+        height: currentImageSize.height,
       });
     });
   }
@@ -188,8 +239,8 @@ export const Media: React.FC<MediaProps> = ({
     allImages.push({
       url: "/default-product-image.png",
       alt: product.name,
-      width: imageSize.width,
-      height: imageSize.height,
+      width: currentImageSize.width,
+      height: currentImageSize.height,
     });
   }
 
@@ -198,12 +249,14 @@ export const Media: React.FC<MediaProps> = ({
 
   // Slider thumbnail settings (vertical)
   const thumbSliderSettings = {
-    vertical: true,
-    verticalSwiping: true,
-    slidesToShow: Math.min(
-      Math.floor(imageSize.height / thumbnailSize.height),
-      allImages.length
-    ),
+    vertical: !isMobile,
+    verticalSwiping: !isMobile,
+    slidesToShow: isMobile
+      ? Math.min(4, allImages.length)
+      : Math.min(
+          Math.floor(currentImageSize.height / currentThumbSize.height),
+          allImages.length
+        ),
     slidesToScroll: 1,
     focusOnSelect: true,
     arrows: allImages.length > 1,
@@ -228,8 +281,8 @@ export const Media: React.FC<MediaProps> = ({
     arrows: false, // Không hiện nút
     fade: false,
     swipe: true, // Cho phép trượt chuột
-    vertical: true, // Thêm dòng này
-    verticalSwiping: true, // Thêm dòng này
+    vertical: !isMobile,
+    verticalSwiping: !isMobile,
     beforeChange: (_: number, next: number) => {
       setActiveSlide(next);
     },
@@ -250,18 +303,6 @@ export const Media: React.FC<MediaProps> = ({
     lazyLoad: "ondemand",
     beforeChange: () => setIsImageLoading(true),
     afterChange: () => setIsImageLoading(false),
-  };
-
-  // Hàm xử lý wheel cho slider chính (ngăn cuộn trang)
-  const handleMainSliderWheel = (e: React.WheelEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (!mainSliderRef.current) return;
-    if (e.deltaY > 0) {
-      mainSliderRef.current.slickNext();
-    } else if (e.deltaY < 0) {
-      mainSliderRef.current.slickPrev();
-    }
   };
 
   const openModal = (index: number) => {
@@ -296,25 +337,18 @@ export const Media: React.FC<MediaProps> = ({
 
   return (
     <div
-      className="product-media-container horizontal-layout"
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "flex-start",
-      }}
+      className={`product-media-container horizontal-layout ${
+        isMobile ? "mobile-layout" : "desktop-layout"
+      }`}
     >
       {/* Thumbnails bên trái */}
       <div
         className="thumbnail-slider-container media-thumbnails"
         style={{
-          height: imageSize.height + 10,
-          marginRight: 12, // thu hẹp khoảng cách
-          minWidth: thumbnailSize.width,
-          maxWidth: thumbnailSize.width,
-          overflow: "hidden",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
+          height: isMobile ? "auto" : currentImageSize.height + 10,
+          marginRight: isMobile ? 0 : 12,
+          minWidth: isMobile ? "auto" : currentThumbSize.width,
+          maxWidth: isMobile ? "auto" : currentThumbSize.width,
         }}
       >
         <SliderComponent.default ref={thumbSliderRef} {...thumbSliderSettings}>
@@ -325,8 +359,8 @@ export const Media: React.FC<MediaProps> = ({
                 activeSlide === index ? " active" : ""
               }`}
               style={{
-                width: thumbnailSize.width,
-                height: thumbnailSize.height,
+                width: currentThumbSize.width,
+                height: currentThumbSize.height,
                 cursor: "pointer",
                 border:
                   activeSlide === index
@@ -345,8 +379,8 @@ export const Media: React.FC<MediaProps> = ({
               <Image
                 src={image.url}
                 alt={image.alt || `Thumbnail ${index + 1}`}
-                width={thumbnailSize.width}
-                height={thumbnailSize.height}
+                width={currentThumbSize.width}
+                height={currentThumbSize.height}
                 objectFit="contain"
                 style={{ borderRadius: 0 }}
               />
@@ -357,17 +391,7 @@ export const Media: React.FC<MediaProps> = ({
 
       {/* Hình ảnh chính */}
       <div className="main-image-container">
-        <div
-          tabIndex={0}
-          onWheel={handleMainSliderWheel}
-          onWheelCapture={handleMainSliderWheel}
-          style={{
-            width: imageSize.width,
-            height: imageSize.height,
-            overflow: "hidden", // đảm bảo không bị overflow: visible
-            // Có thể thêm border hoặc boxShadow nếu muốn nổi bật hơn
-          }}
-        >
+        <div tabIndex={0} ref={mainContainerRef} className="main-image-wrapper">
           <SliderComponent.default
             ref={mainSliderRef}
             {...mainSliderSettings}
@@ -378,13 +402,12 @@ export const Media: React.FC<MediaProps> = ({
                 key={index}
                 className="product-image"
                 onClick={() => openModal(index)}
-                style={{ width: imageSize.width, height: imageSize.height }}
               >
                 <Image
                   src={image.url}
                   alt={image.alt || "Product image"}
-                  width={imageSize.width}
-                  height={imageSize.height}
+                  width={currentImageSize.width}
+                  height={currentImageSize.height}
                   objectFit="scale-down"
                   style={{ borderRadius: 0 }}
                 />
@@ -461,13 +484,104 @@ export const Media: React.FC<MediaProps> = ({
 
       {/* Responsive Styles */}
       <style>{`
+        /* Base layout */
+        .product-media-container {
+          display: flex;
+          align-items: flex-start;
+        }
+        
+        .desktop-layout {
+          flex-direction: row;
+        }
+        
+        .mobile-layout {
+          flex-direction: column;
+        }
+        
+        .thumbnail-slider-container {
+          overflow: hidden;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+        
+        .main-image-wrapper {
+          width: 100%;
+          overflow: hidden;
+          position: relative;
+        }
+        
+        .desktop-layout .main-image-wrapper {
+          width: ${currentImageSize.width}px;
+          height: ${currentImageSize.height}px;
+        }
+        
+        .mobile-layout .main-image-wrapper {
+          width: 100%;
+          height: auto;
+        }
+        
+        /* Mobile layout: stack and make images fluid */
         @media (max-width: 768px) {
+          .product-media-container {
+            padding: 0;
+            width: 100%;
+          }
+          
           .media-thumbnails {
             display: none !important;
           }
           
+          .thumbnail-slider-container {
+            display: none !important;
+          }
+          
           .main-image-container {
-            margin-right: 0 !important;
+            width: 100% !important;
+            max-width: 100% !important;
+          }
+          
+          .main-image-wrapper {
+            width: 100% !important;
+            height: auto !important;
+          }
+          
+          .product-slider {
+            width: 100% !important;
+          }
+          
+          .product-image {
+            width: 100% !important;
+            height: auto !important;
+            min-height: 280px;
+          }
+          
+          .product-image img, 
+          .product-image picture, 
+          .product-image > div, 
+          .product-image > div > img {
+            width: 100% !important;
+            height: auto !important;
+            max-width: 100% !important;
+            object-fit: contain !important;
+          }
+          
+          .modal-content {
+            max-width: 100vw;
+            width: 100vw;
+            padding: 20px;
+          }
+          
+          .modal-slider-container {
+            width: 100%;
+            max-width: 100%;
+          }
+        }
+        
+        /* Small mobile devices */
+        @media (max-width: 480px) {
+          .product-image {
+            min-height: 240px;
           }
         }
       `}</style>

@@ -324,13 +324,13 @@ export default function ProductRecommendations({
 
           return (
             <div
-              className="group flex-shrink-0 product-card-item"
+              className="group flex-shrink-0 product-card-item relative"
               style={{ width: `${100 / tilesPerView}%` }}
               key={product.productId}
             >
               <a
                 href={product.url}
-                className="relative block overflow-hidden"
+                className="relative block overflow-hidden product-card-link"
                 style={{ aspectRatio: "3 / 4" } as React.CSSProperties}
                 aria-label={product.name}
               >
@@ -355,6 +355,18 @@ export default function ProductRecommendations({
                     -{discount}%
                   </div>
                 )}
+                {/* Add to cart button, only visible on hover */}
+                <button
+                  className="add-to-cart-btn absolute left-1/2 bottom-4 -translate-x-1/2 px-4 py-2 bg-black text-white rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 font-semibold text-sm"
+                  style={{ zIndex: 40 }}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    // TODO: Add to cart logic here
+                    alert(`Đã thêm "${product.name}" vào giỏ hàng!`);
+                  }}
+                >
+                  Thêm vào giỏ hàng
+                </button>
               </a>
               <div className="mt-3 text-center">
                 <div className="text-sm text-gray-900 font-medium line-clamp-2">
@@ -413,46 +425,49 @@ export default function ProductRecommendations({
       {/* Responsive Styles */}
       <style>{`
         .product-card-item {
-          transition: width 0.3s ease;
+          transition: width 0.3s ease, border-color 0.2s;
+          border: 2px solid transparent;
         }
-        
+        .product-card-item:hover,
+        .product-card-item:focus-within {
+          border-color: #000;
+        }
+        .product-card-link {
+          position: relative;
+        }
+        .add-to-cart-btn {
+          pointer-events: auto;
+        }
         @media (max-width: 1024px) {
           .product-recommendations-section {
             padding: 0 20px;
           }
         }
-        
         @media (max-width: 768px) {
           .product-recommendations-section {
             margin-top: 30px !important;
             padding: 0 16px;
           }
-          
           .product-recommendations-header h2 {
             font-size: 24px !important;
           }
-          
           .product-recommendations-header a {
             font-size: 14px !important;
           }
         }
-        
         @media (max-width: 640px) {
           .product-recommendations-section {
             margin-top: 20px !important;
             padding: 0 12px;
           }
-          
           .product-recommendations-header {
             flex-direction: column;
             align-items: flex-start !important;
             gap: 8px;
           }
-          
           .product-recommendations-header h2 {
             font-size: 20px !important;
           }
-          
           .product-card-item {
             padding: 0 4px;
           }
