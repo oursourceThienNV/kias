@@ -53,11 +53,11 @@ const categoryMap: Record<string, string> = {
 };
 
 const defaultNavItems: NavItem[] = [
-  { id: 'new',     label: 'MỚI',             url: '/new-arrivals' },
-  { id: 'set-bo',  label: 'SẢN PHẨM',          url: '/set-bo' },
+  { id: 'new',     label: 'MỚI',             url: '/ao' },
+  { id: 'set-bo',  label: 'SẢN PHẨM',          url: '/quan' },
   { id: 'vay-dam', label: 'QUÀ TẶNG',       url: '/vay-dam' },
-  { id: 'quan',    label: 'GIÁ MỚI HẤP DẪN',            url: '/quan' },
-  { id: 'ao',      label: 'CỬA HÀNG',              url: '/ao' },
+  { id: 'quan',    label: 'GIÁ MỚI HẤP DẪN',            url: '/set-bo' },
+  { id: 'ao',      label: 'CỬA HÀNG',              url: '/men' },
 ];
 
 export default function MainNavigationLeft({

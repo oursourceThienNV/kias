@@ -10,7 +10,7 @@ export function Footer({ copyRight }: FooterProps) {
   const [openSection, setOpenSection] = useState<string | null>(null);
 
   return (
-    <footer className="w-full bg-[#79192A] text-white py-12 md:py-16">
+    <footer className="w-full bg-[#79192A] text-white px-4 py-12 md:py-16">
       <div className="container">
         {/* Mobile: Phần 1 */}
         <div className="block sm:hidden mb-10 pb-8 border-b border-white/20">
