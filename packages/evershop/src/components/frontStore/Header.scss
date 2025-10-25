@@ -1,0 +1,35 @@
+.header {
+  width: 100%;
+  background: #fff;
+  z-index: 100;
+}
+
+.header__middle {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  height: 70px;
+}
+
+@media (max-width: 768px) {
+  .header__middle {
+    grid-template-columns: 48px 1fr 48px;
+    height: 48px;
+    padding: 0 8px;
+  }
+  .header__middle__left,
+  .header__middle__right {
+    justify-content: center !important;
+    min-width: 48px;
+  }
+  .header__middle__center {
+    justify-content: center !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .header__middle {
+    height: 44px;
+    padding: 0 4px;
+  }
+}

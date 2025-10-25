@@ -22,11 +22,11 @@ export default function HeaderActionsRight({
     return (
         <div className="flex items-center justify-end" style={{ color: navy }}>
             <div className="flex items-center gap-3 sm:gap-4">
-                {/* Account */}
+                {/* Account: chỉ hiện trên desktop */}
                 <a
                     href={isLoggedIn ? '/account' : '/account/login'}
                     aria-label={isLoggedIn ? 'Tài khoản' : 'Đăng nhập'}
-                    className="relative flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 no-underline hover:opacity-80 transition-opacity"
+                    className="relative flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 no-underline hover:opacity-80 transition-opacity hidden md:flex"
                     style={{ color: '#79192A' }}
                 >
                     <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
@@ -35,7 +35,7 @@ export default function HeaderActionsRight({
                     </svg>
                 </a>
 
-                {/* Cart (MiniCart with slide drawer) */}
+                {/* Cart (MiniCart with slide drawer): luôn hiện */}
                 <MiniCart
                     showItemCount
                     renderCartIcon={({ totalQty, onClick, isOpen }) => (
@@ -60,11 +60,11 @@ export default function HeaderActionsRight({
                     )}
                 />
 
-                {/* Wishlist */}
+                {/* Wishlist: chỉ hiện trên desktop */}
                 <a
                     href="/wishlist"
                     aria-label={`Yêu thích${wishlistCount ? ` (${wishlistCount})` : ''}`}
-                    className="relative flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 no-underline hover:opacity-80 transition-opacity"
+                    className="relative flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 no-underline hover:opacity-80 transition-opacity hidden md:flex"
                     style={{ color: "#79192A" }}
                 >
                     <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">

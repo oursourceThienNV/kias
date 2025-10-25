@@ -52,7 +52,9 @@
 }
 
 // Cart Dropdown
+
 .minicart__dropdown {
+  z-index: 2000 !important;
   // Smooth scrollbar
   &::-webkit-scrollbar {
     width: 8px;
@@ -115,6 +117,7 @@
   transform-origin: right center;
   backface-visibility: hidden;
   -webkit-font-smoothing: subpixel-antialiased;
+  z-index: 2000 !important;
   
   &:not(.closing) {
     animation: slideIn 300ms cubic-bezier(0.4, 0, 0.2, 1) forwards;

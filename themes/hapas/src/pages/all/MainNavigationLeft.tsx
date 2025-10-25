@@ -54,11 +54,10 @@ const categoryMap: Record<string, string> = {
 
 const defaultNavItems: NavItem[] = [
   { id: 'new',     label: 'MỚI',             url: '/new-arrivals' },
-  { id: 'set-bo',  label: 'SET BỘ',          url: '/set-bo' },
-  { id: 'vay-dam', label: 'VÁY & ĐẦM',       url: '/vay-dam' },
-  { id: 'quan',    label: 'QUẦN',            url: '/quan' },
-  { id: 'ao',      label: 'ÁO',              url: '/ao' },
-  { id: 'sale',    label: 'GIÁ MỚI HẤP DẪN', url: '/sale' }
+  { id: 'set-bo',  label: 'SẢN PHẨM',          url: '/set-bo' },
+  { id: 'vay-dam', label: 'QUÀ TẶNG',       url: '/vay-dam' },
+  { id: 'quan',    label: 'GIÁ MỚI HẤP DẪN',            url: '/quan' },
+  { id: 'ao',      label: 'CỬA HÀNG',              url: '/ao' },
 ];
 
 export default function MainNavigationLeft({
@@ -122,9 +121,7 @@ export default function MainNavigationLeft({
     [source]
   );
 
-  const navItems: NavItem[] = dynamicNavItems.length > 0
-    ? dynamicNavItems
-    : (navigationConfig?.primary || defaultNavItems);
+  const navItems: NavItem[] = defaultNavItems
 
   return (
     <nav
@@ -143,7 +140,7 @@ export default function MainNavigationLeft({
             <a
               href={item.url}
               className="inline-flex items-center gap-1 text-[13px] tracking-[0.08em] uppercase no-underline hover:opacity-80 transition-opacity"
-              style={{ color: colorHex }}
+              style={{ color: '#79192A' }}
               role="button"
               aria-haspopup={item.submenu ? 'true' : 'false'}
               aria-expanded={activeDropdown === item.id}
@@ -157,9 +154,6 @@ export default function MainNavigationLeft({
               }}
             >
               {item.label}
-              <svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true" className="mt-[1px]">
-                <path d="M3 4.5l3 3 3-3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
             </a>
 
             {item.submenu && activeDropdown === item.id && (
