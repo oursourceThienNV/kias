@@ -47,15 +47,18 @@ export function Payment() {
   }, [paymentMethod]);
 
   return (
-    <div className="checkout-shipment">
-      <h3>{_('Payment')}</h3>
-      <PaymentMethods
+    <div className="w-full">
+      {/* Box thông tin giao hàng */}
+      <div className="bg-white border border-gray-200 rounded-2xl p-5">
+        <h2 className="text-base font-bold mb-4">Phương thức thanh toán</h2>
+      {/* <PaymentMethods
         methods={availablePaymentMethods?.map((method) => ({
           ...method
         }))}
         isLoading={addingBillingAddress}
-      />
+      /> */}
       <BillingAddress billingAddress={billingAddress} />
     </div>
+  </div>
   );
 }

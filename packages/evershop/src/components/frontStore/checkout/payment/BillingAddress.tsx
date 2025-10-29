@@ -68,9 +68,7 @@ export function BillingAddress({
   };
 
   return (
-    <div className="billing-address-section">
-      <h3 className="text-lg font-medium mb-4">{_('Billing Address')}</h3>
-
+    <div>
       {/* Radio options */}
       <div className="mb-6 space-y-3">
         <div
@@ -99,7 +97,7 @@ export function BillingAddress({
                     handleAddressOptionChange('same');
                   }}
                 >
-                  {_('Same as shipping address')}
+                  {_('Thanh toán khi giao hàng (COD)')}
                 </a>
               </div>
             </div>
@@ -133,7 +131,7 @@ export function BillingAddress({
                     handleAddressOptionChange('different');
                   }}
                 >
-                  {_('Use a different billing address')}
+                  {_('Sử dụng địa chỉ thanh toán khác')}
                 </a>
               </div>
             </div>

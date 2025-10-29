@@ -2,7 +2,7 @@ import { Image } from "@components/common/Image.js";
 import { ProductNoThumbnail } from "@components/common/ProductNoThumbnail.js";
 import { AddToCart } from "@components/frontStore/cart/AddToCart.js";
 import { ProductData } from "@components/frontStore/catalog/productContext.js";
-import React, { ReactNode } from "react";
+import React, { ReactNode, useState, useEffect, useRef } from "react";
 
 export interface Product {
   productId: string;
@@ -61,6 +61,101 @@ const DefaultProductItem = ({
   showAddToCart?: boolean;
   customAddToCartRenderer?: (product: ProductData) => ReactNode;
 }) => {
+  // Image carousel state
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isHovering, setIsHovering] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const autoPlayTimerRef = useRef<NodeJS.Timeout | null>(null);
+  
+  // Get all images (main image + gallery)
+  const allImages = [
+    product.image,
+    ...([
+      {
+        url: 'https://down-vn.img.susercontent.com/file/vn-11134207-7r98o-lllliiz9wqf081',
+        alt: 'Product Image'
+      },
+      {
+        url: 'https://cdn0695.cdn4s.com/media/aidan/dachinh03451.jpg',
+        alt: 'Product Image'
+      },
+      {
+        url: 'https://product.hstatic.net/200000690551/product/img_1607_0f59b4d688d244a985c6d66610e3a57d_master.jpg',
+        alt: 'Product Image'
+      }
+    ])
+  ].filter(img => img && img.url);
+  
+  const hasMultipleImages = allImages.length > 1;
+  
+  // Auto-play when hovering
+  useEffect(() => {
+    if (isHovering && hasMultipleImages) {
+      autoPlayTimerRef.current = setInterval(() => {
+        setIsTransitioning(true);
+        setCurrentImageIndex((prev) => 
+          prev === allImages.length - 1 ? 0 : prev + 1
+        );
+        setTimeout(() => setIsTransitioning(false), 300);
+      }, 3000); // Change image every 3 seconds
+    } else {
+      if (autoPlayTimerRef.current) {
+        clearInterval(autoPlayTimerRef.current);
+        autoPlayTimerRef.current = null;
+      }
+    }
+    
+    return () => {
+      if (autoPlayTimerRef.current) {
+        clearInterval(autoPlayTimerRef.current);
+      }
+    };
+  }, [isHovering, hasMultipleImages, allImages.length]);
+  
+  const goToPrevImage = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsTransitioning(true);
+    setCurrentImageIndex((prev) => 
+      prev === 0 ? allImages.length - 1 : prev - 1
+    );
+    setTimeout(() => setIsTransitioning(false), 300);
+    
+    // Reset auto-play timer
+    if (autoPlayTimerRef.current) {
+      clearInterval(autoPlayTimerRef.current);
+      autoPlayTimerRef.current = setInterval(() => {
+        setIsTransitioning(true);
+        setCurrentImageIndex((prev) => 
+          prev === allImages.length - 1 ? 0 : prev + 1
+        );
+        setTimeout(() => setIsTransitioning(false), 300);
+      }, 3000);
+    }
+  };
+  
+  const goToNextImage = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsTransitioning(true);
+    setCurrentImageIndex((prev) => 
+      prev === allImages.length - 1 ? 0 : prev + 1
+    );
+    setTimeout(() => setIsTransitioning(false), 300);
+    
+    // Reset auto-play timer
+    if (autoPlayTimerRef.current) {
+      clearInterval(autoPlayTimerRef.current);
+      autoPlayTimerRef.current = setInterval(() => {
+        setIsTransitioning(true);
+        setCurrentImageIndex((prev) => 
+          prev === allImages.length - 1 ? 0 : prev + 1
+        );
+        setTimeout(() => setIsTransitioning(false), 300);
+      }, 3000);
+    }
+  };
+
   const formatPrice = (priceObj: any) => {
     try {
       if (!priceObj) return "";
@@ -215,21 +310,65 @@ const DefaultProductItem = ({
   return (
     // reserve space at bottom for the hover add-to-cart so showing it won't push other items
     <div className="product__list__item__inner group relative overflow-visible transition-all">
-      {/* hover effect: black border, lift up and scale slightly, higher z-index and shadow */}
-      <div className="absolute inset-0 pointer-events-none transition-all duration-200 ease-in-out"></div>
-      <div className="relative  group-hover:border group-hover:border-black rounded-md bg-white transition-transform duration-200 ease-in-out">
+        {/* hover effect: black border, lift up and scale slightly, higher z-index and shadow */}
+        <div className="absolute inset-0 pointer-events-none transition-all duration-200 ease-in-out"></div>
+        <div className="relative  group-hover:border group-hover:border-black rounded-md bg-white transition-transform duration-200 ease-in-out">
         <a href={product.url} className="product__list__link block">
-          <div className="product__list__image overflow-hidden bg-gray-50 rounded-t-md">
-            {product.image && product.image.url ? (
-              <div className="w-full h-256 md:h-300 lg:h-320 flex items-center justify-center overflow-hidden bg-gray-50 rounded-t-md">
+          <div 
+            className="product__list__image overflow-hidden bg-gray-50 rounded-t-md relative"
+            onMouseEnter={() => setIsHovering(true)}
+            onMouseLeave={() => setIsHovering(false)}
+          >
+            {allImages.length > 0 && allImages[currentImageIndex] ? (
+              <div className="w-full aspect-square flex items-center justify-center overflow-hidden bg-gray-50 rounded-t-md relative">
                 <Image
-                  src={product.image.url}
-                  alt={product.image.alt || product.name}
-                  width={imageWidth || 420}
-                  height={imageHeight || 420}
+                  key={currentImageIndex}
+                  src={allImages[currentImageIndex]!.url}
+                  alt={allImages[currentImageIndex]!.alt || product.name}
+                  width={450}
+                  height={450}
                   sizes="(max-width: 768px) 100vw, 25vw"
-                  className="w-auto h-full object-contain transition-transform duration-300 ease-in-out group-hover:scale-105"
+                  className="w-full h-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-105"
                 />
+                
+                {/* Navigation buttons - only show if multiple images */}
+                {hasMultipleImages && (
+                  <>
+                    {/* Previous button - always visible on mobile, show on hover on desktop */}
+                    <button
+                      onClick={goToPrevImage}
+                      className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-white/80 hover:bg-white rounded-full flex items-center justify-center shadow-md transition-all sm:opacity-0 sm:group-hover:opacity-100 z-10"
+                      aria-label="Previous image"
+                    >
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M15 18l-6-6 6-6" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </button>
+                    
+                    {/* Next button - always visible on mobile, show on hover on desktop */}
+                    <button
+                      onClick={goToNextImage}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-white/80 hover:bg-white rounded-full flex items-center justify-center shadow-md transition-all sm:opacity-0 sm:group-hover:opacity-100 z-10"
+                      aria-label="Next image"
+                    >
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M9 18l6-6-6-6" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </button>
+                    
+                    {/* Image indicators - always visible on mobile, show on hover on desktop */}
+                    <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
+                      {allImages.map((_, index) => (
+                        <div
+                          key={index}
+                          className={`w-1.5 h-1.5 rounded-full transition-all ${
+                            index === currentImageIndex ? 'bg-white w-4' : 'bg-white/50'
+                          }`}
+                        />
+                      ))}
+                    </div>
+                  </>
+                )}
               </div>
             ) : (
               <div className="w-full h-48 md:h-56 lg:h-64 flex items-center justify-center bg-gray-100">
@@ -262,10 +401,10 @@ const DefaultProductItem = ({
           </div>
         </a>
 
-        {/* Add-to-cart placed below price; desktop shows on hover (opacity) but occupies space to avoid overlap */}
+        {/* Add-to-cart: Only show on desktop (sm and up) with hover effect. Hidden on mobile. */}
         {showAddToCart && (
-          <div className="product__list__add-wrap relative">
-            <div className="sm:block product__list__actions opacity-0 group-hover:opacity-100 transition-opacity duration-200 ease-in-out px-5">
+          <div className="product__list__add-wrap relative hidden sm:block">
+            <div className="product__list__actions opacity-0 group-hover:opacity-100 transition-opacity duration-200 ease-in-out px-5">
               {customAddToCartRenderer ? (
                 customAddToCartRenderer(product)
               ) : (
@@ -277,45 +416,34 @@ const DefaultProductItem = ({
                   qty={1}
                 >
                   {(state, actions) => (
-                    <button
-                      className="w-full py-2 mt-1 mb-4 text-sm font-medium text-white bg-black hover:bg-gray-800 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed rounded-sm"
-                      disabled={!state.canAddToCart || state.isLoading}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        actions.addToCart();
-                      }}
-                    >
-                      THÊM VÀO GIỎ HÀNG
-                    </button>
-                  )}
-                </AddToCart>
-              )}
-            </div>
-
-            <div className="block hidden product__list__actions px-6 pb-6">
-              {customAddToCartRenderer ? (
-                customAddToCartRenderer(product)
-              ) : (
-                <AddToCart
-                  product={{
-                    sku: product.sku,
-                    isInStock: product.inventory?.isInStock ?? true,
-                  }}
-                  qty={1}
-                >
-                  {(state, actions) => (
-                    <button
-                      className="w-full py-3 text-sm font-medium text-white bg-black hover:bg-gray-800 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
-                      disabled={!state.canAddToCart || state.isLoading}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        actions.addToCart();
-                      }}
-                    >
-                      {state.isLoading ? "Đang thêm..." : "THÊM VÀO GIỎ HÀNG"}
-                    </button>
+                    <div className="flex gap-2">
+                      <button
+                        className="flex-1 py-2 mt-1 mb-4 text-sm font-medium text-white bg-black hover:bg-gray-800 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed rounded-sm"
+                        disabled={!state.canAddToCart || state.isLoading}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          actions.addToCart();
+                        }}
+                      >
+                        THÊM VÀO GIỎ
+                      </button>
+                      <button
+                        className="flex-1 py-2 mt-1 mb-4 text-sm font-medium text-white bg-[#79192A] hover:bg-[#5a1220] transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed rounded-sm"
+                        disabled={!state.canAddToCart || state.isLoading}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          actions.addToCart();
+                          // Navigate to cart page
+                          setTimeout(() => {
+                            window.location.href = '/cart';
+                          }, 300);
+                        }}
+                      >
+                        MUA NGAY
+                      </button>
+                    </div>
                   )}
                 </AddToCart>
               )}
