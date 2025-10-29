@@ -80,15 +80,50 @@ export function Header() {
     },
   ];
 
+  const defaultNavItems = [
+    { id: 'new', label: 'MỚI', url: '/moi' },
+    {
+      id: 'san-pham',
+      label: 'SẢN PHẨM',
+      url: '/san-pham',
+      submenu: [
+        { id: 'ao', label: 'Áo', url: '/ao' },
+        { id: 'quan', label: 'Quần', url: '/quan' },
+        { id: 'vay-dam', label: 'Váy & Đầm', url: '/vay-dam' },
+        { id: 'set-bo', label: 'Set Bộ', url: '/set-bo' },
+        { id: 'men', label: 'Nam', url: '/men' },
+        { id: 'women', label: 'Nữ', url: '/women' },
+      ],
+    },
+    {
+      id: 'san-pham-sale',
+      label: 'SẢN PHẨM SALE',
+      url: '/san-pham-sale',
+      submenu: [
+        { id: 'sale-upto', label: 'Sale Up To', url: '/sale-upto' },
+      ],
+    },
+    {
+      id: 'bo-suu-tap',
+      label: 'BỘ SƯU TẬP',
+      url: '/bo-suu-tap',
+      submenu: [
+        { id: 'bst-he', label: 'BST Hè', url: '/bo-suu-tap/he' },
+        { id: 'bst-dong', label: 'BST Đông', url: '/bo-suu-tap/dong' },
+      ],
+    },
+    { id: 've-kias', label: 'VỀ KIAS', url: '/ve-kias' },
+  ];
+
   return (
-    <header className="header">
+    <header className="header sm:pl-[24px] lg:pl-[44px] relative">
       <Area id="headerTop" className="header__top" />
       <div
-        className="header__middle grid grid-cols-3 text-[#79192A]"
+        className="header__middle flex items-center justify-between md:grid md:grid-cols-3 text-[#79192A]"
         style={{ height: "70px" }}
       >
         {/* LEFT: Hamburger cho mobile, menu ngang cho desktop */}
-        <div className="header__middle__left flex justify-start items-center px-8">
+        <div className="header__middle__left flex justify-start items-center">
           <HeaderMobileLeft onMenuOpen={() => setMenuOpen(true)} />
           <div className="hidden md:flex items-center w-full">
             <Area
@@ -103,9 +138,11 @@ export function Header() {
         />
         <Area
           id="headerMiddleRight"
-          className="header__middle__right flex justify-end items-center gap-3"
+          className="header__middle__right flex justify-end items-center gap-3 pl-11"
         />
       </div>
+      {/* Dropdown container - positioned absolutely to break out of grid */}
+      <div id="navigation-dropdown-container" className="absolute left-0 right-0" style={{ top: '100%', zIndex: 1030 }}></div>
       <Area id="headerBottom" className="header__bottom" />
 
       {/* Mobile menu drawer */}
@@ -134,208 +171,130 @@ export function Header() {
           className={`bg-white w-4/5 max-w-xs h-full shadow-lg flex flex-col fixed left-0 top-0 z-[3100] transition-transform duration-300 ease-in-out ${menuOpen ? 'translate-x-0' : '-translate-x-full'}`}
           style={{ willChange: 'transform', pointerEvents: menuOpen ? 'auto' : 'none' }}
         >
-            <button
-              className="absolute top-3 right-3 p-2"
-              aria-label="Đóng menu"
-              onClick={() => setMenuOpen(false)}
+          <button
+            className="absolute top-3 right-3 p-2"
+            aria-label="Đóng menu"
+            onClick={() => setMenuOpen(false)}
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#79192A"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             >
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="#79192A"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <line x1="18" y1="6" x2="6" y2="18" />
-                <line x1="6" y1="6" x2="18" y2="18" />
-              </svg>
-            </button>
-            {/* Đăng nhập/account */}
-            <div className="flex items-center gap-2 px-4 pt-6 pb-4 border-b">
-              <svg
-                width="20"
-                height="20"
-                fill="none"
-                stroke="#79192A"
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+          {/* Đăng nhập/account */}
+          <div className="flex items-center gap-2 px-4 pt-6 pb-4 border-b">
+            <svg
+              width="20"
+              height="20"
+              fill="none"
+              stroke="#79192A"
+              strokeWidth="1.5"
+              viewBox="0 0 20 20"
+            >
+              <circle
+                cx="10"
+                cy="7"
+                r="3.25"
+                stroke="currentColor"
                 strokeWidth="1.5"
-                viewBox="0 0 20 20"
-              >
-                <circle
-                  cx="10"
-                  cy="7"
-                  r="3.25"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                />
-                <path
-                  d="M4.5 18c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5"
-                  stroke="currentColor"
-                  strokeWidth="1.5"
-                />
-              </svg>
-              <a
-                href="/account/login"
-                className="text-[15px] text-[#79192A] font-medium"
-              >
-                Đăng nhập
-              </a>
-            </div>
+              />
+              <path
+                d="M4.5 18c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5"
+                stroke="currentColor"
+                strokeWidth="1.5"
+              />
+            </svg>
+            <a
+              href="/account/login"
+              className="text-[15px] text-[#79192A] font-medium"
+            >
+              Đăng nhập
+            </a>
+          </div>
+          {/* Menu items from defaultNavItems */}
+          <div className="flex-1 overflow-y-auto px-4 py-4">
+            <ul className="space-y-1">
+              {defaultNavItems.map((item) => (
+                <li key={item.id}>
+                  {item.submenu ? (
+                    <>
+                      <button
+                        className="w-full flex justify-between items-center text-lg font-bold text-[#79192A] py-2 focus:outline-none hover:bg-gray-100 rounded transition"
+                        onClick={() => toggleSection(item.id)}
+                        aria-expanded={openSections[item.id]}
+                      >
+                        <span>{item.label}</span>
+                        <svg
+                          className={`w-5 h-5 ml-2 transition-transform duration-200 ${
+                            openSections[item.id] ? "rotate-180" : ""
+                          }`}
+                          fill="none"
+                          stroke="#79192A"
+                          strokeWidth="2"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M6 9l6 6 6-6"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </button>
+                      {openSections[item.id] && (
+                        <ul className="pl-4 text-sm text-[#202020] space-y-1 animate-fadeIn">
+                          {item.submenu.map((sub) => (
+                            <li className="py-0.5" key={sub.id}>
+                              <a href={sub.url} className="hover:text-[#79192A] transition">
+                                {sub.label}
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </>
+                  ) : (
+                    <a
+                      href={item.url}
+                      className="block text-lg font-bold text-[#79192A] py-2 hover:bg-gray-100 rounded transition"
+                    >
+                      {item.label}
+                    </a>
+                  )}
+                </li>
+              ))}
+            </ul>
             {/* Hình ảnh danh mục ở ngay dưới menu, sau CỬA HÀNG */}
-            <div className="flex-1 overflow-y-auto px-4 py-4">
-              <ul className="space-y-1">
-                {/* MỚI */}
-                <li>
-                  <button
-                    className="w-full flex justify-between items-center text-lg font-bold text-[#79192A] py-2 focus:outline-none hover:bg-gray-100 rounded transition"
-                    onClick={() => toggleSection("moi")}
-                    aria-expanded={openSections.moi}
-                  >
-                    <span>MỚI</span>
-                    <svg
-                      className={`w-5 h-5 ml-2 transition-transform duration-200 ${
-                        openSections.moi ? "rotate-180" : ""
-                      }`}
-                      fill="none"
-                      stroke="#79192A"
-                      strokeWidth="2"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M6 9l6 6 6-6"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </button>
-                  {openSections.moi && (
-                    <ul className="pl-4 text-sm text-[#202020] animate-fadeIn">
-                      {thumbItems.map((item, idx) => (
-                        <li className="py-0.5" key={item.url + idx}>
-                          <a href={item.url}>{item.name}</a>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </li>
-                {/* SẢN PHẨM */}
-                <li>
-                  <button
-                    className="w-full flex justify-between items-center text-lg font-bold text-[#79192A] py-2 focus:outline-none hover:bg-gray-100 rounded transition"
-                    onClick={() => toggleSection("tuixach")}
-                    aria-expanded={openSections.tuixach}
-                  >
-                    <span>SẢN PHẨM</span>
-                    <svg
-                      className={`w-5 h-5 ml-2 transition-transform duration-200 ${
-                        openSections.tuixach ? "rotate-180" : ""
-                      }`}
-                      fill="none"
-                      stroke="#79192A"
-                      strokeWidth="2"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M6 9l6 6 6-6"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </button>
-                  {openSections.tuixach && (
-                    <ul className="pl-4 text-sm text-[#202020] space-y-1 animate-fadeIn">
-                      {thumbItems.map((item, idx) => (
-                        <li className="py-0.5" key={item.url + idx}>
-                          <a href={item.url}>{item.name}</a>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </li>
-                {/* QUÀ TẶNG */}
-                <li>
-                  <button
-                    className="w-full flex justify-between items-center text-lg font-bold text-[#79192A] py-2 focus:outline-none hover:bg-gray-100 rounded transition"
-                    onClick={() => toggleSection("quatang")}
-                    aria-expanded={openSections.quatang}
-                  >
-                    <span>QUÀ TẶNG</span>
-                    <svg
-                      className={`w-5 h-5 ml-2 transition-transform duration-200 ${
-                        openSections.quatang ? "rotate-180" : ""
-                      }`}
-                      fill="none"
-                      stroke="#79192A"
-                      strokeWidth="2"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M6 9l6 6 6-6"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </button>
-                  {openSections.quatang && (
-                    <ul className="pl-4 text-sm text-[#202020] space-y-1 animate-fadeIn">
-                      {[{
-                        name: "Quà Tặng 1",
-                        url: "/qua-tang-1",
-                      },
-                      {
-                        name: "Quà Tặng 2",
-                        url: "/qua-tang-2",
-                      }].map((item, idx) => (
-                        <li className="py-0.5" key={item.url + idx}>
-                          <a href={item.url}>{item.name}</a>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </li>
-                {/* GIÁ MỚI HẤP DẪN & CỬA HÀNG (không có submenu) */}
-                <li>
-                  <a
-                    href="#"
-                    className="block text-lg font-bold text-[#79192A] py-2 hover:bg-gray-100 rounded transition"
-                  >
-                    GIÁ MỚI HẤP DẪN
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="block text-lg font-bold text-[#79192A] py-2 hover:bg-gray-100 rounded transition"
-                  >
-                    CỬA HÀNG
-                  </a>
-                </li>
-              </ul>
-              {/* Hình ảnh danh mục ở ngay dưới menu, sau CỬA HÀNG */}
-              <div className="mt-4 grid grid-cols-3 gap-2">
-                {thumbItems.map((item, idx) => (
-                  <a
-                    key={item.url + idx}
-                    href={item.url}
-                    className="flex flex-col items-center hover:opacity-80"
-                    style={{ textDecoration: "none" }}
-                  >
-                    <img
-                      src={item.image?.url}
-                      alt={item.name}
-                      className="w-16 h-16 object-contain"
-                    />
-                    <span className="text-xs mt-1 text-center">
-                      {item.name}
-                    </span>
-                  </a>
-                ))}
-              </div>
+            <div className="mt-4 grid grid-cols-3 gap-2">
+              {thumbItems.map((item, idx) => (
+                <a
+                  key={item.url + idx}
+                  href={item.url}
+                  className="flex flex-col items-center hover:opacity-80"
+                  style={{ textDecoration: "none" }}
+                >
+                  <img
+                    src={item.image?.url}
+                    alt={item.name}
+                    className="w-16 h-16 object-contain"
+                  />
+                  <span className="text-xs mt-1 text-center">
+                    {item.name}
+                  </span>
+                </a>
+              ))}
             </div>
-          </nav>
-        </div>
+          </div>
+        </nav>
+      </div>
     </header>
   );
 }

@@ -1,31 +1,30 @@
 import {
   useCartDispatch,
-  useCartState
-} from '@components/frontStore/cart/cartContext.js';
+  useCartState,
+} from "@components/frontStore/cart/cartContext.js";
 import {
   useCheckout,
-  useCheckoutDispatch
-} from '@components/frontStore/checkout/checkoutContext.js';
-import { ShippingMethods } from '@components/frontStore/checkout/shipment/ShippingMethods.js';
-import CustomerAddressForm from '@components/frontStore/customer/address/addressForm/Index.js';
-import { _ } from '@evershop/evershop/lib/locale/translate/_';
-import React, { useEffect, useRef } from 'react';
-import { useWatch } from 'react-hook-form';
-import { toast } from 'react-toastify';
+  useCheckoutDispatch,
+} from "@components/frontStore/checkout/checkoutContext.js";
+import { ShippingMethods } from "@components/frontStore/checkout/shipment/ShippingMethods.js";
+import { _ } from "@evershop/evershop/lib/locale/translate/_";
+import React, { useEffect, useRef } from "react";
+import { useWatch } from "react-hook-form";
+import { toast } from "react-toastify";
 
 export function Shipment() {
   const {
     data: {
       shippingAddress,
       availableShippingMethods,
-      shippingMethod: selectedShippingMethod
+      shippingMethod: selectedShippingMethod,
     },
-    loadingStates: { fetchingShippingMethods }
+    loadingStates: { fetchingShippingMethods },
   } = useCartState();
   const {
     addShippingAddress,
     addShippingMethod,
-    fetchAvailableShippingMethods
+    fetchAvailableShippingMethods,
   } = useCartDispatch();
   const { form } = useCheckout();
   const { updateCheckoutData } = useCheckoutDispatch();
@@ -33,7 +32,7 @@ export function Shipment() {
   // Use useWatch for better performance and cleaner code
   const watchedShippingAddress = useWatch({
     control: form.control,
-    name: 'shippingAddress'
+    name: "shippingAddress",
   });
 
   const dirtyFields = form.formState.dirtyFields;
@@ -48,7 +47,7 @@ export function Shipment() {
       ? {
           country: shippingAddress.country?.code,
           province: shippingAddress.province?.code,
-          postcode: shippingAddress.postcode || undefined
+          postcode: shippingAddress.postcode || undefined,
         }
       : null
   );
@@ -56,9 +55,9 @@ export function Shipment() {
   useEffect(() => {
     const fetchShippingMethods = async () => {
       try {
-        const country = form.getValues('shippingAddress.country');
-        const province = form.getValues('shippingAddress.province');
-        const postcode = form.getValues('shippingAddress.postcode');
+        const country = form.getValues("shippingAddress.country");
+        const province = form.getValues("shippingAddress.province");
+        const postcode = form.getValues("shippingAddress.postcode");
 
         if (!country) {
           return;
@@ -86,7 +85,7 @@ export function Shipment() {
         toast.error(
           error instanceof Error
             ? error.message
-            : _('Failed to update shipment')
+            : _("Failed to update shipment")
         );
       }
     };
@@ -113,11 +112,11 @@ export function Shipment() {
 
   const updateShipment = async (method: { code: string; name: string }) => {
     try {
-      const validate = await form.trigger('shippingAddress');
+      const validate = await form.trigger("shippingAddress");
       if (!validate) {
         return false;
       }
-      const shippingAddress = form.getValues('shippingAddress');
+      const shippingAddress = form.getValues("shippingAddress");
 
       await addShippingAddress(shippingAddress);
       await addShippingMethod(method.code, method.name);
@@ -125,29 +124,27 @@ export function Shipment() {
       return true;
     } catch (error) {
       toast.error(
-        error instanceof Error ? error.message : _('Failed to update shipment')
+        error instanceof Error ? error.message : _("Failed to update shipment")
       );
       return false;
     }
   };
 
   return (
-    <div className="checkout-shipment">
-      <h2>{_('Delivery')}</h2>
-      <CustomerAddressForm
-        areaId="checkoutShippingAddressForm"
-        fieldNamePrefix="shippingAddress"
-        address={shippingAddress}
-      />
-      <ShippingMethods
-        methods={availableShippingMethods?.map((method) => ({
-          ...method,
-          isSelected: method.code === selectedShippingMethod
-        }))}
-        shippingAddress={shippingAddress}
-        onSelect={updateShipment}
-        isLoading={fetchingShippingMethods}
-      />
+    <div className="w-full">
+      {/* Box thông tin giao hàng */}
+      <div className="bg-white border border-gray-200 rounded-2xl p-5">
+        <h2 className="text-base font-bold mb-4">Phương thức thanh toán</h2>
+        <ShippingMethods
+          methods={availableShippingMethods?.map((method) => ({
+            ...method,
+            isSelected: method.code === selectedShippingMethod,
+          }))}
+          shippingAddress={shippingAddress}
+          onSelect={updateShipment}
+          isLoading={fetchingShippingMethods}
+        />
+      </div>
     </div>
   );
 }

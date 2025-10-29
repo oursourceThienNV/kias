@@ -15,12 +15,16 @@
   .header__middle {
     grid-template-columns: 48px 1fr 48px;
     height: 48px;
-    padding: 0 8px;
+    padding: 0;
   }
-  .header__middle__left,
-  .header__middle__right {
-    justify-content: center !important;
+  .header__middle__left {
+    justify-content: flex-start;
     min-width: 48px;
+  }
+  .header__middle__right {
+    justify-content: flex-end;
+    min-width: 48px;
+    padding-right: 0;
   }
   .header__middle__center {
     justify-content: center !important;

@@ -161,7 +161,7 @@ const CartItemComponent: React.FC<{
 
         <Area id="cartItemAfterImage" item={item} noOuter />
 
-        <div className="flex-1 min-w-[200px] max-w-full md:max-w-[300px]">
+        <div className="flex-1 min-w-[200px] max-w-full md:max-w-[600px]">
           <div className="mb-2">
             {item.url ? (
               <a
@@ -351,6 +351,8 @@ interface CartItemsProps {
     isEmpty: boolean;
     totalItems: number;
     onRemoveItem: (itemId: string) => Promise<void>;
+    onIncreaseItem: (itemId: string) => Promise<void>;
+    onDecreaseItem: (itemId: string) => Promise<void>;
     SkeletonCartItem: React.FC;
     EmptyCart: React.FC<{ loading?: boolean }>;
     CartItemComponent: React.FC<{
@@ -367,7 +369,7 @@ function CartItems({ children }: CartItemsProps) {
     loading,
     setting: { priceIncludingTax },
   } = useCartState();
-  const { removeItem } = useCartDispatch();
+  const { removeItem, updateItem } = useCartDispatch();
 
   const items = (cart?.items || []).map((item) => ({
     id: item.cartItemId,
@@ -392,6 +394,20 @@ function CartItems({ children }: CartItemsProps) {
     await removeItem(itemId);
   };
 
+  // Hàm tăng/giảm số lượng cho từng item
+  const onIncreaseItem = async (itemId: string) => {
+    const item = items.find(i => i.id === itemId);
+    if (item) {
+      await updateItem(itemId, { qty: 1, action: 'increase' });
+    }
+  };
+  const onDecreaseItem = async (itemId: string) => {
+    const item = items.find(i => i.id === itemId);
+    if (item && item.qty > 1) {
+      await updateItem(itemId, { qty: 1, action: 'decrease' });
+    }
+  };
+
   return (
     <div className="cart-items">
       <Area id="cartItemsBefore" noOuter />
@@ -402,6 +418,8 @@ function CartItems({ children }: CartItemsProps) {
           isEmpty,
           totalItems,
           onRemoveItem: handleRemoveItem,
+          onIncreaseItem,
+          onDecreaseItem,
           SkeletonCartItem,
           EmptyCart,
           CartItemComponent,

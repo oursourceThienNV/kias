@@ -1,67 +1,105 @@
 {
-  "timestamp": "2025-10-19T17:57:29.751Z",
+  "timestamp": "2025-10-28T07:36:34.763Z",
   "stats": {
-    "categoriesCreated": 6,
-    "attributesCreated": 2,
+    "categoriesCreated": 0,
+    "attributesCreated": 0,
     "productsScraped": 70,
-    "productsImported": 70,
-    "productsFailed": 0,
-    "imagesDownloaded": 0,
+    "productsImported": 0,
+    "productsFailed": 70,
+    "imagesDownloaded": 210,
     "imagesFailed": 0,
     "cmsPagesCreated": 0,
     "cmsPagesFailed": 6
   },
   "summary": {
     "totalProductsScraped": 70,
-    "totalProductsImported": 70,
-    "successRate": "100.00%",
-    "totalErrors": 6
+    "totalProductsImported": 0,
+    "successRate": "0.00%",
+    "totalErrors": 14
   },
-  "categories": [
-    {
-      "name": "Set Bộ",
-      "id": 4,
-      "slug": "set-bo"
-    },
-    {
-      "name": "Váy & Đầm",
-      "id": 5,
-      "slug": "vay-dam"
-    },
-    {
-      "name": "Quần",
-      "id": 6,
-      "slug": "quan"
-    },
-    {
-      "name": "Áo",
-      "id": 7,
-      "slug": "ao"
-    },
-    {
-      "name": "Hàng mới về",
-      "id": 8,
-      "slug": "new-arrivals"
-    },
-    {
-      "name": "Giá mới hấp dẫn",
-      "id": 9,
-      "slug": "sale"
-    }
-  ],
-  "attributes": [
-    {
-      "code": "material",
-      "id": 2,
-      "optionsCount": 0
-    },
-    {
-      "code": "size",
-      "id": 3,
-      "optionsCount": 4
-    }
-  ],
+  "categories": [],
+  "attributes": [],
   "errors": [
+    {
+      "type": "attribute_creation",
+      "attribute": "Chất liệu",
+      "error": {
+        "error": {
+          "status": 500,
+          "message": "Exception in middleware createAttribute: duplicate key value violates unique constraint \"ATTRIBUTE_CODE_UNIQUE\""
+        }
+      }
+    },
+    {
+      "type": "attribute_creation",
+      "attribute": "Kích cỡ",
+      "error": {
+        "error": {
+          "status": 500,
+          "message": "Exception in middleware createAttribute: duplicate key value violates unique constraint \"ATTRIBUTE_CODE_UNIQUE\""
+        }
+      }
+    },
+    {
+      "type": "category_creation",
+      "category": "Set Bộ",
+      "error": {
+        "error": {
+          "status": 500,
+          "message": "Exception in middleware createCategory: duplicate key value violates unique constraint \"CATEGORY_URL_KEY_UNIQUE\""
+        }
+      }
+    },
+    {
+      "type": "category_creation",
+      "category": "Váy & Đầm",
+      "error": {
+        "error": {
+          "status": 500,
+          "message": "Exception in middleware createCategory: duplicate key value violates unique constraint \"CATEGORY_URL_KEY_UNIQUE\""
+        }
+      }
+    },
+    {
+      "type": "category_creation",
+      "category": "Quần",
+      "error": {
+        "error": {
+          "status": 500,
+          "message": "Exception in middleware createCategory: duplicate key value violates unique constraint \"CATEGORY_URL_KEY_UNIQUE\""
+        }
+      }
+    },
+    {
+      "type": "category_creation",
+      "category": "Áo",
+      "error": {
+        "error": {
+          "status": 500,
+          "message": "Exception in middleware createCategory: duplicate key value violates unique constraint \"CATEGORY_URL_KEY_UNIQUE\""
+        }
+      }
+    },
+    {
+      "type": "category_creation",
+      "category": "Hàng mới về",
+      "error": {
+        "error": {
+          "status": 500,
+          "message": "Exception in middleware createCategory: duplicate key value violates unique constraint \"CATEGORY_URL_KEY_UNIQUE\""
+        }
+      }
+    },
+    {
+      "type": "category_creation",
+      "category": "Giá mới hấp dẫn",
+      "error": {
+        "error": {
+          "status": 500,
+          "message": "Exception in middleware createCategory: duplicate key value violates unique constraint \"CATEGORY_URL_KEY_UNIQUE\""
+        }
+      }
+    },
     {
       "type": "cms_page_creation",
       "page": "Xu hướng thời trang Xuân Hè 2025",

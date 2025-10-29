@@ -83,7 +83,7 @@ export default function HeaderActionsRight({
                 <span className="mx-2 select-none" style={{ color: "#79192A" }}>|</span>
                 <button
                     type="button"
-                    className="text-xs sm:text-sm font-medium tracking-wide bg-transparent border-0 cursor-pointer hover:opacity-80"
+                    className="text-sm font-medium tracking-wide bg-transparent border-0 cursor-pointer hover:opacity-80"
                     style={{ color: "#79192A" }}
                     aria-label="Chuyển ngôn ngữ"
                 >
