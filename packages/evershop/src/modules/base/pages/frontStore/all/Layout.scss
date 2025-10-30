@@ -181,10 +181,13 @@ h6 {
 }
 .header {
   // padding: 1rem;
+  padding-left: 16px;
+  padding-right: 16px;
   border-bottom: 1px solid #ebebeb;
+  
   @media only screen and (min-width: 1200px) {
-    padding-left: 50px;
-    padding-right: 50px;
+    padding-left: 44px;
+    padding-right: 44px;
   }
 }
 

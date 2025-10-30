@@ -35,8 +35,36 @@ export default function Index({
   const { data, fetching, error } = result;
 
   if (fetching) return <AddressFormLoadingSkeleton />;
-  if (error) {
-    return <p className="text-critical">{error.message}</p>;
+  if (error || !data || !data.allowedCountries || data.allowedCountries.length === 0) {
+    // fallback options nếu không có dữ liệu
+    const fallbackCountries = [
+      {
+        value: 'VN',
+        label: 'Vietnam',
+        provinces: [
+          { value: 'SG', label: 'Hồ Chí Minh' },
+          { value: 'HN', label: 'Hà Nội' },
+          { value: 'DN', label: 'Đà Nẵng' }
+        ]
+      },
+      {
+        value: 'US',
+        label: 'United States',
+        provinces: [
+          { value: 'CA', label: 'California' },
+          { value: 'NY', label: 'New York' },
+          { value: 'TX', label: 'Texas' }
+        ]
+      }
+    ];
+    return (
+      <CustomerAddressForm
+        address={address}
+        areaId={areaId}
+        allowCountries={fallbackCountries}
+        fieldNamePrefix={fieldNamePrefix}
+      />
+    );
   }
 
   return (
