@@ -62,8 +62,10 @@
     .hapas-category-section .category-header h2 {
         font-size: 36px;
     }
-    
-    @media (max-width: 1024px) {
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .hapas-category-section .category-header h2 {
         font-size: 28px;
     }
 }
@@ -249,4 +251,95 @@
     @media (max-width: 640px) {
         height: 40px;
     }
+}
+
+/* Ẩn scrollbar hoàn toàn */
+.scrollbar-hide {
+    -ms-overflow-style: none !important; /* IE and Edge */
+    scrollbar-width: none !important; /* Firefox */
+    
+    &::-webkit-scrollbar {
+        display: none !important; /* Chrome, Safari and Opera */
+        width: 0 !important;
+        height: 0 !important;
+    }
+    
+    &::-webkit-scrollbar-track {
+        background: transparent !important;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+        background: transparent !important;
+    }
+}
+
+/* Smooth scroll container */
+.scroll-smooth {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch; /* iOS momentum scrolling */
+    will-change: scroll-position;
+}
+
+/* Optimize rendering performance */
+.flex.overflow-x-auto {
+    transform: translateZ(0); /* Force GPU acceleration */
+    -webkit-transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    perspective: 1000px;
+    -webkit-perspective: 1000px;
+}
+
+/* Navigation arrows responsive */
+.absolute.left-0,
+.absolute.right-0 {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    &:hover {
+        transform: translateY(-50%) scale(1.1);
+    }
+    
+    &:active {
+        transform: translateY(-50%) scale(0.95);
+    }
+    
+    @media (max-width: 640px) {
+        padding: 0.5rem !important;
+        
+        svg {
+            width: 18px !important;
+            height: 18px !important;
+        }
+    }
+}
+
+// Hover preview popup animation (from left - slides right)
+@keyframes fadeInPopup {
+  from {
+    opacity: 0;
+    transform: translateX(-10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+// Hover preview popup animation (from right - slides left)
+@keyframes fadeInPopupReverse {
+  from {
+    opacity: 0;
+    transform: translateX(10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+// Hide popup on mobile and tablet (< 1024px)
+@media (max-width: 1023px) {
+  .container .relative div[style*="fadeInPopup"] {
+    display: none !important;
+  }
 }

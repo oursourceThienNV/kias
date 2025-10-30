@@ -1,4 +1,4 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
+  /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useState, useRef, useEffect } from "react";
 import Slider from "react-slick";
@@ -157,9 +157,16 @@ export const Media: React.FC<MediaProps> = ({
   const [activeSlide, setActiveSlide] = useState(0);
   const [isImageLoading, setIsImageLoading] = useState(false);
   const mainSliderRef = useRef<SliderType>(null);
+  const thumbContainerRef = useRef<HTMLDivElement | null>(null);
+  const mediaContainerRef = useRef<HTMLDivElement | null>(null);
   const modalSliderRef = useRef<SliderType>(null);
-  // ref for main image container to attach non-passive wheel listener
+  const [isMagnifierVisible, setIsMagnifierVisible] = useState(false);
+  const [magnifierBackgroundPos, setMagnifierBackgroundPos] = useState("50% 50%");
+  const [magnifierImageUrl, setMagnifierImageUrl] = useState<string | null>(null);
+  const [hoverIndex, setHoverIndex] = useState<number | null>(null);
+  const bgPosRafRef = useRef<number | null>(null);
   const mainContainerRef = useRef<HTMLDivElement | null>(null);
+  const mainImageSlotRef = useRef<HTMLDivElement | null>(null);
   // Responsive: track window width
   const [windowWidth, setWindowWidth] = useState<number>(
     typeof window !== "undefined" ? window.innerWidth : 1200
@@ -171,26 +178,7 @@ export const Media: React.FC<MediaProps> = ({
     return () => window.removeEventListener("resize", onResize);
   }, []);
 
-  // Attach wheel listener with passive: false so preventDefault() works
-  useEffect(() => {
-    const el = mainContainerRef.current;
-    if (!el) return;
-    const onWheel = (e: WheelEvent) => {
-      // prevent page scroll while interacting with slider
-      e.preventDefault();
-      e.stopPropagation();
-      if (!mainSliderRef.current) return;
-      if ((e as any).deltaY > 0) {
-        mainSliderRef.current.slickNext();
-      } else if ((e as any).deltaY < 0) {
-        mainSliderRef.current.slickPrev();
-      }
-    };
-    el.addEventListener("wheel", onWheel, { passive: false });
-    return () => {
-      el.removeEventListener("wheel", onWheel);
-    };
-  }, [mainContainerRef, mainSliderRef]);
+  
 
   const isMobile = windowWidth <= 768;
 
@@ -244,10 +232,9 @@ export const Media: React.FC<MediaProps> = ({
     });
   }
 
-  // Thêm ref cho thumbnail slider nếu muốn điều khiển đồng bộ
+  // Thumbnails + Main slider settings
   const thumbSliderRef = useRef<SliderType>(null);
 
-  // Slider thumbnail settings (vertical)
   const thumbSliderSettings = {
     vertical: !isMobile,
     verticalSwiping: !isMobile,
@@ -272,15 +259,14 @@ export const Media: React.FC<MediaProps> = ({
     className: "thumbnail-slider-vertical",
   };
 
-  // Xoá prevArrow, nextArrow khỏi mainSliderSettings, giữ swipe: true
   const mainSliderSettings = {
     infinite: true,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
-    arrows: false, // Không hiện nút
+    arrows: false,
     fade: false,
-    swipe: true, // Cho phép trượt chuột
+    swipe: true,
     vertical: !isMobile,
     verticalSwiping: !isMobile,
     beforeChange: (_: number, next: number) => {
@@ -305,16 +291,88 @@ export const Media: React.FC<MediaProps> = ({
     afterChange: () => setIsImageLoading(false),
   };
 
+  const [magnifierZoom, setMagnifierZoom] = useState<number>(2);
+  const magnifierSize = isMobile ? 0 : 300;
+  const thumbToMainGap = isMobile ? 0 : 8;
+  const mainToMagnifierGap = isMobile ? 0 : 2; // even tighter gap
+  const [magnifierLeft, setMagnifierLeft] = useState<number>(0);
+  const magnifierTop = 0;
+
+  // Build transformed URL like Image component so background image loads correctly
+  const buildTransformedUrl = (src: string, w: number, q = 90) =>
+    `/images?src=${encodeURIComponent(src)}&w=${Math.round(w)}&q=${q}`;
+
+  const handleImageMouseMove = (
+    e: React.MouseEvent<HTMLDivElement>,
+    index: number
+  ) => {
+    const target = e.currentTarget as HTMLDivElement;
+    const rect = target.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const clampedX = Math.max(0, Math.min(x, rect.width));
+    const clampedY = Math.max(0, Math.min(y, rect.height));
+    const posX = (clampedX / rect.width) * 100;
+    const posY = (clampedY / rect.height) * 100;
+    if (bgPosRafRef.current) cancelAnimationFrame(bgPosRafRef.current);
+    bgPosRafRef.current = requestAnimationFrame(() => {
+      setMagnifierBackgroundPos(`${posX}% ${posY}%`);
+    });
+    const src = allImages[index]?.url;
+    if (src) {
+      // Use a stable high-res base to avoid refetching on every zoom tick
+      const highRes = buildTransformedUrl(src, currentImageSize.width * 3, 90);
+      setMagnifierImageUrl(highRes);
+    } else {
+      setMagnifierImageUrl(null);
+    }
+    setHoverIndex(index);
+    if (!isMobile) setIsMagnifierVisible(true);
+  };
+
+  const handleImageMouseLeave = () => {
+    setIsMagnifierVisible(false);
+    setHoverIndex(null);
+  };
+
+  // Ensure high-res base is available when hovering or size changes
+  useEffect(() => {
+    if (isMobile || !isMagnifierVisible || hoverIndex === null) return;
+    const src = allImages[hoverIndex]?.url;
+    if (!src) return;
+    const highRes = buildTransformedUrl(src, currentImageSize.width * 3, 90);
+    setMagnifierImageUrl(highRes);
+  }, [hoverIndex, isMagnifierVisible, isMobile, currentImageSize.width]);
+
+  // Wheel behavior: smooth zoom without refetching the image
+  useEffect(() => {
+    const el = mainContainerRef.current;
+    if (!el) return;
+    const onWheel = (e: WheelEvent) => {
+      if (!isMagnifierVisible) return;
+      e.preventDefault();
+      e.stopPropagation();
+      const delta = (e as any).deltaY;
+      setMagnifierZoom((z) => {
+        const step = 0.2;
+        const next = Math.min(4, Math.max(1, z + (delta > 0 ? step : -step)));
+        return parseFloat(next.toFixed(2));
+      });
+    };
+    el.addEventListener("wheel", onWheel, { passive: false });
+    return () => {
+      el.removeEventListener("wheel", onWheel as EventListener);
+    };
+  }, [isMagnifierVisible, mainContainerRef]);
+
   const openModal = (index: number) => {
     setActiveSlide(index);
     setIsModalOpen(true);
-
     setTimeout(() => {
       if (modalSliderRef.current) {
         modalSliderRef.current.slickGoTo(index);
       }
     }, 100);
-
     document.addEventListener("keydown", handleKeyDown);
     document.body.style.overflow = "hidden";
   };
@@ -340,8 +398,9 @@ export const Media: React.FC<MediaProps> = ({
       className={`product-media-container horizontal-layout ${
         isMobile ? "mobile-layout" : "desktop-layout"
       }`}
+      ref={mediaContainerRef}
     >
-      {/* Thumbnails bên trái */}
+      {/* Thumbnails bên trái (desktop), ẩn trên mobile */}
       <div
         className="thumbnail-slider-container media-thumbnails"
         style={{
@@ -349,7 +408,9 @@ export const Media: React.FC<MediaProps> = ({
           marginRight: isMobile ? 0 : 12,
           minWidth: isMobile ? "auto" : currentThumbSize.width,
           maxWidth: isMobile ? "auto" : currentThumbSize.width,
+          display: isMobile ? "none" : "flex",
         }}
+        ref={thumbContainerRef}
       >
         <SliderComponent.default ref={thumbSliderRef} {...thumbSliderSettings}>
           {allImages.map((image, index) => (
@@ -389,7 +450,7 @@ export const Media: React.FC<MediaProps> = ({
         </SliderComponent.default>
       </div>
 
-      {/* Hình ảnh chính */}
+      {/* Hình ảnh chính (slider) */}
       <div className="main-image-container">
         <div tabIndex={0} ref={mainContainerRef} className="main-image-wrapper">
           <SliderComponent.default
@@ -402,6 +463,9 @@ export const Media: React.FC<MediaProps> = ({
                 key={index}
                 className="product-image"
                 onClick={() => openModal(index)}
+                onMouseMove={(e) => handleImageMouseMove(e, index)}
+                onMouseLeave={handleImageMouseLeave}
+                ref={index === activeSlide ? mainImageSlotRef : undefined}
               >
                 <Image
                   src={image.url}
@@ -416,6 +480,40 @@ export const Media: React.FC<MediaProps> = ({
           </SliderComponent.default>
         </div>
       </div>
+
+      {!isMobile && (
+        <div
+          className={`magnifier-container${
+            isMagnifierVisible ? " visible" : ""
+          }`}
+          style={{
+            width: magnifierSize,
+            height: magnifierSize,
+            position: "absolute",
+            top: magnifierTop,
+            left: magnifierLeft,
+            zIndex: 999,
+            pointerEvents: "none",
+          }}
+        >
+          {isMagnifierVisible && magnifierImageUrl && (
+            <div
+              className="magnifier-box"
+              style={{
+                width: "100%",
+                height: "100%",
+                backgroundImage: `url(${magnifierImageUrl})`,
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: magnifierBackgroundPos,
+                backgroundSize: `${currentImageSize.width * magnifierZoom}px ${
+                  currentImageSize.height * magnifierZoom
+                }px`,
+                transition: "background-size 180ms ease, background-position 120ms ease",
+              }}
+            />
+          )}
+        </div>
+      )}
 
       {isModalOpen && (
         <div className="product-image-modal">
@@ -488,6 +586,7 @@ export const Media: React.FC<MediaProps> = ({
         .product-media-container {
           display: flex;
           align-items: flex-start;
+          position: relative; /* For absolute magnifier positioning */
         }
         
         .desktop-layout {
@@ -576,6 +675,22 @@ export const Media: React.FC<MediaProps> = ({
             width: 100%;
             max-width: 100%;
           }
+        }
+        
+        .magnifier-container {
+          margin-left: 12px;
+          border: 1px solid #e5e7eb;
+          box-shadow: 0 1px 2px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.1);
+          border-radius: 4px;
+          overflow: hidden;
+          display: none;
+        }
+        .magnifier-container.visible {
+          display: block;
+        }
+        .mobile-layout + .magnifier-container,
+        @media (max-width: 768px) {
+          .magnifier-container { display: none !important; }
         }
         
         /* Small mobile devices */

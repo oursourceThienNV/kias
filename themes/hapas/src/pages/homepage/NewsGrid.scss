@@ -4,6 +4,7 @@
 .hapas-news-grid {
   padding: 4rem 0;
   background: #ffffff;
+  transform: translateZ(0);
   
   @media (max-width: $breakpoint-md) {
     padding: 3rem 0;
@@ -17,6 +18,49 @@
     @media (max-width: $breakpoint-sm) {
       padding-left: 1rem;
       padding-right: 1rem;
+    }
+  }
+
+  /* Ẩn scrollbar hoàn toàn */
+  .scrollbar-hide {
+    -ms-overflow-style: none !important;
+    scrollbar-width: none !important;
+    
+    &::-webkit-scrollbar {
+      display: none !important;
+      width: 0 !important;
+      height: 0 !important;
+    }
+    
+    &::-webkit-scrollbar-track {
+      background: transparent !important;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      background: transparent !important;
+    }
+  }
+
+  /* Navigation arrows responsive */
+  .absolute.left-0,
+  .absolute.right-0 {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    &:hover {
+      transform: translateY(-50%) scale(1.1);
+    }
+    
+    &:active {
+      transform: translateY(-50%) scale(0.95);
+    }
+    
+    @media (max-width: 640px) {
+      padding: 0.5rem !important;
+      
+      svg {
+        width: 18px !important;
+        height: 18px !important;
+      }
     }
   }
 }
@@ -202,14 +246,48 @@
 /* Carousel News Card Hover Effect */
 .hapas-news-grid {
   article {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1), 0 4px 12px rgba(0, 0, 0, 0.08);
+    
+    &:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12), 0 12px 32px rgba(0, 0, 0, 0.1);
+    }
+    
     a {
-      display: block;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
       text-decoration: none;
       color: inherit;
     }
     
-    @media (max-width: $breakpoint-sm) {
-      min-width: 200px; // Ensure minimum width on mobile
+    // Ensure exactly 3 cards visible on desktop - no overflow
+    @media (min-width: 1024px) {
+      min-width: calc((100% - 2rem) / 3);
+      max-width: calc((100% - 2rem) / 3);
+      flex: 0 0 calc((100% - 2rem) / 3);
+    }
+    
+    @media (min-width: 768px) and (max-width: 1023px) {
+      min-width: calc((100% - 2rem) / 3);
+      max-width: calc((100% - 2rem) / 3);
+      flex: 0 0 calc((100% - 2rem) / 3);
+    }
+    
+    @media (min-width: 640px) and (max-width: 767px) {
+      min-width: calc((100% - 1rem) / 2);
+      max-width: calc((100% - 1rem) / 2);
+      flex: 0 0 calc((100% - 1rem) / 2);
+    }
+    
+    @media (max-width: 639px) {
+      min-width: calc(100vw - 2rem);
+      max-width: calc(100vw - 2rem);
+      flex: 0 0 calc(100vw - 2rem);
     }
   }
   
@@ -252,25 +330,5 @@
     }
   }
   
-  // Slider thumb responsive
-  .flex.justify-center {
-    @media (max-width: $breakpoint-md) {
-      margin-top: 1.5rem;
-    }
-    
-    @media (max-width: $breakpoint-sm) {
-      margin-top: 1rem;
-    }
-    
-    .relative.w-\[50vw\] {
-      @media (max-width: $breakpoint-md) {
-        width: 70vw !important;
-      }
-      
-      @media (max-width: $breakpoint-sm) {
-        width: 80vw !important;
-      }
-    }
-  }
 }
 

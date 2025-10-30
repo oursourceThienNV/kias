@@ -130,6 +130,12 @@ export default function ProductRecommendations({
   const [isDragging, setIsDragging] = useState(false);
   const [tilesPerView, setTilesPerView] = useState(TILES_PER_VIEW);
 
+  // Drag-to-scroll states (like ProductCarousel)
+  const [isDraggingScroll, setIsDraggingScroll] = useState(false);
+  const [startXScroll, setStartXScroll] = useState(0);
+  const [currentXScroll, setCurrentXScroll] = useState(0);
+  const [scrollLeftStart, setScrollLeftStart] = useState(0);
+
   const totalDots = Math.ceil(productList.length / tilesPerView);
 
   const scrollToPosition = (ratio: number) => {
@@ -255,6 +261,54 @@ export default function ProductRecommendations({
     };
   }, []);
 
+  // Attach native touch drag events to scroll container (like ProductCarousel)
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+
+    let touchStartX = 0;
+    let touchCurrentX = 0;
+    let touchScrollLeft = 0;
+    let isTouchDragging = false;
+
+    const onTouchStart = (e: TouchEvent) => {
+      isTouchDragging = true;
+      touchStartX = e.touches[0].clientX;
+      touchCurrentX = e.touches[0].clientX;
+      touchScrollLeft = el.scrollLeft;
+      setIsDraggingScroll(true);
+      setStartXScroll(touchStartX);
+      setCurrentXScroll(touchCurrentX);
+      setScrollLeftStart(touchScrollLeft);
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      if (!isTouchDragging) return;
+      e.preventDefault();
+      touchCurrentX = e.touches[0].clientX;
+      setCurrentXScroll(touchCurrentX);
+      const offset = touchStartX - touchCurrentX;
+      el.scrollLeft = touchScrollLeft + offset;
+    };
+
+    const onTouchEnd = (e: TouchEvent) => {
+      if (!isTouchDragging) return;
+      e.preventDefault();
+      isTouchDragging = false;
+      setIsDraggingScroll(false);
+    };
+
+    el.addEventListener('touchstart', onTouchStart, { passive: false });
+    el.addEventListener('touchmove', onTouchMove, { passive: false });
+    el.addEventListener('touchend', onTouchEnd, { passive: false });
+
+    return () => {
+      el.removeEventListener('touchstart', onTouchStart as any);
+      el.removeEventListener('touchmove', onTouchMove as any);
+      el.removeEventListener('touchend', onTouchEnd as any);
+    };
+  }, []);
+
   useEffect(() => {
     return () => {
       document.removeEventListener("mousemove", handleGlobalMouseMove);
@@ -312,8 +366,37 @@ export default function ProductRecommendations({
         </div>
       </div>
 
-      {/* Product cards */}
-      <div ref={scrollRef} className="flex overflow-x-hidden gap-1">
+      {/* Product cards (drag-to-scroll enabled) */}
+      <div
+        ref={scrollRef}
+        className="flex overflow-x-scroll gap-1 cursor-grab active:cursor-grabbing select-none"
+        style={{ touchAction: "none", WebkitOverflowScrolling: "touch", scrollbarWidth: "none", msOverflowStyle: "none" }}
+        onMouseDown={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          if (!scrollRef.current) return;
+          setIsDraggingScroll(true);
+          setStartXScroll(e.clientX);
+          setCurrentXScroll(e.clientX);
+          setScrollLeftStart(scrollRef.current.scrollLeft);
+        }}
+        onMouseMove={(e) => {
+          if (!isDraggingScroll || !scrollRef.current) return;
+          e.preventDefault();
+          const x = e.clientX;
+          setCurrentXScroll(x);
+          const offset = startXScroll - x;
+          scrollRef.current.scrollLeft = scrollLeftStart + offset;
+        }}
+        onMouseUp={() => {
+          if (!isDraggingScroll) return;
+          setIsDraggingScroll(false);
+        }}
+        onMouseLeave={() => {
+          if (!isDraggingScroll) return;
+          setIsDraggingScroll(false);
+        }}
+      >
         {productList.map((product) => {
           const discount = product.price.special?.value
             ? calculateDiscount(
@@ -333,6 +416,13 @@ export default function ProductRecommendations({
                 className="relative block overflow-hidden product-card-link"
                 style={{ aspectRatio: "3 / 4" } as React.CSSProperties}
                 aria-label={product.name}
+                onClick={(e) => {
+                  // Prevent navigation if dragged
+                  if (Math.abs(currentXScroll - startXScroll) > 10) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                  }
+                }}
               >
                 {product.image?.url ? (
                   <Image

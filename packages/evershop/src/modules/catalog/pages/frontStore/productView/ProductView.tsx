@@ -8,8 +8,8 @@ import {
 // import { ProductSingleDescription } from "@components/frontStore/catalog/ProductSingleDescription.js";
 // import { ProductSingleForm } from "@components/frontStore/catalog/ProductSingleForm.js";
 import { ProductSingleName } from "@components/frontStore/catalog/ProductSingleName.js";
-import ProductVideo from "@components/frontStore/catalog/ProductVideo.js";
-import ProductContains from "@components/frontStore/catalog/ProductContains.js";
+import SizeChartImage from "@components/frontStore/catalog/SizeChartImage.js";
+import ProductDetailsUsage from "@components/frontStore/catalog/ProductDetailsUsage.js";
 import ProductRecommendations from "@components/frontStore/catalog/ProductRecommendations.js";
 import React from "react";
 
@@ -67,6 +67,9 @@ export default function ProductView({ product }: ProductData) {
                             width: "100%",
                             maxWidth: "100%",
                             margin: 0,
+                            height: "100%",
+                            display: "flex",
+                            flexDirection: "column",
                           }}
                         >
                           {/* Tên sản phẩm */}
@@ -287,14 +290,14 @@ export default function ProductView({ product }: ProductData) {
                           <hr style={{ margin: "20px 0" }} />
                           {/* Accordion thông tin */}
                           <div>
-                            <ProductDetailsAccordion
+                            {/* <ProductDetailsAccordion
                               open={openAccordion === "details"}
                               onClick={() =>
                                 setOpenAccordion(
                                   openAccordion === "details" ? null : "details"
                                 )
                               }
-                            />
+                            /> */}
                             <WarrantyAccordion
                               open={openAccordion === "warranty"}
                               onClick={() =>
@@ -317,16 +320,16 @@ export default function ProductView({ product }: ProductData) {
             />
           </div>
 
-          {/* Hàng 2: Video bên trái, ProductContains bên phải */}
+          {/* Hàng 2: Bảng size bên trái, Thông tin chi tiết + HDSD bên phải */}
           <div
             className="grid grid-cols-1 lg:grid-cols-2 gap-7"
             style={{ marginTop: "28px", alignItems: "stretch" }}
           >
-            <div>
-              <ProductVideo />
+            <div style={{ height: "100%" }}>
+              <SizeChartImage />
             </div>
-            <div>
-              <ProductContains />
+            <div style={{ height: "100%" }}>
+              <ProductDetailsUsage />
             </div>
           </div>
 
@@ -352,6 +355,13 @@ export default function ProductView({ product }: ProductData) {
           
           .product__detail__right {
             width: 100%;
+            display: flex;
+            align-items: stretch;
+            height: 100%;
+          }
+          /* Make card fill the column height */
+          .product__detail__right .product-info-box {
+            flex: 1 1 auto;
           }
           
           @media (max-width: 768px) {
@@ -534,31 +544,22 @@ function ProductDetailsAccordion({
         style={{
           display: "flex",
           alignItems: "center",
-          cursor: "pointer",
+          cursor: "default",
           fontWeight: 600,
           fontSize: 17,
           padding: "12px 0",
           transition: "all 0.3s ease",
         }}
-        onClick={onClick}
       >
-        <span
-          style={{
-            marginRight: 8,
-            transition: "transform 0.3s ease",
-            transform: open ? "rotate(90deg)" : "rotate(0deg)",
-          }}
-        >
-          ▶
-        </span>
+        {/* Luôn hiển thị, không cần biểu tượng mở/đóng */}
         Thông tin chi tiết sản phẩm
       </div>
       <div
         style={{
-          maxHeight: open ? "1000px" : "0",
-          opacity: open ? 1 : 0,
-          overflow: "hidden",
-          transition: "max-height 0.5s ease, opacity 0.3s ease",
+          maxHeight: "none",
+          opacity: 1,
+          overflow: "visible",
+          transition: "none",
         }}
       >
         <div

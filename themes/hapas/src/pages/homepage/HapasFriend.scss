@@ -18,22 +18,20 @@
   // Large images - no special effects on click
   align-self: flex-start; /* Align to top */
   width: 400px !important; /* Force consistent width */
-  height: 533px !important; /* Force consistent height */
   flex-shrink: 0; /* Prevent shrinking */
+  transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1); /* Smooth transition when changing size */
+  will-change: width, height, transform;
   
   @media (max-width: $breakpoint-lg) {
     width: 320px !important;
-    height: 427px !important;
   }
   
   @media (max-width: $breakpoint-md) {
     width: 280px !important;
-    height: 373px !important;
   }
   
   @media (max-width: $breakpoint-sm) {
     width: 240px !important;
-    height: 320px !important;
   }
   
   .hapas-friend-image {
@@ -41,25 +39,14 @@
     width: 100% !important;
     height: 100% !important;
     object-fit: cover; /* Ensure consistent aspect ratio */
+    transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
   // Image container
   .relative.overflow-hidden {
     width: 100% !important;
-    height: 533px !important;
     aspect-ratio: 3/4 !important;
-    
-    @media (max-width: $breakpoint-lg) {
-      height: 427px !important;
-    }
-    
-    @media (max-width: $breakpoint-md) {
-      height: 373px !important;
-    }
-    
-    @media (max-width: $breakpoint-sm) {
-      height: 320px !important;
-    }
+    transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
   // Name overlay styling
@@ -84,22 +71,20 @@
   // Small images - can be offset randomly
   align-self: center; /* Center vertically relative to large images */
   width: 200px !important; /* Force consistent width */
-  height: 300px !important; /* Force consistent height */
   flex-shrink: 0; /* Prevent shrinking */
+  transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1); /* Smooth transition when changing size */
+  will-change: width, height, transform;
   
   @media (max-width: $breakpoint-lg) {
     width: 160px !important;
-    height: 240px !important;
   }
   
   @media (max-width: $breakpoint-md) {
     width: 140px !important;
-    height: 210px !important;
   }
   
   @media (max-width: $breakpoint-sm) {
     width: 120px !important;
-    height: 180px !important;
   }
   
   .hapas-friend-image {
@@ -107,25 +92,14 @@
     width: 100% !important;
     height: 100% !important;
     object-fit: cover; /* Ensure consistent aspect ratio */
+    transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
   // Image container
   .relative.overflow-hidden {
     width: 100% !important;
-    height: 300px !important;
     aspect-ratio: 2/3 !important;
-    
-    @media (max-width: $breakpoint-lg) {
-      height: 240px !important;
-    }
-    
-    @media (max-width: $breakpoint-md) {
-      height: 210px !important;
-    }
-    
-    @media (max-width: $breakpoint-sm) {
-      height: 180px !important;
-    }
+    transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
   }
   
   // Name overlay styling
@@ -221,6 +195,15 @@
   
   &:not(.dragging) {
     cursor: grab;
+  }
+  
+  /* Smooth animations */
+  article {
+    transform: translateZ(0); /* GPU acceleration */
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    perspective: 1000px;
+    -webkit-perspective: 1000px;
   }
   
   @media (max-width: $breakpoint-md) {
@@ -321,7 +304,7 @@
   width: 50vw;
   height: 1rem;
   background: transparent;
-  select: none;
+  user-select: none;
   z-index: 20;
 }
 

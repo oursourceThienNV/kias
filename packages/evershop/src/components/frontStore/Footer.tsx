@@ -10,7 +10,7 @@ export function Footer({ copyRight }: FooterProps) {
   const [openSection, setOpenSection] = useState<string | null>(null);
 
   return (
-    <footer className="w-full bg-[#79192A] text-white py-12 md:py-16">
+    <footer className="w-full bg-[#79192A] text-white px-4 py-12 md:py-16">
       <div className="container">
         {/* Mobile: Phần 1 */}
         <div className="block sm:hidden mb-10 pb-8 border-b border-white/20">
@@ -349,14 +349,14 @@ export function Footer({ copyRight }: FooterProps) {
             />
           </div>
         </div>
-        {/* Desktop: giữ nguyên grid */}
-        <div className="hidden sm:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr_1.2fr] gap-10 md:gap-16">
+        {/* Desktop layout */}
+        <div className="hidden sm:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr_1.2fr] gap-8 md:gap-12">
           {/* Cột 1 */}
           <div>
-            <h4 className="text-sm font-semibold tracking-wide uppercase text-white/100">
+            <h4 className="text-xs md:text-sm font-semibold tracking-wide uppercase text-white/100">
               Về KIAS
             </h4>
-            <ul className="mt-4 space-y-3 text-sm text-white/90">
+            <ul className="mt-3 space-y-2 text-xs md:text-sm text-white/90">
               <li>
                 <a href="/pages/dieu-binh-thuong" className="hover:opacity-80">
                   Điều bình thường tươi đẹp
@@ -382,10 +382,10 @@ export function Footer({ copyRight }: FooterProps) {
 
           {/* Cột 2 */}
           <div>
-            <h4 className="text-sm font-semibold tracking-wide uppercase text-white/100">
+            <h4 className="text-xs md:text-sm font-semibold tracking-wide uppercase text-white/100">
               Dịch vụ khách hàng
             </h4>
-            <ul className="mt-4 space-y-3 text-sm text-white/90">
+            <ul className="mt-3 space-y-2 text-xs md:text-sm text-white/90">
               <li>
                 <a
                   href="/pages/chinh-sach-khach-hang-than-thiet"
@@ -429,10 +429,10 @@ export function Footer({ copyRight }: FooterProps) {
 
           {/* Cột 3 */}
           <div>
-            <h4 className="text-sm font-semibold tracking-wide uppercase text-white/100">
+            <h4 className="text-base md:text-lg font-semibold tracking-wide uppercase text-white/100">
               Liên hệ KIAS
             </h4>
-            <ul className="mt-4 space-y-3 text-sm text-white/90">
+            <ul className="mt-4 space-y-3 text-base text-white/90">
               <li>
                 <a href="/pages/stores" className="hover:opacity-80">
                   Hệ thống cửa hàng
@@ -446,7 +446,7 @@ export function Footer({ copyRight }: FooterProps) {
             </ul>
             {/* Theo dõi chúng tôi - chỉ hiện desktop */}
             <div className="mt-6 hidden sm:block">
-              <h5 className="text-sm font-semibold tracking-wide uppercase text-white/100">
+              <h5 className="text-base md:text-lg font-semibold tracking-wide uppercase text-white/100">
                 Theo dõi chúng tôi
               </h5>
               <div className="mt-3 flex items-center gap-4 text-white">
