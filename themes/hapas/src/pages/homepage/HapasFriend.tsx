@@ -19,7 +19,7 @@ interface HapasFriendProps {
 }
 
 export default function HapasFriend({
-  title = "BẠN THÂN KIAS",
+  title = "Feedback khách hàng",
   viewAllHref = "/kias-friends",
 }: HapasFriendProps) {
   // Mock data - các hình ảnh bạn thân HAPAS
