@@ -3,7 +3,7 @@
  * "THE MAKING OF A BAG" content section + Bestseller (1 product from API)
  */
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import "./StoryBanner.scss";
 
 interface MoneyText {
@@ -69,7 +69,7 @@ export default function StoryBanner({
   cta = { text: "Xem chi tiết", url: "/pages/the-making-of-a-bag" },
   layout = "image_left",
   BestsellersData,
-  enableMockSwitch = false,
+  enableMockSwitch = true,
 }: StoryBannerProps) {
   // Nhiều bộ mock để demo và có thể chuyển qua lại khi bật enableMockSwitch
   const mockDatasets = useMemo(
@@ -125,7 +125,7 @@ export default function StoryBanner({
                   special: null,
                 },
                 image: {
-                  url: "https://file.hstatic.net/200000978078/file/mini_tote_e1b2e6.jpg",
+                  url: "https://file.hstatic.net/200000978078/file/_nh.png",
                   alt: "Flex Mini Tote",
                 },
               },
@@ -152,7 +152,7 @@ export default function StoryBanner({
                   special: { value: 1690000, text: "1.690.000₫" },
                 },
                 image: {
-                  url: "https://file.hstatic.net/200000978078/file/everyday_backpack_4a8c1c.jpg",
+                  url: "https://file.hstatic.net/200000978078/file/_nh__3_.png",
                   alt: "Everyday Backpack",
                 },
               },
@@ -168,6 +168,17 @@ export default function StoryBanner({
   const activeMock = enableMockSwitch
     ? mockDatasets[activeMockIndex]
     : undefined;
+
+  // Auto-slide when mock switch is enabled
+  useEffect(() => {
+    if (!enableMockSwitch) return;
+    const id = setInterval(() => {
+      setIsTransitioning(true);
+      setActiveMockIndex((prev) => (prev + 1) % mockDatasets.length);
+      setTimeout(() => setIsTransitioning(false), 500);
+    }, 6000);
+    return () => clearInterval(id);
+  }, [enableMockSwitch, mockDatasets.length]);
 
   const handleNext = () => {
     if (!enableMockSwitch || isTransitioning) return;
