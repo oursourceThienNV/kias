@@ -175,7 +175,7 @@ export default function ShoppingCart({ checkoutUrl }: ShoppingCartProps) {
                 <Area id="shoppingCartBeforeCheckoutButton" noOuter />
                 <button
                   onClick={() => (window.location.href = checkoutUrl)}
-                  className="w-full bg-[#79192A] hover:bg-[#1e3a8a] text-white py-2 rounded font-semibold text-[14px] transition-colors"
+                  className="w-full bg-[#79192A] hover:bg-[#9B2138] text-white py-2 rounded font-semibold text-[14px] transition-colors"
                 >
                   TIẾN HÀNH ĐẶT HÀNG
                 </button>

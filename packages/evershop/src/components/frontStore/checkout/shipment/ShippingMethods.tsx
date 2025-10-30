@@ -1,7 +1,7 @@
-import { useCheckout } from '@components/frontStore/checkout/checkoutContext.js';
-import { _ } from '@evershop/evershop/lib/locale/translate/_';
-import { CustomerAddressGraphql } from '@evershop/evershop/types/customerAddress.js';
-import React from 'react';
+import { useCheckout } from "@components/frontStore/checkout/checkoutContext.js";
+import { _ } from "@evershop/evershop/lib/locale/translate/_";
+import { CustomerAddressGraphql } from "@evershop/evershop/types/customerAddress.js";
+import React from "react";
 
 interface ShippingMethod {
   code: string;
@@ -46,7 +46,7 @@ export function ShippingMethods({
   methods,
   shippingAddress,
   isLoading,
-  onSelect
+  onSelect,
 }: {
   methods: ShippingMethod[];
   shippingAddress?: CustomerAddressGraphql;
@@ -56,12 +56,12 @@ export function ShippingMethods({
   const { form } = useCheckout();
   const { register, formState, setValue, watch } = form;
   const [isProcessing, setIsProcessing] = React.useState(false);
-  const currentValue = watch('shippingMethod');
+  const currentValue = watch("shippingMethod");
 
   const handleMethodSelect = async (method: ShippingMethod) => {
     if (!onSelect) {
       // If no onSelect function provided, allow normal behavior
-      setValue('shippingMethod', method.code);
+      setValue("shippingMethod", method.code);
       return;
     }
 
@@ -75,7 +75,7 @@ export function ShippingMethods({
 
       if (result) {
         // Only update the form value if onSelect returns true
-        setValue('shippingMethod', method.code);
+        setValue("shippingMethod", method.code);
       }
       // If result is false, keep the current selection
     } catch (error) {
@@ -87,38 +87,33 @@ export function ShippingMethods({
 
   return (
     <div className="checkout-shipment">
-      <h2 className="text-lg font-medium mb-4">{_('Shipping method')}</h2>
-
       {isLoading ? (
         <ShippingMethodSkeleton />
       ) : (
         <>
           <div className="shipping-methods-list">
             {methods?.length === 0 ? (
-              <div className="text-gray-500 text-center py-8">
+              <div className="text-gray-500 text-center">
                 <input
                   type="hidden"
-                  {...form.register('shippingMethod', { required: true })}
+                  {...form.register("shippingMethod", { required: true })}
                   value=""
                 />
                 {!shippingAddress?.country || !shippingAddress?.province ? (
                   <div>
-                    <div className="mb-2">
-                      {_('Please complete your shipping address')}
-                    </div>
-                    <div className="text-sm">
-                      {_(
-                        'Available shipping methods will appear once you provide your address details'
-                      )}
-                    </div>
+                    <input
+                      className="w-full border border-gray-300 rounded-lg px-4 py-3 text-base placeholder-gray-400 resize-none"
+                      placeholder="Nhập địa chỉ để xem các phương thức giao hàng"
+                      disabled
+                    />
                   </div>
                 ) : (
                   <div>
                     <div className="mb-2">
-                      {_('No shipping methods available')}
+                      {_("No shipping methods available")}
                     </div>
                     <div className="text-sm">
-                      {_('No shipping options are available for your location')}
+                      {_("No shipping options are available for your location")}
                     </div>
                   </div>
                 )}
@@ -129,16 +124,16 @@ export function ShippingMethods({
                   key={method.code}
                   className={`border rounded-lg p-3 mb-3 cursor-pointer transition-colors ${
                     currentValue === method.code
-                      ? 'border-blue-500 bg-blue-50'
-                      : 'border-gray-200 hover:border-gray-300'
-                  } ${isProcessing ? 'opacity-50 cursor-not-allowed' : ''}`}
+                      ? "border-blue-500 bg-blue-50"
+                      : "border-gray-200 hover:border-gray-300"
+                  } ${isProcessing ? "opacity-50 cursor-not-allowed" : ""}`}
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3">
                       <input
                         type="radio"
-                        {...register('shippingMethod', {
-                          required: _('Please select a shipping method')
+                        {...register("shippingMethod", {
+                          required: _("Please select a shipping method"),
                         })}
                         value={method.code}
                         checked={currentValue === method.code}
@@ -181,14 +176,14 @@ export function ShippingMethods({
                                 {method.cost.text}
                               </div>
                               <div className="font-medium text-green-600">
-                                {_('FREE')}
+                                {_("FREE")}
                               </div>
                             </>
                           )}
                         </>
                       ) : (
                         <div className="font-medium text-gray-900">
-                          {_('Contact for pricing')}
+                          {_("Contact for pricing")}
                         </div>
                       )}
                     </div>
@@ -200,7 +195,7 @@ export function ShippingMethods({
           {formState.errors.shippingMethod && (
             <div className="text-red-500 text-sm mt-2">
               {formState.errors.shippingMethod?.message?.toString() ||
-                _('Please select a shipping method')}
+                _("Please select a shipping method")}
             </div>
           )}
         </>

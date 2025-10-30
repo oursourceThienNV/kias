@@ -1,17 +1,21 @@
-import { EmailField } from '@components/common/form/EmailField.js';
-import { PasswordField } from '@components/common/form/PasswordField.js';
-import { useCartState } from '@components/frontStore/cart/cartContext.js';
+import { EmailField } from "@components/common/form/EmailField.js";
+import { PasswordField } from "@components/common/form/PasswordField.js";
+import { useCartState } from "@components/frontStore/cart/cartContext.js";
 import {
   useCheckout,
-  useCheckoutDispatch
-} from '@components/frontStore/checkout/checkoutContext.js';
+  useCheckoutDispatch,
+} from "@components/frontStore/checkout/checkoutContext.js";
 import {
   useCustomer,
-  useCustomerDispatch
-} from '@components/frontStore/customer/customerContext.js';
-import { _ } from '@evershop/evershop/lib/locale/translate/_';
-import React, { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
+  useCustomerDispatch,
+} from "@components/frontStore/customer/customerContext.js";
+import { _ } from "@evershop/evershop/lib/locale/translate/_";
+import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import CustomerAddressForm from "@components/frontStore/customer/address/addressForm/Index.js";
+
+// Key để lưu thông tin vào localStorage
+const CONTACT_INFO_KEY = 'checkout_contact_info';
 
 const LoggedIn: React.FC<{
   fullName: string;
@@ -27,8 +31,8 @@ const LoggedIn: React.FC<{
       customer: {
         id: uuid,
         email: email,
-        fullName: fullName
-      }
+        fullName: fullName,
+      },
     });
   }, [fullName, email]);
 
@@ -38,10 +42,10 @@ const LoggedIn: React.FC<{
     try {
       setIsLoggingOut(true);
       await logout();
-      toast.success(_('Successfully logged out'));
+      toast.success(_("Successfully logged out"));
     } catch (error) {
       const errorMessage =
-        error instanceof Error ? error.message : _('Logout failed');
+        error instanceof Error ? error.message : _("Logout failed");
       toast.error(errorMessage);
     } finally {
       setIsLoggingOut(false);
@@ -83,7 +87,7 @@ const LoggedIn: React.FC<{
                 />
               </svg>
               <h3 className="text-sm font-medium text-blue-800">
-                {_('Logged in as')} {fullName}
+                {_("Logged in as")} {fullName}
               </h3>
             </div>
             <p className="text-sm text-blue-600 mt-1">{email}</p>
@@ -95,7 +99,7 @@ const LoggedIn: React.FC<{
           disabled={isLoggingOut}
           className="ml-3 text-sm text-blue-700 hover:text-blue-900 underline disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {isLoggingOut ? _('Logging out...') : _('Logout')}
+          {isLoggingOut ? _("Logging out...") : _("Logout")}
         </button>
       </div>
     </div>
@@ -110,7 +114,8 @@ const Guest: React.FC<{
   const { login } = useCustomerDispatch();
   const { form } = useCheckout();
   const { updateCheckoutData } = useCheckoutDispatch();
-  const contactEmail = form.watch('contact.email', email);
+  const contactEmail = form.watch("contact.email", email);
+  
   const handleLoginClick = (e: React.MouseEvent) => {
     e.preventDefault();
     setShowLogin(true);
@@ -119,8 +124,8 @@ const Guest: React.FC<{
   useEffect(() => {
     updateCheckoutData({
       customer: {
-        email: contactEmail
-      }
+        email: contactEmail,
+      },
     });
   }, [contactEmail]);
 
@@ -129,7 +134,7 @@ const Guest: React.FC<{
 
     try {
       setIsLogging(true);
-      const isValid = await form.trigger(['contact.email', 'contact.password']);
+      const isValid = await form.trigger(["contact.email", "contact.password"]);
       if (!isValid) {
         return;
       }
@@ -137,11 +142,11 @@ const Guest: React.FC<{
       const loginEmail = formData?.contact?.email;
       const password = formData?.contact?.password;
       await login(loginEmail, password, window.location.href);
-      toast.success(_('Successfully logged in'));
+      toast.success(_("Successfully logged in"));
       setShowLogin(false);
     } catch (error) {
       const errorMessage =
-        error instanceof Error ? error.message : _('Login failed');
+        error instanceof Error ? error.message : _("Login failed");
       toast.error(errorMessage);
     } finally {
       setIsLogging(false);
@@ -151,7 +156,7 @@ const Guest: React.FC<{
   const handleCancelLogin = () => {
     setShowLogin(false);
     // Clear password field
-    form.setValue('contact.password', '');
+    form.setValue("contact.password", "");
   };
 
   return (
@@ -159,24 +164,24 @@ const Guest: React.FC<{
       <EmailField
         defaultValue={email}
         name="contact.email"
-        label={_('Email')}
+        label={_("Email")}
         required
         validation={{
-          required: _('Email is required')
+          required: _("Email is required"),
         }}
-        placeholder={_('Enter your email')}
+        placeholder={_("Enter your email")}
       />
 
       {showLogin && (
         <div className="mt-4">
           <PasswordField
             name="contact.password"
-            label={_('Password')}
+            label={_("Password")}
             required
             validation={{
-              required: _('Password is required')
+              required: _("Password is required"),
             }}
-            placeholder={_('Enter your password')}
+            placeholder={_("Enter your password")}
           />
           <div className="mt-4 flex gap-2">
             <button
@@ -185,14 +190,14 @@ const Guest: React.FC<{
               disabled={isLogging}
               className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {isLogging ? _('Logging in...') : _('Log in')}
+              {isLogging ? _("Logging in...") : _("Log in")}
             </button>
             <button
               type="button"
               onClick={handleCancelLogin}
               className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400"
             >
-              {_('Cancel')}
+              {_("Cancel")}
             </button>
           </div>
         </div>
@@ -200,35 +205,71 @@ const Guest: React.FC<{
 
       {!showLogin && (
         <p className="mt-2">
-          {_('Already have an account?')}{' '}
+          {_("Already have an account?")}{" "}
           <button
             type="button"
             onClick={handleLoginClick}
             className="underline text-blue-600 hover:text-blue-800"
           >
-            {_('Log in')}
+            {_("Log in")}
           </button>
         </p>
       )}
     </div>
   );
 };
+
 export function ContactInformation() {
   const { customer } = useCustomer();
   const { data: cart } = useCartState();
+  const { form } = useCheckout();
+  const {
+    data: {
+      shippingAddress,
+      availableShippingMethods,
+      shippingMethod: selectedShippingMethod,
+    },
+    loadingStates,
+  } = useCartState();
+
+  // Khi mount, nếu có dữ liệu localStorage thì reset lại toàn bộ form
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(CONTACT_INFO_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (parsed && typeof parsed === 'object') {
+          form.reset(parsed);
+        }
+      }
+    } catch {}
+  }, [form]);
+
+  // Khi submit đặt hàng, lưu toàn bộ form vào localStorage
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      try {
+        const allValues = form.getValues();
+        localStorage.setItem(CONTACT_INFO_KEY, JSON.stringify(allValues));
+      } catch {}
+    };
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [form]);
 
   return (
-    <div className="checkout-contact checkout-step">
-      <h1 className="checkout-step-title">{_('Contact Information')}</h1>
-      {customer ? (
-        <LoggedIn
-          fullName={customer.fullName}
-          email={customer.email}
-          uuid={customer.uuid}
+    <div className="w-full">
+      {/* Box thông tin giao hàng */}
+      <div className="bg-white border border-gray-200 rounded-2xl p-5">
+        <h2 className="text-base font-bold mb-4">Thông tin giao hàng</h2>
+        <CustomerAddressForm
+          areaId="checkoutShippingAddressForm"
+          fieldNamePrefix="shippingAddress"
+          address={shippingAddress}
         />
-      ) : (
-        <Guest email={cart.customerEmail || ''} />
-      )}
+      </div>
     </div>
   );
 }
