@@ -4,6 +4,7 @@
  */
 
 import React, { useState, useEffect } from "react";
+import CustomerInfoPopup from "./CustomerInfoPopup";
 import "./FloatingChatWidget.scss";
 
 interface FloatingChatWidgetProps {
@@ -24,6 +25,9 @@ export default function FloatingChatWidget({
     null
   );
   const [showBackToTop, setShowBackToTop] = useState(false);
+  const [showOptions, setShowOptions] = useState(false);
+  const [showCustomerPopup, setShowCustomerPopup] = useState(false);
+  const [customerPopupKey, setCustomerPopupKey] = useState(0);
 
   // Handle scroll để hiện/ẩn nút back to top
   useEffect(() => {
@@ -62,6 +66,10 @@ export default function FloatingChatWidget({
 
   return (
     <div className="floating-chat-widget">
+      {/* Customer Info Popup (on-demand) */}
+      {showCustomerPopup && (
+        <CustomerInfoPopup key={customerPopupKey} delay={0} />
+      )}
       {/* Chat Box */}
       {isOpen && activeChat && (
         <div className="chat-box">
@@ -197,40 +205,142 @@ export default function FloatingChatWidget({
           </button>
         )}
 
-        {/* Messenger Button */}
-        <button
-          className={`chat-button messenger-button ${
-            isOpen && activeChat === "messenger" ? "active" : ""
-          }`}
-          onClick={() => toggleChat("messenger")}
-          aria-label="Chat Messenger"
-          title="Chat với Messenger"
-        >
-          <svg
-            width="28"
-            height="28"
-            viewBox="0 0 16 16"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fill="currentColor"
-              d="M0 7.76C0 3.301 3.493 0 8 0s8 3.301 8 7.76-3.493 7.76-8 7.76c-.81 0-1.586-.107-2.316-.307a.64.64 0 0 0-.427.03l-1.588.702a.64.64 0 0 1-.898-.566l-.044-1.423a.64.64 0 0 0-.215-.456C.956 12.108 0 10.092 0 7.76m5.546-1.459-2.35 3.728c-.225.358.214.761.551.506l2.525-1.916a.48.48 0 0 1 .578-.002l1.869 1.402a1.2 1.2 0 0 0 1.735-.32l2.35-3.728c.226-.358-.214-.761-.551-.506L9.728 7.381a.48.48 0 0 1-.578.002L7.281 5.98a1.2 1.2 0 0 0-1.735.32z"
-            />
-          </svg>
-        </button>
+        {/* Contact Button */}
+        <div style={{ position: "relative" }}>
+          {/* Options panel */}
+          {showOptions && (
+            <div
+              style={{
+                position: "absolute",
+                bottom: "72px",
+                right: 0,
+                background: "#fff",
+                borderRadius: 12,
+                boxShadow: "0 8px 24px rgba(0,0,0,0.15)",
+                padding: 10,
+                width: 240,
+                zIndex: 50,
+              }}
+            >
+              {/* Open customer info popup (combined): Đăng ký thông tin & để lại lời nhắn */}
+              <button
+                className="chat-button"
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 10,
+                  background: "#fff",
+                  color: "#222",
+                  border: "1px solid #E5E5E5",
+                  borderRadius: 10,
+                  padding: "10px 12px",
+                  marginBottom: 8,
+                }}
+                onClick={() => {
+                  sessionStorage.removeItem("customerInfoPopupShown");
+                  setShowOptions(false);
+                  setIsOpen(false);
+                  setActiveChat(null);
+                  setCustomerPopupKey((k) => k + 1);
+                  setShowCustomerPopup(true);
+                }}
+              >
+                <span className="contact-option-icon" aria-hidden>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="3" y="5" width="18" height="14" rx="2" ry="2" stroke="white" strokeWidth="2" fill="none"/>
+                    <path d="M3 7l9 7 9-7" stroke="white" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </span>
+                <span style={{ fontWeight: 700 }}>Đăng ký thông tin & để lại lời nhắn</span>
+              </button>
+              <button
+                className="chat-button"
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 10,
+                  background: "#1877F2",
+                  color: "#fff",
+                  border: "none",
+                  borderRadius: 10,
+                  padding: "10px 12px",
+                  marginBottom: 8,
+                }}
+                onClick={() => {
+                  setShowOptions(false);
+                  setIsOpen(false);
+                  setActiveChat(null);
+                  window.open(messengerUrl, "_blank", "noopener,noreferrer");
+                }}
+              >
+                <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M0 7.76C0 3.301 3.493 0 8 0s8 3.301 8 7.76-3.493 7.76-8 7.76c-.81 0-1.586-.107-2.316-.307a.64.64 0 0 0-.427.03l-1.588.702a.64.64 0 0 1-.898-.566l-.044-1.423a.64.64 0 0 0-.215-.456C.956 12.108 0 10.092 0 7.76m5.546-1.459-2.35 3.728c-.225.358.214.761.551.506l2.525-1.916a.48.48 0 0 1 .578-.002l1.869 1.402a1.2 1.2 0 0 0 1.735-.32l2.35-3.728c.226-.358-.214-.761-.551-.506L9.728 7.381a.48.48 0 0 1-.578.002L7.281 5.98a1.2 1.2 0 0 0-1.735.32z" />
+                </svg>
+                <span style={{ fontWeight: 700 }}>Messenger</span>
+              </button>
+              <button
+                className="chat-button"
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 10,
+                  background: "#fff",
+                  color: "#0068FF",
+                  border: "1px solid #E5E5E5",
+                  borderRadius: 10,
+                  padding: "10px 12px",
+                }}
+                onClick={() => {
+                  setShowOptions(false);
+                  setIsOpen(false);
+                  setActiveChat(null);
+                  const link = zaloUrl || `https://zalo.me/${zaloPhone}`;
+                  window.open(link, "_blank", "noopener,noreferrer");
+                }}
+              >
+                <span className="zalo-text-icon" style={{ fontSize: 14 }}>Zalo</span>
+                <span style={{ fontWeight: 700, color: "#222" }}>Liên hệ Zalo</span>
+              </button>
+            </div>
+          )}
 
-        {/* Zalo Button */}
-        <button
-          className={`chat-button zalo-button ${
-            isOpen && activeChat === "zalo" ? "active" : ""
-          }`}
-          onClick={() => toggleChat("zalo")}
-          aria-label="Chat Zalo"
-          title="Chat với Zalo"
-        >
-          <span className="zalo-text-icon">Zalo</span>
-        </button>
+          <button
+            className={`chat-button contact-button ${showOptions ? 'active' : ''}`}
+            aria-label={showOptions ? 'Đóng' : 'Liên hệ'}
+            title={showOptions ? 'Đóng' : 'Liên hệ'}
+            onClick={() => setShowOptions((v) => !v)}
+          >
+            {showOptions ? (
+              // X icon when panel is open
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M18 6L6 18M6 6l12 12" stroke="white" strokeWidth="2" strokeLinecap="round" />
+              </svg>
+            ) : (
+              <>
+                {/* Chat bubbles icon */}
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M21 6h-2V5a3 3 0 0 0-3-3H5a3 3 0 0 0-3 3v6a3 3 0 0 0 3 3h1v3a1 1 0 0 0 1.64.77L11.25 15H16a3 3 0 0 0 3-3V9h2a1 1 0 0 0 0-2ZM16 12H10a1 1 0 0 0-.64.23L9 12.53V12H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h11a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1Zm3 2h-1v1a3 3 0 0 1-3 3h-3.75l-3.61 3.04A1 1 0 0 1 6 20v-3H5a3 3 0 0 1-3-3v-1a1 1 0 1 1 2 0v1a1 1 0 0 0 1 1h2a1 1 0 0 1 1 1v1.47l2.39-2a1 1 0 0 1 .64-.23H15a1 1 0 0 0 1-1v-1a1 1 0 1 1 2 0Z" />
+                </svg>
+                <span className="contact-button__label">Liên hệ</span>
+              </>
+            )}
+          </button>
+        </div>
       </div>
     </div>
   );
