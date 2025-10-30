@@ -94,7 +94,7 @@ const PromoCodeInput = () => {
           />
           <button
             type="button"
-            className="px-4 py-2 bg-black text-white rounded-lg font-medium hover:bg-gray-900 transition"
+            className="px-4 py-2 bg-[#79192A] text-white rounded-lg font-medium hover:bg-[#5a1220] transition"
           >
             Áp dụng
           </button>

@@ -167,7 +167,7 @@ const DefaultCartSummary: React.FC<{
     {/* Nút đặt hàng */}
     <button
       type="submit"
-      className="w-full mt-2 bg-black text-white rounded-xl py-3 text-lg font-bold hover:bg-gray-900 transition"
+      className="w-full mt-2 bg-[#79192A] text-white rounded-xl py-3 text-lg font-bold hover:bg-[#5a1220] transition"
     >
       Đặt hàng
     </button>
