@@ -1,3 +1,13 @@
+// Hiển thị phần left trên desktop, ẩn trên mobile
+.header-middle-left-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  @media (max-width: 767px) {
+    display: none;
+  }
+}
+
 .header {
   width: 100%;
   background: #fff;

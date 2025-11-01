@@ -125,10 +125,10 @@ export function Header() {
         {/* LEFT: Hamburger cho mobile, menu ngang cho desktop */}
         <div className="header__middle__left flex justify-start items-center">
           <HeaderMobileLeft onMenuOpen={() => setMenuOpen(true)} />
-          <div className="hidden md:flex items-center w-full">
+          <div className="header-middle-left-container">
             <Area
               id="headerMiddleLeft"
-              className="header__middle__left items-center"
+              className="header__middle__left"
             />
           </div>
         </div>
