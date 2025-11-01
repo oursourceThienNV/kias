@@ -96,18 +96,7 @@ export default function HapasFriend({
     },
   ];
 
-  // State to track which images are large (random every 5s)
-  const [largeImageIds, setLargeImageIds] = useState<Set<number>>(
-    new Set([1, 4])
-  ); // Initially 2 large images
-  const [pendingLargeImageIds, setPendingLargeImageIds] = useState<Set<number>>(
-    new Set([1, 4])
-  ); // Pending changes waiting for images to leave viewport
-  const [visibleImageIds, setVisibleImageIds] = useState<Set<number>>(
-    new Set()
-  ); // Track visible images
-  const numLargeImages = 2; // Number of large images to show
-  const imageRefs = useRef<Map<number, HTMLElement>>(new Map()); // Track image elements
+  // All images will use large size uniformly
 
   // Create infinite loop by duplicating friends array
   const infiniteFriends = [...mockFriends, ...mockFriends, ...mockFriends];
@@ -120,116 +109,12 @@ export default function HapasFriend({
   const dragStartScrollRef = useRef(0);
   const isResettingRef = useRef(false); // Prevent multiple simultaneous resets
 
-  const [imageOffsets, setImageOffsets] = useState<Record<number, number>>({});
   const [isAutoScrolling, setIsAutoScrolling] = useState(true);
   const [isDragging, setIsDragging] = useState(false);
-  const autoOffsetRef = useRef<NodeJS.Timeout | null>(null);
+  const [itemWidth, setItemWidth] = useState<number | null>(null);
+  
 
-  // Intersection Observer to track visible images
-  useEffect(() => {
-    let observer: IntersectionObserver | null = null;
-
-    // Delay to ensure refs are populated
-    const timeoutId = setTimeout(() => {
-      if (imageRefs.current.size === 0) return;
-
-      observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            const imageId = parseInt(
-              entry.target.getAttribute("data-image-id") || "0"
-            );
-
-            setVisibleImageIds((prev) => {
-              const newSet = new Set(prev);
-              if (entry.isIntersecting) {
-                newSet.add(imageId);
-              } else {
-                newSet.delete(imageId);
-              }
-              return newSet;
-            });
-          });
-        },
-        {
-          root: null, // Use viewport instead of scroll container
-          threshold: 0.1, // 10% visible
-          rootMargin: "0px",
-        }
-      );
-
-      // Observe all image elements
-      imageRefs.current.forEach((element) => {
-        observer?.observe(element);
-      });
-    }, 100);
-
-    return () => {
-      clearTimeout(timeoutId);
-      observer?.disconnect();
-    };
-  }, [mockFriends.length]); // Re-run when friends list changes
-
-  // Apply size changes only when images are out of viewport
-  useEffect(() => {
-    const checkInterval = setInterval(() => {
-      setLargeImageIds((currentLarge) => {
-        let hasChanges = false;
-        const newLarge = new Set(currentLarge);
-
-        // For each image that should change size
-        pendingLargeImageIds.forEach((pendingId) => {
-          // If it should be large but isn't, and it's NOT visible, make it large
-          if (!currentLarge.has(pendingId) && !visibleImageIds.has(pendingId)) {
-            newLarge.add(pendingId);
-            hasChanges = true;
-          }
-        });
-
-        // For images that should be small but are large, shrink only if NOT visible
-        currentLarge.forEach((currentId) => {
-          if (
-            !pendingLargeImageIds.has(currentId) &&
-            !visibleImageIds.has(currentId)
-          ) {
-            newLarge.delete(currentId);
-            hasChanges = true;
-          }
-        });
-
-        return hasChanges ? newLarge : currentLarge;
-      });
-    }, 100); // Check every 100ms
-
-    return () => clearInterval(checkInterval);
-  }, [pendingLargeImageIds, visibleImageIds]);
-
-  // Random large images every 5 seconds
-  useEffect(() => {
-    const randomizeInterval = setInterval(() => {
-      // Filter out images that are currently offsetting (animating up/down)
-      const stableImages = mockFriends.filter(
-        (friend) => !imageOffsets[friend.id] || imageOffsets[friend.id] === 0
-      );
-
-      // Shuffle and pick random images from stable images only
-      const shuffled = [...stableImages].sort(() => 0.5 - Math.random());
-      const selectedLarge = shuffled.slice(0, numLargeImages).map((f) => f.id);
-      setPendingLargeImageIds(new Set(selectedLarge)); // Set pending instead of immediate
-
-      // Reset offset for newly selected images to ensure they're at center
-      const resetOffsets: Record<number, number> = {};
-      selectedLarge.forEach((id) => {
-        resetOffsets[id] = 0;
-      });
-      setImageOffsets((prev) => ({
-        ...prev,
-        ...resetOffsets,
-      }));
-    }, 5000);
-
-    return () => clearInterval(randomizeInterval);
-  }, [mockFriends.length, numLargeImages, imageOffsets]);
+  // Removed: random large/small toggling and intersection-based size switching
 
   // Auto scroll functionality with infinite loop
   const startAutoScroll = () => {
@@ -239,22 +124,8 @@ export default function HapasFriend({
       if (!scrollRef.current || isDraggingRef.current) return;
 
       const container = scrollRef.current;
-      // Calculate itemWidth based on screen size
-      const screenWidth = window.innerWidth;
-      let itemWidth = 350; // Desktop default (average of 400 and 200)
-
-      if (screenWidth <= 640) {
-        // Mobile
-        itemWidth = 180; // Average of 240 and 120
-      } else if (screenWidth <= 768) {
-        // Tablet
-        itemWidth = 245; // Average of 280 and 140
-      } else if (screenWidth <= 1024) {
-        // Small laptop
-        itemWidth = 280; // Average of 320 and 160
-      }
-
-      const scrollAmount = itemWidth;
+      // Use computed itemWidth, fallback to 300 if not ready
+      const scrollAmount = itemWidth ?? 300;
 
       // Always scroll right
       container.scrollBy({ left: scrollAmount, behavior: "smooth" });
@@ -268,97 +139,9 @@ export default function HapasFriend({
     }
   };
 
-  // Auto random offset for small images
-  const startAutoOffset = () => {
-    if (autoOffsetRef.current) clearInterval(autoOffsetRef.current);
+  // Removed: auto random vertical offset for small images
 
-    autoOffsetRef.current = setInterval(() => {
-      // Get all small images from original set only (not in largeImageIds and not in pendingLargeImageIds)
-      const smallImages = mockFriends.filter(
-        (friend) =>
-          !largeImageIds.has(friend.id) && !pendingLargeImageIds.has(friend.id)
-      );
-
-      if (smallImages.length === 0) return;
-
-      // Randomly select 1-2 small images to offset
-      const numToOffset = Math.floor(Math.random() * 2) + 1; // 1-2 images
-      const shuffled = [...smallImages].sort(() => 0.5 - Math.random());
-      const selectedImages = shuffled.slice(0, numToOffset);
-
-      // Apply random offsets from center position
-      const newOffsets: Record<number, number> = {};
-
-      selectedImages.forEach((friend) => {
-        // Always start from center (0) and move to random position
-        const randomOffset =
-          Math.random() > 0.5
-            ? Math.random() * 25 + 8 // Move down 8-33px from center
-            : -(Math.random() * 25 + 8); // Move up 8-33px from center
-
-        newOffsets[friend.id] = randomOffset;
-      });
-
-      setImageOffsets((prev) => ({
-        ...prev,
-        ...newOffsets,
-      }));
-
-      // Reset offsets back to center after a delay
-      setTimeout(() => {
-        const resetOffsets: Record<number, number> = {};
-        selectedImages.forEach((friend) => {
-          resetOffsets[friend.id] = 0; // Reset to center position
-        });
-
-        setImageOffsets((prev) => ({
-          ...prev,
-          ...resetOffsets,
-        }));
-      }, 1500 + Math.random() * 2000); // Reset after 1.5-3.5 seconds
-    }, 3000 + Math.random() * 2000); // Trigger every 3-5 seconds
-  };
-
-  const stopAutoOffset = () => {
-    if (autoOffsetRef.current) {
-      clearInterval(autoOffsetRef.current);
-      autoOffsetRef.current = null;
-    }
-  };
-
-  // Handle image click - random offset for small images only
-  const handleImageClick = (friend: HapasFriend, e: React.MouseEvent) => {
-    e.preventDefault();
-
-    if (largeImageIds.has(friend.id)) {
-      // Large images: no effect
-      return;
-    }
-
-    // Small images: random offset from center position
-    const randomOffset =
-      Math.random() > 0.5
-        ? Math.random() * 30 + 10 // Move down 10-40px from center
-        : -(Math.random() * 30 + 10); // Move up 10-40px from center
-
-    setImageOffsets((prev) => ({
-      ...prev,
-      [friend.id]: randomOffset,
-    }));
-  };
-
-  // Handle image hover - reset to center
-  const handleImageHover = (friend: HapasFriend) => {
-    if (
-      !largeImageIds.has(friend.id) &&
-      imageOffsets[friend.id] !== undefined
-    ) {
-      setImageOffsets((prev) => ({
-        ...prev,
-        [friend.id]: 0, // Reset to center
-      }));
-    }
-  };
+  // Removed: click and hover vertical offset handlers
 
   // Drag to scroll functionality
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -537,6 +320,27 @@ export default function HapasFriend({
     const container = scrollRef.current;
     if (!container) return;
 
+    // Calculate item width so that exactly 5 items fit (account for gap)
+    const calcItemWidth = () => {
+      if (!scrollRef.current) return;
+      const el = scrollRef.current;
+      const styles = window.getComputedStyle(el);
+      const gapRaw = (styles.getPropertyValue("column-gap") || styles.getPropertyValue("gap") || "16px").trim();
+      // If gap returns like "16px 16px", take the first number
+      const gapMatch = /([0-9]+\.?[0-9]*)/.exec(gapRaw);
+      const gap = gapMatch ? parseFloat(gapMatch[1]) : 16;
+      // Subtract horizontal paddings from available width
+      const padLeft = parseFloat(styles.getPropertyValue("padding-left")) || 0;
+      const padRight = parseFloat(styles.getPropertyValue("padding-right")) || 0;
+      const visibleCount = 5;
+      const totalGap = gap * (visibleCount - 1);
+      const width = el.clientWidth - padLeft - padRight;
+      if (width > 0) {
+        const w = (width - totalGap) / visibleCount;
+        setItemWidth(w);
+      }
+    };
+
     // Wait for layout to be ready, then set initial position
     const setInitialPosition = () => {
       const scrollWidth = container.scrollWidth;
@@ -546,7 +350,16 @@ export default function HapasFriend({
     };
 
     // Set initial position after a short delay to ensure layout is ready
-    setTimeout(setInitialPosition, 100);
+    setTimeout(() => {
+      calcItemWidth();
+      setInitialPosition();
+    }, 100);
+
+    // Recalculate on resize
+    const handleResize = () => {
+      calcItemWidth();
+    };
+    window.addEventListener("resize", handleResize);
 
     // Add scroll listener for infinite loop
     container.addEventListener("scroll", throttledHandleScroll);
@@ -555,9 +368,6 @@ export default function HapasFriend({
     if (isAutoScrolling) {
       startAutoScroll();
     }
-
-    // Start auto offset for small images
-    startAutoOffset();
 
     // Safety check: ensure auto scroll is running every 10 seconds
     const safetyCheck = setInterval(() => {
@@ -575,27 +385,23 @@ export default function HapasFriend({
     return () => {
       container.removeEventListener("scroll", throttledHandleScroll);
       stopAutoScroll();
-      stopAutoOffset();
       clearInterval(safetyCheck);
+      window.removeEventListener("resize", handleResize);
     };
   }, [
     isAutoScrolling,
     mockFriends.length,
-    largeImageIds,
-    pendingLargeImageIds,
   ]);
 
   // Pause auto scroll on hover
   const handleCarouselMouseEnter = () => {
     stopAutoScroll();
-    stopAutoOffset();
   };
 
   const handleCarouselMouseLeave = () => {
     if (isAutoScrolling) {
       startAutoScroll();
     }
-    startAutoOffset();
   };
 
   return (
@@ -652,66 +458,30 @@ export default function HapasFriend({
           }}
         >
           {infiniteFriends.map((friend, index) => {
-            // Check if this image is large
-            const isLarge = largeImageIds.has(friend.id);
-
-            // Responsive dimensions
-            const getLargeSize = () => {
-              if (typeof window === "undefined")
-                return { width: 400, height: 533 };
-              const screenWidth = window.innerWidth;
-              if (screenWidth <= 640) return { width: 240, height: 320 };
-              if (screenWidth <= 768) return { width: 280, height: 373 };
-              if (screenWidth <= 1024) return { width: 320, height: 427 };
-              return { width: 400, height: 533 };
-            };
-
-            const getSmallSize = () => {
-              if (typeof window === "undefined")
-                return { width: 200, height: 300 };
-              const screenWidth = window.innerWidth;
-              if (screenWidth <= 640) return { width: 120, height: 180 };
-              if (screenWidth <= 768) return { width: 140, height: 210 };
-              if (screenWidth <= 1024) return { width: 160, height: 240 };
-              return { width: 200, height: 300 };
-            };
-
-            const size = isLarge ? getLargeSize() : getSmallSize();
+            // Dynamic width so 5 items fit the viewport
+            const widthPx = itemWidth ?? 300;
 
             return (
               <article
                 key={`${friend.id}-${index}`}
-                ref={(el) => {
-                  if (el) {
-                    imageRefs.current.set(friend.id, el);
-                  } else {
-                    imageRefs.current.delete(friend.id);
-                  }
-                }}
-                data-image-id={friend.id}
-                className={`flex-shrink-0 group cursor-pointer ${
-                  isLarge ? "hapas-friend-large" : "hapas-friend-small"
-                }`}
+                className={`flex-shrink-0 group cursor-pointer hapas-friend-large`}
                 style={{
-                  width: `${size.width}px`,
-                  transform: `translateY(${
-                    imageOffsets[friend.id] || 0
-                  }px) scale(${isLarge ? 1 : 1})`,
+                  width: `${widthPx}px`,
+                  flex: `0 0 ${widthPx}px`,
+                  transform: `translateY(0px) scale(1)`,
                   transition: "all 1.5s cubic-bezier(0.4, 0, 0.2, 1)",
-                  alignSelf: !isLarge ? "center" : "flex-start",
+                  alignSelf: "flex-start",
                   opacity: 1,
                 }}
               >
                 <div
-                  onClick={(e) => handleImageClick(friend, e)}
-                  onMouseEnter={() => handleImageHover(friend)}
                   className="block relative"
                   aria-label={`View ${friend.name}`}
                 >
                   <div
-                    className="relative overflow-hidden"
+                    className="relative overflow-hidden rounded-[12px]"
                     style={{
-                      aspectRatio: isLarge ? "3/4" : "2/3",
+                      aspectRatio: "3/4",
                       width: "100%",
                       transition: "all 1.5s cubic-bezier(0.4, 0, 0.2, 1)",
                     }}
@@ -719,17 +489,13 @@ export default function HapasFriend({
                     <Image
                       src={friend.image.url}
                       alt={friend.image.alt}
-                      width={isLarge ? 400 : 200}
-                      height={isLarge ? 533 : 300}
+                      width={widthPx}
+                      height={Math.round(widthPx * (4 / 3))}
                       sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
                       loading="lazy"
                       decoding="async"
                       objectFit="cover"
-                      className={`${
-                        isLarge
-                          ? "group-hover:scale-105"
-                          : "group-hover:scale-110"
-                      }`}
+                      className={`group-hover:scale-105`}
                       style={{
                         transition: "all 1.5s cubic-bezier(0.4, 0, 0.2, 1)",
                         width: "100%",
