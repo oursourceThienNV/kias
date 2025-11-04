@@ -87,7 +87,7 @@ export default function ProductView({ product }: ProductData) {
                           <div
                             className="product-price-text"
                             style={{
-                              color: "#FF7A7A",
+                              color: "#79192A",
                               fontWeight: 700,
                               fontSize: 24,
                               marginBottom: 22,
