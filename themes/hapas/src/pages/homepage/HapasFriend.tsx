@@ -96,7 +96,18 @@ export default function HapasFriend({
     },
   ];
 
-  // All images will use large size uniformly
+  // State to track which images are large (random every 5s)
+  const [largeImageIds, setLargeImageIds] = useState<Set<number>>(
+    new Set([1, 4])
+  ); // Initially 2 large images
+  const [pendingLargeImageIds, setPendingLargeImageIds] = useState<Set<number>>(
+    new Set([1, 4])
+  ); // Pending changes waiting for images to leave viewport
+  const [visibleImageIds, setVisibleImageIds] = useState<Set<number>>(
+    new Set()
+  ); // Track visible images
+  const numLargeImages = 2; // Number of large images to show
+  const imageRefs = useRef<Map<number, HTMLElement>>(new Map()); // Track image elements
 
   // Create infinite loop by duplicating friends array
   const infiniteFriends = [...mockFriends, ...mockFriends, ...mockFriends];
@@ -108,13 +119,153 @@ export default function HapasFriend({
   const dragStartXRef = useRef(0);
   const dragStartScrollRef = useRef(0);
   const isResettingRef = useRef(false); // Prevent multiple simultaneous resets
+  const snapTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const dragRafRef = useRef<number | null>(null);
+  const lastClientXRef = useRef<number>(0);
 
+  const [imageOffsets, setImageOffsets] = useState<Record<number, number>>({});
   const [isAutoScrolling, setIsAutoScrolling] = useState(true);
   const [isDragging, setIsDragging] = useState(false);
   const [itemWidth, setItemWidth] = useState<number | null>(null);
-  
+  const [activeIndex, setActiveIndex] = useState<number>(0); // leftmost visible item index in the rendered list
+  const autoOffsetRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Removed: random large/small toggling and intersection-based size switching
+  // Snap to nearest card and update active index
+  const snapToNearest = () => {
+    const container = scrollRef.current;
+    if (!container) return;
+    const arts = Array.from(container.querySelectorAll("article"));
+    if (arts.length === 0) return;
+    const cRect = container.getBoundingClientRect();
+    let nearest = arts[0] as HTMLElement;
+    let nearestIdx = 0;
+    let min = Math.abs(nearest.getBoundingClientRect().left - cRect.left);
+    for (let i = 1; i < arts.length; i++) {
+      const el = arts[i] as HTMLElement;
+      const d = Math.abs(el.getBoundingClientRect().left - cRect.left);
+      if (d < min) {
+        min = d;
+        nearest = el;
+        nearestIdx = i;
+      }
+    }
+    const nRect = nearest.getBoundingClientRect();
+    const delta = nRect.left - cRect.left;
+    if (Math.abs(delta) > 1) {
+      const target = container.scrollLeft + delta;
+      container.scrollTo({ left: target, behavior: "smooth" });
+      setTimeout(() => {
+        container.scrollLeft = target;
+      }, 220);
+    }
+    setActiveIndex(nearestIdx);
+  };
+
+  // Intersection Observer to track visible images
+  useEffect(() => {
+    let observer: IntersectionObserver | null = null;
+
+    // Delay to ensure refs are populated
+    const timeoutId = setTimeout(() => {
+      if (imageRefs.current.size === 0) return;
+
+      observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            const imageId = parseInt(
+              entry.target.getAttribute("data-image-id") || "0"
+            );
+
+            setVisibleImageIds((prev) => {
+              const newSet = new Set(prev);
+              if (entry.isIntersecting) {
+                newSet.add(imageId);
+              } else {
+                newSet.delete(imageId);
+              }
+              return newSet;
+            });
+          });
+        },
+        {
+          root: null, // Use viewport instead of scroll container
+          threshold: 0.1, // 10% visible
+          rootMargin: "0px",
+        }
+      );
+
+      // Observe all image elements
+      imageRefs.current.forEach((element) => {
+        observer?.observe(element);
+      });
+    }, 100);
+
+    return () => {
+      clearTimeout(timeoutId);
+      observer?.disconnect();
+    };
+  }, [mockFriends.length]); // Re-run when friends list changes
+
+  // Apply size changes only when images are out of viewport
+  useEffect(() => {
+    const checkInterval = setInterval(() => {
+      setLargeImageIds((currentLarge) => {
+        let hasChanges = false;
+        const newLarge = new Set(currentLarge);
+
+        // For each image that should change size
+        pendingLargeImageIds.forEach((pendingId) => {
+          // If it should be large but isn't, and it's NOT visible, make it large
+          if (!currentLarge.has(pendingId) && !visibleImageIds.has(pendingId)) {
+            newLarge.add(pendingId);
+            hasChanges = true;
+          }
+        });
+
+        // For images that should be small but are large, shrink only if NOT visible
+        currentLarge.forEach((currentId) => {
+          if (
+            !pendingLargeImageIds.has(currentId) &&
+            !visibleImageIds.has(currentId)
+          ) {
+            newLarge.delete(currentId);
+            hasChanges = true;
+          }
+        });
+
+        return hasChanges ? newLarge : currentLarge;
+      });
+    }, 100); // Check every 100ms
+
+    return () => clearInterval(checkInterval);
+  }, [pendingLargeImageIds, visibleImageIds]);
+
+  // Random large images every 5 seconds
+  useEffect(() => {
+    const randomizeInterval = setInterval(() => {
+      // Filter out images that are currently offsetting (animating up/down)
+      const stableImages = mockFriends.filter(
+        (friend) => !imageOffsets[friend.id] || imageOffsets[friend.id] === 0
+      );
+
+      // Shuffle and pick random images from stable images only
+      const shuffled = [...stableImages].sort(() => 0.5 - Math.random());
+      const selectedLarge = shuffled.slice(0, numLargeImages).map((f) => f.id);
+      setPendingLargeImageIds(new Set(selectedLarge)); // Set pending instead of immediate
+
+      // Reset offset for newly selected images to ensure they're at center
+      const resetOffsets: Record<number, number> = {};
+      selectedLarge.forEach((id) => {
+        resetOffsets[id] = 0;
+      });
+      setImageOffsets((prev) => ({
+        ...prev,
+        ...resetOffsets,
+      }));
+    }, 5000);
+
+    return () => clearInterval(randomizeInterval);
+  }, [mockFriends.length, numLargeImages, imageOffsets]);
 
   // Auto scroll functionality with infinite loop
   const startAutoScroll = () => {
@@ -124,11 +275,20 @@ export default function HapasFriend({
       if (!scrollRef.current || isDraggingRef.current) return;
 
       const container = scrollRef.current;
-      // Use computed itemWidth, fallback to 300 if not ready
-      const scrollAmount = itemWidth ?? 300;
+      // Measure actual item width (including gap) or fall back to stored value
+      const firstItem = container.querySelector("article");
+      const gap = parseFloat(getComputedStyle(container).columnGap || "0");
+      const measured = firstItem
+        ? (firstItem as HTMLElement).getBoundingClientRect().width + gap
+        : itemWidth ?? 300;
+      const scrollAmount = measured;
 
       // Always scroll right
       container.scrollBy({ left: scrollAmount, behavior: "smooth" });
+      // After the smooth step, snap and update active to avoid boundary mismatches
+      setTimeout(() => {
+        snapToNearest();
+      }, 350);
     }, 3000);
   };
 
@@ -139,9 +299,97 @@ export default function HapasFriend({
     }
   };
 
-  // Removed: auto random vertical offset for small images
+  // Auto random offset for small images
+  const startAutoOffset = () => {
+    if (autoOffsetRef.current) clearInterval(autoOffsetRef.current);
 
-  // Removed: click and hover vertical offset handlers
+    autoOffsetRef.current = setInterval(() => {
+      // Get all small images from original set only (not in largeImageIds and not in pendingLargeImageIds)
+      const smallImages = mockFriends.filter(
+        (friend) =>
+          !largeImageIds.has(friend.id) && !pendingLargeImageIds.has(friend.id)
+      );
+
+      if (smallImages.length === 0) return;
+
+      // Randomly select 1-2 small images to offset
+      const numToOffset = Math.floor(Math.random() * 2) + 1; // 1-2 images
+      const shuffled = [...smallImages].sort(() => 0.5 - Math.random());
+      const selectedImages = shuffled.slice(0, numToOffset);
+
+      // Apply random offsets from center position
+      const newOffsets: Record<number, number> = {};
+
+      selectedImages.forEach((friend) => {
+        // Always start from center (0) and move to random position
+        const randomOffset =
+          Math.random() > 0.5
+            ? Math.random() * 25 + 8 // Move down 8-33px from center
+            : -(Math.random() * 25 + 8); // Move up 8-33px from center
+
+        newOffsets[friend.id] = randomOffset;
+      });
+
+      setImageOffsets((prev) => ({
+        ...prev,
+        ...newOffsets,
+      }));
+
+      // Reset offsets back to center after a delay
+      setTimeout(() => {
+        const resetOffsets: Record<number, number> = {};
+        selectedImages.forEach((friend) => {
+          resetOffsets[friend.id] = 0; // Reset to center position
+        });
+
+        setImageOffsets((prev) => ({
+          ...prev,
+          ...resetOffsets,
+        }));
+      }, 1500 + Math.random() * 2000); // Reset after 1.5-3.5 seconds
+    }, 3000 + Math.random() * 2000); // Trigger every 3-5 seconds
+  };
+
+  const stopAutoOffset = () => {
+    if (autoOffsetRef.current) {
+      clearInterval(autoOffsetRef.current);
+      autoOffsetRef.current = null;
+    }
+  };
+
+  // Handle image click - random offset for small images only
+  const handleImageClick = (friend: HapasFriend, e: React.MouseEvent) => {
+    e.preventDefault();
+
+    if (largeImageIds.has(friend.id)) {
+      // Large images: no effect
+      return;
+    }
+
+    // Small images: random offset from center position
+    const randomOffset =
+      Math.random() > 0.5
+        ? Math.random() * 30 + 10 // Move down 10-40px from center
+        : -(Math.random() * 30 + 10); // Move up 10-40px from center
+
+    setImageOffsets((prev) => ({
+      ...prev,
+      [friend.id]: randomOffset,
+    }));
+  };
+
+  // Handle image hover - reset to center
+  const handleImageHover = (friend: HapasFriend) => {
+    if (
+      !largeImageIds.has(friend.id) &&
+      imageOffsets[friend.id] !== undefined
+    ) {
+      setImageOffsets((prev) => ({
+        ...prev,
+        [friend.id]: 0, // Reset to center
+      }));
+    }
+  };
 
   // Drag to scroll functionality
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -160,15 +408,19 @@ export default function HapasFriend({
 
   const handleMouseMove = (e: MouseEvent) => {
     if (!isDraggingRef.current || !scrollRef.current) return;
-
-    const deltaX = e.clientX - dragStartXRef.current;
-    const newScrollLeft = dragStartScrollRef.current - deltaX;
-
-    // Disable smooth scroll during drag for better performance
-    scrollRef.current.style.scrollBehavior = "auto";
-
-    // Allow scrolling beyond boundaries for infinite loop
-    scrollRef.current.scrollLeft = newScrollLeft;
+    lastClientXRef.current = e.clientX;
+    if (dragRafRef.current !== null) return;
+    dragRafRef.current = requestAnimationFrame(() => {
+      dragRafRef.current = null;
+      const container = scrollRef.current;
+      if (!container) return;
+      const deltaX = lastClientXRef.current - dragStartXRef.current;
+      const newScrollLeft = dragStartScrollRef.current - deltaX;
+      // Disable smooth scroll during drag for better performance
+      container.style.scrollBehavior = "auto";
+      // Allow scrolling beyond boundaries for infinite loop
+      container.scrollLeft = newScrollLeft;
+    });
   };
 
   const handleMouseUp = () => {
@@ -178,6 +430,10 @@ export default function HapasFriend({
     setIsDragging(false);
     document.removeEventListener("mousemove", handleMouseMove);
     document.removeEventListener("mouseup", handleMouseUp);
+    if (dragRafRef.current !== null) {
+      cancelAnimationFrame(dragRafRef.current);
+      dragRafRef.current = null;
+    }
 
     // Re-enable smooth scroll after drag
     requestAnimationFrame(() => {
@@ -185,6 +441,34 @@ export default function HapasFriend({
         scrollRef.current.style.scrollBehavior = "smooth";
       }
     });
+
+    // Debounced snap to nearest article when scrolling stops (using rects)
+    if (snapTimeoutRef.current) clearTimeout(snapTimeoutRef.current);
+    snapTimeoutRef.current = setTimeout(() => {
+      const arts = Array.from(scrollRef.current.querySelectorAll("article"));
+      if (arts.length === 0) return;
+      const cRect = scrollRef.current.getBoundingClientRect();
+      let nearest = arts[0] as HTMLElement;
+      let min = Math.abs(nearest.getBoundingClientRect().left - cRect.left);
+      for (let i = 1; i < arts.length; i++) {
+        const el = arts[i] as HTMLElement;
+        const d = Math.abs(el.getBoundingClientRect().left - cRect.left);
+        if (d < min) {
+          min = d;
+          nearest = el;
+        }
+      }
+      const nRect = nearest.getBoundingClientRect();
+      const delta = nRect.left - cRect.left; // positive if item starts to the right
+      const target = scrollRef.current.scrollLeft + delta;
+      if (Math.abs(delta) > 1) {
+        scrollRef.current.scrollTo({ left: target, behavior: "smooth" });
+        // Post-adjust to exact position after smooth scroll finishes
+        setTimeout(() => {
+          scrollRef.current.scrollLeft = target;
+        }, 220);
+      }
+    }, 120);
 
     // Restart auto scroll after a delay
     setTimeout(() => {
@@ -204,15 +488,33 @@ export default function HapasFriend({
     const scrollWidth = container.scrollWidth;
     const totalItems = mockFriends.length;
 
-    // Calculate approximate item width based on container
-    const itemWidth = scrollWidth / (totalItems * 3); // 3 sets of items
-    const firstSetEnd = itemWidth * totalItems;
-    const secondSetEnd = itemWidth * totalItems * 2;
-    const thirdSetEnd = itemWidth * totalItems * 3;
+    const itemW = itemWidth ?? scrollWidth / (totalItems * 3);
+    const firstSetEnd = itemW * totalItems;
+    const secondSetEnd = itemW * totalItems * 2;
+    const thirdSetEnd = itemW * totalItems * 3;
+
+    // Update active index based on nearest child's visual left (rects)
+    const articles = Array.from(container.querySelectorAll("article"));
+    if (articles.length > 0) {
+      const cRect = container.getBoundingClientRect();
+      let nearestIdx = 0;
+      let minDelta = Infinity;
+      for (let i = 0; i < articles.length; i++) {
+        const aRect = (articles[i] as HTMLElement).getBoundingClientRect();
+        const delta = Math.abs(aRect.left - cRect.left);
+        if (delta < minDelta) {
+          minDelta = delta;
+          nearestIdx = i;
+        }
+      }
+      if (nearestIdx !== activeIndex) {
+        setActiveIndex(nearestIdx);
+      }
+    }
 
     // Smaller buffer for more precise reset timing
-    const forwardBuffer = itemWidth * 2; // 2 items before end
-    const backwardBuffer = itemWidth * 1; // 1 item before start
+    const forwardBuffer = itemW * 2; // 2 items before end
+    const backwardBuffer = itemW * 1; // 1 item before start
 
     // If scrolled near the end of third set, reset to second set (smoother)
     if (container.scrollLeft >= thirdSetEnd - containerWidth - forwardBuffer) {
@@ -252,6 +554,8 @@ export default function HapasFriend({
               }
             }, 200);
           }
+          // Ensure active aligns to the new leftmost card after reset
+          snapToNearest();
         });
       });
     }
@@ -289,6 +593,8 @@ export default function HapasFriend({
               }
             }, 200);
           }
+          // Ensure active aligns to the new leftmost card after reset
+          snapToNearest();
         });
       });
     }
@@ -320,46 +626,44 @@ export default function HapasFriend({
     const container = scrollRef.current;
     if (!container) return;
 
-    // Calculate item width so that exactly 5 items fit (account for gap)
-    const calcItemWidth = () => {
-      if (!scrollRef.current) return;
-      const el = scrollRef.current;
-      const styles = window.getComputedStyle(el);
-      const gapRaw = (styles.getPropertyValue("column-gap") || styles.getPropertyValue("gap") || "16px").trim();
-      // If gap returns like "16px 16px", take the first number
-      const gapMatch = /([0-9]+\.?[0-9]*)/.exec(gapRaw);
-      const gap = gapMatch ? parseFloat(gapMatch[1]) : 16;
-      // Subtract horizontal paddings from available width
-      const padLeft = parseFloat(styles.getPropertyValue("padding-left")) || 0;
-      const padRight = parseFloat(styles.getPropertyValue("padding-right")) || 0;
-      const visibleCount = 5;
-      const totalGap = gap * (visibleCount - 1);
-      const width = el.clientWidth - padLeft - padRight;
-      if (width > 0) {
-        const w = (width - totalGap) / visibleCount;
-        setItemWidth(w);
+    // Wait for layout to be ready, then set initial position
+    const setInitialPosition = () => {
+      const totalItems = mockFriends.length;
+      const firstItem = container.querySelector("article");
+      const gap = parseFloat(getComputedStyle(container).columnGap || "0");
+      let measured = firstItem
+        ? (firstItem as HTMLElement).getBoundingClientRect().width + gap
+        : container.scrollWidth / (totalItems * 3);
+      setItemWidth(measured);
+      const initialLeft = measured * totalItems;
+      container.scrollLeft = initialLeft;
+      // Immediate snap using rects to eliminate any fractional offset
+      const arts = Array.from(container.querySelectorAll("article"));
+      if (arts.length > 0) {
+        const cRect = container.getBoundingClientRect();
+        let nearest = arts[0] as HTMLElement;
+        let min = Math.abs(nearest.getBoundingClientRect().left - cRect.left);
+        for (let i = 1; i < arts.length; i++) {
+          const el = arts[i] as HTMLElement;
+          const d = Math.abs(el.getBoundingClientRect().left - cRect.left);
+          if (d < min) {
+            min = d;
+            nearest = el;
+          }
+        }
+        const nRect = nearest.getBoundingClientRect();
+        const delta = nRect.left - cRect.left;
+        if (Math.abs(delta) > 0) {
+          container.scrollLeft = container.scrollLeft + delta;
+        }
+        setActiveIndex(arts.indexOf(nearest));
+      } else {
+        setActiveIndex(Math.floor(initialLeft / measured));
       }
     };
 
-    // Wait for layout to be ready, then set initial position
-    const setInitialPosition = () => {
-      const scrollWidth = container.scrollWidth;
-      const totalItems = mockFriends.length;
-      const itemWidth = scrollWidth / (totalItems * 3);
-      container.scrollLeft = itemWidth * totalItems;
-    };
-
     // Set initial position after a short delay to ensure layout is ready
-    setTimeout(() => {
-      calcItemWidth();
-      setInitialPosition();
-    }, 100);
-
-    // Recalculate on resize
-    const handleResize = () => {
-      calcItemWidth();
-    };
-    window.addEventListener("resize", handleResize);
+    setTimeout(setInitialPosition, 100);
 
     // Add scroll listener for infinite loop
     container.addEventListener("scroll", throttledHandleScroll);
@@ -368,6 +672,9 @@ export default function HapasFriend({
     if (isAutoScrolling) {
       startAutoScroll();
     }
+
+    // Start auto offset for small images
+    startAutoOffset();
 
     // Safety check: ensure auto scroll is running every 10 seconds
     const safetyCheck = setInterval(() => {
@@ -385,23 +692,31 @@ export default function HapasFriend({
     return () => {
       container.removeEventListener("scroll", throttledHandleScroll);
       stopAutoScroll();
+      stopAutoOffset();
       clearInterval(safetyCheck);
-      window.removeEventListener("resize", handleResize);
     };
   }, [
     isAutoScrolling,
     mockFriends.length,
+    largeImageIds,
+    pendingLargeImageIds,
   ]);
 
   // Pause auto scroll on hover
   const handleCarouselMouseEnter = () => {
-    stopAutoScroll();
+    // no-op: keep auto-scroll running
   };
 
   const handleCarouselMouseLeave = () => {
-    if (isAutoScrolling) {
-      startAutoScroll();
-    }
+    // no-op: keep auto-scroll running
+  };
+
+  const handleWheelBlock = (e: React.WheelEvent<HTMLDivElement>) => {
+    e.preventDefault();
+  };
+
+  const handleTouchMoveBlock = (e: React.TouchEvent<HTMLDivElement>) => {
+    e.preventDefault();
   };
 
   return (
@@ -445,21 +760,22 @@ export default function HapasFriend({
         {/* Carousel */}
         <div
           ref={scrollRef}
-          className={`hapas-friend-carousel flex overflow-x-scroll overflow-y-hidden gap-4 ${
-            isDragging ? "dragging" : ""
-          }`}
+          className={`hapas-friend-carousel flex overflow-x-scroll overflow-y-hidden gap-4`}
           onMouseEnter={handleCarouselMouseEnter}
           onMouseLeave={handleCarouselMouseLeave}
-          onMouseDown={handleMouseDown}
+          onWheel={handleWheelBlock}
+          onTouchMove={handleTouchMoveBlock}
           style={{
             scrollbarWidth: "none",
             msOverflowStyle: "none",
             scrollBehavior: "smooth",
+            cursor: "default",
           }}
         >
           {infiniteFriends.map((friend, index) => {
             // Dynamic width so 5 items fit the viewport
             const widthPx = itemWidth ?? 300;
+            const isActive = index === activeIndex;
 
             return (
               <article
@@ -468,10 +784,11 @@ export default function HapasFriend({
                 style={{
                   width: `${widthPx}px`,
                   flex: `0 0 ${widthPx}px`,
-                  transform: `translateY(0px) scale(1)`,
-                  transition: "all 1.5s cubic-bezier(0.4, 0, 0.2, 1)",
+                  transform: isActive ? `translateY(0px) scale(1)` : `translateY(0px) scale(0.9)`,
+                  transformOrigin: "left center",
+                  transition: "transform 400ms cubic-bezier(0.4, 0, 0.2, 1), opacity 400ms",
                   alignSelf: "flex-start",
-                  opacity: 1,
+                  opacity: isActive ? 1 : 0.96,
                 }}
               >
                 <div
@@ -483,7 +800,7 @@ export default function HapasFriend({
                     style={{
                       aspectRatio: "3/4",
                       width: "100%",
-                      transition: "all 1.5s cubic-bezier(0.4, 0, 0.2, 1)",
+                      transition: "all 400ms cubic-bezier(0.4, 0, 0.2, 1)",
                     }}
                   >
                     <Image
@@ -497,7 +814,7 @@ export default function HapasFriend({
                       objectFit="cover"
                       className={`group-hover:scale-105`}
                       style={{
-                        transition: "all 1.5s cubic-bezier(0.4, 0, 0.2, 1)",
+                        transition: "all 400ms cubic-bezier(0.4, 0, 0.2, 1)",
                         width: "100%",
                         height: "100%",
                       }}

@@ -174,11 +174,16 @@
 
 .hapas-friend-carousel {
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden; /* user cannot scroll horizontally */
+  overflow-y: hidden;
   user-select: none; /* Prevent text selection while dragging */
+  touch-action: none; /* disable touch panning */
   display: flex;
   align-items: center; /* Center items vertically */
   gap: 1rem;
+  padding-left: 0; /* ensure no left padding adds visual gap */
+  scroll-snap-type: x proximity; /* softer snap to not fight manual drag */
+  scroll-padding-left: 0; /* snap from exact left edge */
   
   /* Hide scrollbars */
   scrollbar-width: none; /* Firefox */
@@ -204,6 +209,15 @@
     -webkit-backface-visibility: hidden;
     perspective: 1000px;
     -webkit-perspective: 1000px;
+    scroll-snap-align: start; /* each card snaps to start */
+  }
+
+  /* During dragging, disable transitions to avoid jank */
+  &.dragging {
+    article,
+    article * {
+      transition: none !important;
+    }
   }
   
   @media (max-width: $breakpoint-md) {
