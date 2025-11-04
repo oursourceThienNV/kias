@@ -182,29 +182,6 @@ export default function FloatingChatWidget({
 
       {/* Floating Buttons */}
       <div className="floating-chat-buttons">
-        {/* Back to Top Button */}
-        {showBackToTop && (
-          <button
-            className="chat-button back-to-top-button"
-            onClick={scrollToTop}
-            aria-label="Lên đầu trang"
-            title="Lên đầu trang"
-          >
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M12 19V5M5 12l7-7 7 7" />
-            </svg>
-          </button>
-        )}
-
         {/* Contact Button */}
         <div style={{ position: "relative" }}>
           {/* Options panel */}
@@ -341,6 +318,29 @@ export default function FloatingChatWidget({
             )}
           </button>
         </div>
+
+        {/* Back to Top Button (rendered below contact) */}
+        {showBackToTop && (
+          <button
+            className="chat-button back-to-top-button"
+            onClick={scrollToTop}
+            aria-label="Lên đầu trang"
+            title="Lên đầu trang"
+          >
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M12 19V5M5 12l7-7 7 7" />
+            </svg>
+          </button>
+        )}
       </div>
     </div>
   );

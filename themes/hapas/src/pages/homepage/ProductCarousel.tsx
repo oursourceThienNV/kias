@@ -57,6 +57,10 @@ export default function ProductCarousel({
   const [hoverTimeout, setHoverTimeout] = useState<NodeJS.Timeout | null>(null);
   const [hideTimeout, setHideTimeout] = useState<NodeJS.Timeout | null>(null);
   const [popupPosition, setPopupPosition] = useState<"left" | "right">("right");
+  const [popupCoords, setPopupCoords] = useState<{ top: number; left: number }>(
+    { top: 0, left: 0 }
+  );
+  const [popupHeight, setPopupHeight] = useState<number>(460);
 
   // Extract products array from GraphQL response
   const productList = products?.items || [];
@@ -107,25 +111,47 @@ export default function ProductCarousel({
       clearTimeout(hoverTimeout);
     }
 
-    // Detect if popup should show on left or right
+    // Defer computing viewport coordinates until just before showing popup
     const target = event.currentTarget;
-    const rect = target.getBoundingClientRect();
-    const popupWidth = 384; // w-96 = 384px
-    const spaceOnRight = window.innerWidth - rect.right;
+    const initialRect = target.getBoundingClientRect();
+    const popupWidth = 720; // must match popup element width
+    const desiredHeight = Math.min(460, window.innerHeight - 16); // ensure fully visible
+    setPopupHeight(desiredHeight);
+    const margin = 16;
 
-    // If not enough space on right (need popup width + margin), show on left
-    if (spaceOnRight < popupWidth + 32) {
-      setPopupPosition("left");
-    } else {
-      setPopupPosition("right");
-    }
-
-    // Set new timeout to show popup after 500ms
+    // Show popup after 200ms
     const timeout = setTimeout(() => {
       if (!isDragging) {
+        // Recalculate rect to avoid any mid-delay movement
+        const rect = target.getBoundingClientRect();
+        const spaceOnRight = window.innerWidth - rect.right;
+        const centerY = rect.top + rect.height / 2;
+        const unclampedTop = centerY - desiredHeight / 2;
+        const clampedTop = Math.max(
+          8,
+          Math.min(unclampedTop, window.innerHeight - desiredHeight - 8)
+        );
+
+        if (spaceOnRight < popupWidth + margin) {
+          setPopupPosition("left");
+          setPopupCoords({
+            top: clampedTop,
+            left: Math.max(8, rect.left - popupWidth - margin),
+          });
+        } else {
+          setPopupPosition("right");
+          setPopupCoords({
+            top: clampedTop,
+            left: Math.min(
+              window.innerWidth - popupWidth - 8,
+              rect.right + margin
+            ),
+          });
+        }
+
         setHoveredProduct(productId);
       }
-    }, 500);
+    }, 200);
     setHoverTimeout(timeout);
   };
 
@@ -452,62 +478,80 @@ export default function ProductCarousel({
                     {/* Hover Preview Popup */}
                     {hoveredProduct === product.productId && (
                       <div
-                        className={`absolute ${
-                          popupPosition === "right"
-                            ? "left-full ml-4"
-                            : "right-full mr-4"
-                        } top-0 w-96 bg-white shadow-2xl rounded-lg overflow-hidden z-50 border border-gray-200`}
+                        className={`fixed w-[720px] overflow-auto bg-white shadow-2xl rounded-lg z-50 border border-gray-200`}
                         style={{
-                          animation:
-                            popupPosition === "right"
-                              ? "fadeInPopup 0.2s ease-out"
-                              : "fadeInPopupReverse 0.2s ease-out",
+                          top: popupCoords.top,
+                          left: popupCoords.left,
+                          height: popupHeight,
+                          maxHeight: 'calc(100vh - 16px)',
+                          willChange: "auto",
                         }}
                         onMouseEnter={handleMouseEnterPopup}
                         onMouseLeave={handleMouseLeavePopup}
                       >
-                        <div className="grid grid-cols-2 gap-3 p-4">
+                        <div className="grid grid-cols-[3fr_2fr] gap-1.5 p-2 pb-3">
                           {/* Ảnh mẫu */}
                           <div className="col-span-2">
                             <img
-                              src={
-                                product.image?.url || "/placeholder-product.jpg"
-                              }
+                              src={product.image?.url || "/placeholder-product.jpg"}
                               alt={product.name}
-                              className="w-full h-48 object-cover rounded"
+                              className="w-full h-52 object-cover rounded"
                             />
                           </div>
 
                           {/* Ảnh cận chất liệu */}
                           <div className="col-span-1">
-                            <div className="text-xs font-medium text-gray-700 mb-1">
+                            <div className="text-xs font-medium text-gray-700 mb-0">
                               Chất liệu
                             </div>
-                            <img
-                              src={
-                                product.image?.url || "/placeholder-product.jpg"
-                              }
-                              alt="Material texture"
-                              className="w-full h-24 object-cover rounded border border-gray-200"
-                            />
+                            <div className="grid grid-cols-2 gap-1">
+                              <div className="relative overflow-hidden">
+                                <img
+                                  src={product.image?.url || "/placeholder-product.jpg"}
+                                  alt="Material texture 1"
+                                  className="w-full h-24 object-cover object-center rounded border border-gray-200"
+                                />
+                              </div>
+                              <div className="relative overflow-hidden">
+                                <img
+                                  src={product.image?.url || "/placeholder-product.jpg"}
+                                  alt="Material texture 2"
+                                  className="w-full h-24 object-cover object-center rounded border border-gray-200"
+                                />
+                              </div>
+                              <div className="relative overflow-hidden">
+                                <img
+                                  src={product.image?.url || "/placeholder-product.jpg"}
+                                  alt="Material texture 3"
+                                  className="w-full h-24 object-cover object-center rounded border border-gray-200"
+                                />
+                              </div>
+                              <div className="relative overflow-hidden">
+                                <img
+                                  src={product.image?.url || "/placeholder-product.jpg"}
+                                  alt="Material texture 4"
+                                  className="w-full h-24 object-cover object-center rounded border border-gray-200"
+                                />
+                              </div>
+                            </div>
                           </div>
 
                           {/* Mô tả chất liệu */}
                           <div className="col-span-1">
-                            <div className="text-xs font-medium text-gray-700 mb-1">
+                            <div className="text-xs font-medium text-gray-700 mb-0">
                               Mô tả
                             </div>
-                            <p className="text-xs text-gray-600 leading-relaxed">
-                              Áo phông cao cấp, mềm mại, chống thấm nước tốt
+                            <p className="text-xs text-gray-600 leading-tight">
+                              Da PU cao cấp, mềm mại, chống thấm nước tốt
                             </p>
                           </div>
                         </div>
 
                         {/* Nút xem thêm */}
-                        <div className="px-4 pb-4">
+                        <div className="sticky bottom-0 left-0 right-0 bg-white px-3 py-2 border-t border-gray-200">
                           <a
                             href={product.url}
-                            className="block w-full bg-black text-white text-center py-2 px-4 text-sm font-medium uppercase tracking-wide hover:bg-gray-900 transition-colors rounded"
+                            className="block w-full bg-black text-white text-center py-2 px-3 text-sm font-medium uppercase tracking-wide hover:bg-gray-900 transition-colors rounded"
                           >
                             Xem thêm
                           </a>
