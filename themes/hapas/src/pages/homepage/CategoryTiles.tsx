@@ -524,7 +524,7 @@ export default function CategoryTiles({
                   {/* Hover Preview Popup */}
                   {hoveredCategory === x.categoryId && (
                     <div
-                      className={`fixed w-[720px] h-[460px] overflow-auto bg-white shadow-2xl rounded-lg z-50 border border-gray-200`}
+                      className={`fixed w-[720px] h-[460px] overflow-hidden bg-white shadow-2xl rounded-lg z-50 border border-gray-200`}
                       style={{
                         top: popupCoords.top,
                         left: popupCoords.left,
@@ -533,7 +533,7 @@ export default function CategoryTiles({
                       onMouseEnter={handleMouseEnterPopup}
                       onMouseLeave={handleMouseLeavePopup}
                     >
-                      <div className="grid grid-cols-[3fr_2fr] gap-1.5 p-2 pb-3">
+                      <div className="grid grid-cols-2 gap-1.5 p-2 pb-3">
                         {/* Ảnh mẫu */}
                         <div className="col-span-2">
                           <img
@@ -548,35 +548,12 @@ export default function CategoryTiles({
                           <div className="text-xs font-medium text-gray-700 mb-0">
                             Chất liệu
                           </div>
-                          <div className="grid grid-cols-2 gap-1">
-                            <div className="relative overflow-hidden">
-                              <img
-                                src={img}
-                                alt="Material texture 1"
-                                className="w-full h-24 object-cover object-center rounded border border-gray-200"
-                              />
-                            </div>
-                            <div className="relative overflow-hidden">
-                              <img
-                                src={img}
-                                alt="Material texture 2"
-                                className="w-full h-24 object-cover object-center rounded border border-gray-200"
-                              />
-                            </div>
-                            <div className="relative overflow-hidden">
-                              <img
-                                src={img}
-                                alt="Material texture 3"
-                                className="w-full h-24 object-cover object-center rounded border border-gray-200"
-                              />
-                            </div>
-                            <div className="relative overflow-hidden">
-                              <img
-                                src={img}
-                                alt="Material texture 4"
-                                className="w-full h-24 object-cover object-center rounded border border-gray-200"
-                              />
-                            </div>
+                          <div className="relative overflow-hidden">
+                            <img
+                              src={img}
+                              alt="Material texture"
+                              className="w-full h-[10.25rem] object-cover object-center rounded border border-gray-200"
+                            />
                           </div>
                         </div>
 

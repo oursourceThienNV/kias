@@ -8,17 +8,21 @@ import "./CustomerInfoPopup.scss";
 
 interface CustomerInfoPopupProps {
   delay?: number; // Thời gian delay trước khi hiện popup (ms)
-  onSubmit?: (data: { name: string; phone: string }) => void;
+  onSubmit?: (data: { name: string; phone: string; email?: string; note?: string }) => void;
+  imageUrl?: string;
+  imageAlt?: string;
 }
 
 export default function CustomerInfoPopup({
   delay = 25000, // 25 giây = 25000ms
   onSubmit,
+  imageUrl = "/images/popup-side.jpg",
+  imageAlt = "KIAS promotion image",
 }: CustomerInfoPopupProps) {
   const [isVisible, setIsVisible] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
-  const [formData, setFormData] = useState({ name: "", phone: "" });
-  const [errors, setErrors] = useState({ name: "", phone: "" });
+  const [formData, setFormData] = useState({ name: "", email: "", phone: "", note: "" });
+  const [errors, setErrors] = useState({ name: "", email: "", phone: "" });
 
   // Kiểm tra xem đã hiển thị popup trong session này chưa
   useEffect(() => {
@@ -36,7 +40,7 @@ export default function CustomerInfoPopup({
   }, [delay]);
 
   const validateForm = () => {
-    const newErrors = { name: "", phone: "" };
+    const newErrors = { name: "", email: "", phone: "" };
     let isValid = true;
 
     if (!formData.name.trim()) {
@@ -57,6 +61,15 @@ export default function CustomerInfoPopup({
       isValid = false;
     }
 
+    // Validate email (optional)
+    if (formData.email.trim()) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(formData.email.trim())) {
+        newErrors.email = "Email không hợp lệ";
+        isValid = false;
+      }
+    }
+
     setErrors(newErrors);
     return isValid;
   };
@@ -69,6 +82,8 @@ export default function CustomerInfoPopup({
         onSubmit({
           name: formData.name.trim(),
           phone: formData.phone.trim(),
+          email: formData.email.trim() || undefined,
+          note: formData.note.trim() || undefined,
         });
       }
 
@@ -76,6 +91,8 @@ export default function CustomerInfoPopup({
       console.log("Customer Info:", {
         name: formData.name.trim(),
         phone: formData.phone.trim(),
+        email: formData.email.trim() || undefined,
+        note: formData.note.trim() || undefined,
       });
 
       // Đóng popup
@@ -91,7 +108,7 @@ export default function CustomerInfoPopup({
     }, 300);
   };
 
-  const handleInputChange = (field: "name" | "phone", value: string) => {
+  const handleInputChange = (field: "name" | "email" | "phone" | "note", value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
     // Clear error khi user bắt đầu nhập lại
     if (errors[field]) {
@@ -144,65 +161,107 @@ export default function CustomerInfoPopup({
 
         {/* Content */}
         <div className="popup-content">
-          <h2 className="popup-title">Nhận ưu đãi đặc biệt từ KIAS</h2>
-          <p className="popup-description">
-            Để lại thông tin để nhận ngay voucher giảm giá và cập nhật sản phẩm
-            mới nhất!
-          </p>
+          <div className="popup-body">
+            <div className="popup-form-wrapper">
+              <h2 className="popup-title">Nhận ưu đãi đặc biệt từ KIAS</h2>
+              <p className="popup-description">
+                Để lại thông tin để nhận ngay voucher giảm giá và cập nhật sản phẩm
+                mới nhất!
+              </p>
 
-          <form onSubmit={handleSubmit} className="popup-form">
-            {/* Tên */}
-            <div className="form-group">
-              <label htmlFor="customer-name" className="form-label">
-                Họ và tên <span className="required">*</span>
-              </label>
-              <input
-                id="customer-name"
-                type="text"
-                className={`form-input ${errors.name ? "error" : ""}`}
-                placeholder="Nhập họ và tên của bạn"
-                value={formData.name}
-                onChange={(e) => handleInputChange("name", e.target.value)}
-                required
-              />
-              {errors.name && (
-                <span className="error-message">{errors.name}</span>
+              <form onSubmit={handleSubmit} className="popup-form">
+                {/* Tên */}
+                <div className="form-group">
+                  <label htmlFor="customer-name" className="form-label">
+                    Họ và tên <span className="required">*</span>
+                  </label>
+                  <input
+                    id="customer-name"
+                    type="text"
+                    className={`form-input ${errors.name ? "error" : ""}`}
+                    placeholder="Nhập họ và tên của bạn"
+                    value={formData.name}
+                    onChange={(e) => handleInputChange("name", e.target.value)}
+                    required
+                  />
+                  {errors.name && (
+                    <span className="error-message">{errors.name}</span>
+                  )}
+                </div>
+
+                {/* Email */}
+                <div className="form-group">
+                  <label htmlFor="customer-email" className="form-label">
+                    Email
+                  </label>
+                  <input
+                    id="customer-email"
+                    type="email"
+                    className={`form-input ${errors.email ? "error" : ""}`}
+                    placeholder="example@email.com"
+                    value={formData.email}
+                    onChange={(e) => handleInputChange("email", e.target.value)}
+                  />
+                  {errors.email && (
+                    <span className="error-message">{errors.email}</span>
+                  )}
+                </div>
+
+                {/* Số điện thoại */}
+                <div className="form-group">
+                  <label htmlFor="customer-phone" className="form-label">
+                    Số điện thoại <span className="required">*</span>
+                  </label>
+                  <input
+                    id="customer-phone"
+                    type="tel"
+                    className={`form-input ${errors.phone ? "error" : ""}`}
+                    placeholder="Nhập số điện thoại của bạn"
+                    value={formData.phone}
+                    onChange={(e) => handleInputChange("phone", e.target.value)}
+                    maxLength={10}
+                    required
+                  />
+                  {errors.phone && (
+                    <span className="error-message">{errors.phone}</span>
+                  )}
+                </div>
+
+                {/* Ghi chú (không bắt buộc) */}
+                <div className="form-group">
+                  <label htmlFor="customer-note" className="form-label">
+                    Ghi chú (không bắt buộc)
+                  </label>
+                  <textarea
+                    id="customer-note"
+                    className="form-input"
+                    placeholder="Nội dung bạn muốn tư vấn..."
+                    rows={4}
+                    value={formData.note}
+                    onChange={(e) => handleInputChange("note", e.target.value)}
+                  />
+                </div>
+
+                {/* Submit Button */}
+                <button type="submit" className="popup-submit-btn">
+                  Nhận ưu đãi ngay
+                </button>
+
+                <p className="popup-privacy">
+                  Bằng việc điền form, bạn đồng ý với{" "}
+                  <a href="/pages/privacy-policy" target="_blank">
+                    Chính sách bảo mật
+                  </a>{" "}
+                  của chúng tôi
+                </p>
+              </form>
+            </div>
+            <div className="popup-side-image" aria-hidden={!imageUrl ? true : false}>
+              {imageUrl && (
+                <img src="https://kias.vn/wp-content/uploads/2025/09/CTS03275-scaled.jpg" alt={imageAlt} />
               )}
             </div>
-
-            {/* Số điện thoại */}
-            <div className="form-group">
-              <label htmlFor="customer-phone" className="form-label">
-                Số điện thoại <span className="required">*</span>
-              </label>
-              <input
-                id="customer-phone"
-                type="tel"
-                className={`form-input ${errors.phone ? "error" : ""}`}
-                placeholder="Nhập số điện thoại của bạn"
-                value={formData.phone}
-                onChange={(e) => handleInputChange("phone", e.target.value)}
-                maxLength={10}
-                required
-              />
-              {errors.phone && (
-                <span className="error-message">{errors.phone}</span>
-              )}
-            </div>
-
-            {/* Submit Button */}
-            <button type="submit" className="popup-submit-btn">
-              Nhận ưu đãi ngay
-            </button>
-
-            <p className="popup-privacy">
-              Bằng việc điền form, bạn đồng ý với{" "}
-              <a href="/pages/privacy-policy" target="_blank">
-                Chính sách bảo mật
-              </a>{" "}
-              của chúng tôi
-            </p>
-          </form>
+          </div>
         </div>
       </div>
     </div>
