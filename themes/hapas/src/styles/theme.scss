@@ -18,6 +18,8 @@
 :root {
   /* ===== Brand Colors ===== */
   --color-primary: #000000;
+  /* Global button primary color used by core Button component */
+  --primary: #79192A;
   --color-secondary: #666666;
   --color-text-primary: #1a1a1a;
   --color-text-secondary: #666666;
@@ -224,3 +226,11 @@ p {
    
    Tất cả đều dùng var(--variable-name) thay vì $scss-variable
 */
+
+/* Override core Button colors to use theme primary and proper hover */
+.button.primary {
+  background-color: var(--primary) !important;
+}
+.button.primary:hover {
+  background-color: #5E1220 !important; /* darker shade of #79192A */
+}

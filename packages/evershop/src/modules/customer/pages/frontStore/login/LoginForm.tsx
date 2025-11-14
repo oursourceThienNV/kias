@@ -11,7 +11,7 @@ const SubmitButton: React.FC<{ formId: string }> = ({ formId }) => {
     formState: { isSubmitting }
   } = useFormContext();
   return (
-    <div className="form-submit-button flex border-t border-divider mt-4 pt-4 justify-between">
+    <div className="form-submit-button flex justify-center mt-6 pt-4 border-t border-[#E8D3D7]">
       <Button
         title="SIGN IN"
         onAction={() => {
@@ -41,11 +41,14 @@ export default function LoginForm({
   const [error, setError] = React.useState(null);
 
   return (
-    <div className="flex justify-center items-center">
-      <div className="login__form flex justify-center items-center w-[30rem] max-w-[80%] bg-white rounded-3xl px-5 py-16 shadow-lg border border-divider">
+    <div className="min-h-[70vh] w-full flex items-center justify-center bg-white px-4 py-12">
+      <div className="login__form w-full max-w-md bg-white rounded-2xl px-6 py-8 shadow-xl border border-[#F0E3E6]">
         <div className="login__form__inner">
-          <h1 className="text-center mb-6">{_('Login')}</h1>
-          {error && <div className="text-critical mb-2">{error}</div>}
+          <h1 className="text-center mb-2 text-[28px] font-semibold tracking-wide uppercase font-[Montserrat] text-[#79192A]">
+            {_('Login')}
+          </h1>
+          <p className="text-center mb-6 text-sm text-gray-600">Chào mừng bạn quay lại</p>
+          {error && <div className="mb-4 text-sm text-red-600 bg-red-50 border border-red-200 rounded px-3 py-2">{error}</div>}
           <Form
             id="loginForm"
             action={action}
@@ -59,7 +62,8 @@ export default function LoginForm({
             }}
             submitBtn={false}
           >
-            <Area
+            <div className="space-y-4">
+              <Area
               id="loginFormInner"
               coreComponents={[
                 {
@@ -101,13 +105,14 @@ export default function LoginForm({
                   sortOrder: 30
                 }
               ]}
-            />
+              />
+            </div>
           </Form>
-          <div className="text-center mt-2 gap-5 flex justify-center">
-            <a className="text-interactive" href={registerUrl}>
+          <div className="text-center mt-4 gap-6 flex justify-center text-sm">
+            <a className="text-[#79192A] hover:opacity-80" href={registerUrl}>
               {_('Create an account')}
             </a>
-            <a href={forgotPasswordUrl}>{_('Forgot your password?')}</a>
+            <a className="text-gray-700 hover:text-gray-900" href={forgotPasswordUrl}>{_('Forgot your password?')}</a>
           </div>
         </div>
       </div>
