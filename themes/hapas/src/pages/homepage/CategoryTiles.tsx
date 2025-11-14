@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Image } from "@components/common/Image";
-import { useCartDispatch } from "@components/frontStore/cart/cartContext";
 
 interface MoneyText {
   value: number;
@@ -19,6 +18,7 @@ type Product = {
   urlKey: string;
   sku?: string;
   image?: ProductImage | null;
+  description?: string | null;
   price?: {
     regular: MoneyText;
     special?: MoneyText;
@@ -41,7 +41,6 @@ export default function CategoryTiles({
   products,
   viewAllHref = "/products",
 }: Props) {
-  const { addItem } = useCartDispatch();
   const productList = products?.items || [];
   if (!productList.length) return null;
 
@@ -501,6 +500,9 @@ export default function CategoryTiles({
                       }}
                       onMouseEnter={handleMouseEnterPopup}
                       onMouseLeave={handleMouseLeavePopup}
+                      onMouseDown={(e) => {
+                        e.stopPropagation();
+                      }}
                     >
                       <div className="grid grid-cols-2 gap-1.5 p-2 pb-3">
                         {/* Ảnh mẫu */}
@@ -526,25 +528,28 @@ export default function CategoryTiles({
                           </div>
                         </div>
 
-                        {/* Mô tả chất liệu */}
+                        {/* Mô tả sản phẩm từ DB (nếu có) */}
                         <div className="col-span-1">
-                          <div className="text-xs font-medium text-gray-700 mb-0">
-                            Mô tả
-                          </div>
-                          <p className="text-xs text-gray-600 leading-tight">
-                            Da PU cao cấp, mềm mại, chống thấm nước tốt
-                          </p>
+                          <div className="text-xs font-medium text-gray-700 mb-0">Mô tả</div>
+                          {typeof p.description === 'string' && p.description.trim() && (
+                            <p className="text-xs text-gray-600 leading-tight line-clamp-5">
+                              {p.description}
+                            </p>
+                          )}
                         </div>
                       </div>
 
-                      {/* Nút xem thêm */}
+                      {/* Nút xem chi tiết sản phẩm */}
                       <div className="sticky bottom-0 left-0 right-0 bg-white px-3 py-2 border-t border-gray-200">
-                        <a
-                          href="/products"
+                        <button
                           className="block w-full bg-black text-white text-center py-2 px-3 text-sm font-medium uppercase tracking-wide hover:bg-gray-900 transition-colors rounded"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            window.location.href = href;
+                          }}
                         >
                           Xem thêm
-                        </a>
+                        </button>
                       </div>
                     </div>
                   )}
@@ -572,16 +577,9 @@ export default function CategoryTiles({
                       </div>
                     )}
 
-                    {/* Button Mua ngay */}
+                    {/* Button Mua ngay -> điều hướng sang trang chi tiết */}
                     <button
                       className="mt-auto pt-3 w-full bg-black text-white py-3 px-4 font-medium text-sm uppercase tracking-wide hover:bg-gray-900 transition-colors duration-200"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        if (p.sku) {
-                          addItem({ sku: p.sku, qty: 1 }).catch(() => {});
-                        }
-                      }}
                     >
                       Mua ngay
                     </button>
@@ -638,6 +636,7 @@ export const query = `
         url
         urlKey
         sku
+        description
         price {
           regular {
             value

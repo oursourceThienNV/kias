@@ -79,93 +79,13 @@ export default function ProductRecommendations({
     };
   };
 
-  // Lấy products từ GraphQL hoặc dùng mock data
+  // Lấy products từ GraphQL (không dùng mock trong sản phẩm)
   const graphQLProductList: Product[] = graphQLProducts?.items
     ? graphQLProducts.items.map(mapGraphQLToProduct)
     : [];
 
-  // Mock products nếu không có data từ GraphQL
-  const mockProducts: Product[] = [
-    {
-      productId: 1,
-      name: "TDV Hobo Nắp Gập Chain Handle",
-      url: "/product/tdv-hobo-nap-gap-chain-handle",
-      price: {
-        regular: { value: 1083000, text: "1.083.000₫" },
-        special: { value: 1007190, text: "1.007.190₫" },
-      },
-      image: {
-        url: "https://cdn.hstatic.net/products/200000978078/26.1_ec242fa30e88406389bab2b0be2c1af6_grande.jpg",
-        alt: "TDV Hobo",
-      },
-    },
-    {
-      productId: 2,
-      name: "TDV Crossbody Nắp Gập",
-      url: "/product/tdv-crossbody-nap-gap",
-      price: {
-        regular: { value: 950000, text: "950.000₫" },
-      },
-      image: {
-        url: "https://product.hstatic.net/200000978078/product/img_0112_4da90db586de42688a52cbb99cef6b55_large.jpg",
-        alt: "TDV Crossbody",
-      },
-    },
-    {
-      productId: 3,
-      name: "TDV Tote Classic",
-      url: "/product/tdv-tote-classic",
-      price: {
-        regular: { value: 1200000, text: "1.200.000₫" },
-        special: { value: 1080000, text: "1.080.000₫" },
-      },
-      image: {
-        url: "https://product.hstatic.net/200000978078/product/img_1212_12ad01d38a7d4f518028b9e015be9358_large.jpg",
-        alt: "TDV Tote",
-      },
-    },
-    {
-      productId: 4,
-      name: "TDV Satchel Premium",
-      url: "/product/tdv-satchel-premium",
-      price: {
-        regular: { value: 1500000, text: "1.500.000₫" },
-      },
-      image: {
-        url: "https://cdn.hstatic.net/products/200000978078/26.1_ec242fa30e88406389bab2b0be2c1af6_grande.jpg",
-        alt: "TDV Satchel",
-      },
-    },
-    {
-      productId: 5,
-      name: "TDV Clutch Evening",
-      url: "/product/tdv-clutch-evening",
-      price: {
-        regular: { value: 800000, text: "800.000₫" },
-        special: { value: 720000, text: "720.000₫" },
-      },
-      image: {
-        url: "https://product.hstatic.net/200000978078/product/img_0112_4da90db586de42688a52cbb99cef6b55_large.jpg",
-        alt: "TDV Clutch",
-      },
-    },
-    {
-      productId: 6,
-      name: "TDV Backpack Modern",
-      url: "/product/tdv-backpack-modern",
-      price: {
-        regular: { value: 1350000, text: "1.350.000₫" },
-      },
-      image: {
-        url: "https://product.hstatic.net/200000978078/product/img_1212_12ad01d38a7d4f518028b9e015be9358_large.jpg",
-        alt: "TDV Backpack",
-      },
-    },
-  ];
-
-  // Ưu tiên dùng data từ GraphQL, fallback về mock data
-  const productList =
-    graphQLProductList.length > 0 ? graphQLProductList : mockProducts;
+  // Chỉ hiển thị khi có data từ GraphQL
+  const productList = graphQLProductList;
   if (!productList.length) return null;
 
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -519,7 +439,7 @@ export default function ProductRecommendations({
                   </div>
                 )}
                 {/* Add to cart button, only visible on hover */}
-                <button
+                {/* <button
                   className="add-to-cart-btn absolute left-1/2 bottom-4 -translate-x-1/2 px-4 py-2 bg-black text-white rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 font-semibold text-sm"
                   style={{ zIndex: 40 }}
                   onClick={(e) => {
@@ -529,7 +449,7 @@ export default function ProductRecommendations({
                   }}
                 >
                   Thêm vào giỏ hàng
-                </button>
+                </button> */}
               </a>
               <div className="mt-3 text-center">
                 <div className="text-sm text-gray-900 font-medium line-clamp-2">
@@ -670,3 +590,8 @@ export const query = `
     }
   }
 `;
+
+export const layout = {
+  areaId: 'productRecommendations',
+  sortOrder: 10
+};

@@ -58,7 +58,7 @@ const ResetForm: React.FC<{ action: string; onSuccess: () => void }> = ({
                 required: _('Email is required')
               }}
             />
-            <div className="form-submit-button flex border-t border-divider mt-2 pt-2">
+            <div className="form-submit-button flex justify-center mt-6 pt-4 border-t border-[#E8D3D7]">
               <Button
                 title={_('RESET PASSWORD')}
                 type="submit"

@@ -11,10 +11,12 @@ import {
 import { ProductSingleName } from "@components/frontStore/catalog/ProductSingleName.js";
 import SizeChartImage from "@components/frontStore/catalog/SizeChartImage.js";
 import ProductDetailsUsage from "@components/frontStore/catalog/ProductDetailsUsage.js";
+import { useCartDispatch } from "@components/frontStore/cart/cartContext.js";
 import ProductRecommendations from "@components/frontStore/catalog/ProductRecommendations.js";
 import React from "react";
 
-export default function ProductView({ product }: ProductData) {
+export default function ProductView({ product, products }: any) {
+  const { addItem } = useCartDispatch();
   return (
     <ProductProvider product={product}>
       <div className="product__detail">
@@ -269,8 +271,13 @@ export default function ProductView({ product }: ProductData) {
                                 letterSpacing: 1.5,
                                 transition: "background 0.2s",
                               }}
+                              onClick={() => {
+                                if (product?.sku) {
+                                  addItem({ sku: product.sku, qty: quantity }).catch(() => {});
+                                }
+                              }}
                             >
-                              MUA NGAY
+                              THÊM VÀO GIỎ HÀNG
                             </button>
                             <button
                               style={{
@@ -291,14 +298,14 @@ export default function ProductView({ product }: ProductData) {
                           <hr style={{ margin: "20px 0" }} />
                           {/* Accordion thông tin */}
                           <div>
-                            {/* <ProductDetailsAccordion
+                            <ProductDetailsAccordion
                               open={openAccordion === "details"}
                               onClick={() =>
                                 setOpenAccordion(
                                   openAccordion === "details" ? null : "details"
                                 )
                               }
-                            /> */}
+                            />
                             <WarrantyAccordion
                               open={openAccordion === "warranty"}
                               onClick={() =>
@@ -336,7 +343,7 @@ export default function ProductView({ product }: ProductData) {
 
           {/* Hàng 3: Có thể bạn sẽ thích */}
           <div style={{ marginTop: "60px", marginBottom: "40px" }}>
-            <ProductRecommendations />
+            <ProductRecommendations products={products} />
           </div>
         </div>
 
@@ -522,6 +529,34 @@ query Query {
         }
       }
     }
+    products(
+      filters: [
+        { key: "status", operation: eq, value: "1" }
+      ],
+      limit: 12
+    ) {
+      items {
+        productId
+        name
+        url
+        urlKey
+        sku
+        price {
+          regular {
+            value
+            text
+          }
+          special {
+            value
+            text
+          }
+        }
+        image {
+          url
+          alt
+        }
+      }
+    }
 }`;
 
 // Sửa ProductPrice để nhận quantity và tính tổng giá từ GraphQL
@@ -542,60 +577,61 @@ function ProductDetailsAccordion({
   open: boolean;
   onClick: () => void;
 }) {
+  const product = useProduct();
+  const attributes = Array.isArray(product?.attributes)
+    ? product.attributes
+    : [];
+
+  const details: Array<{ label: string; value: string }> = [];
+
+  if (product?.sku) {
+    details.push({ label: "Mã sản phẩm", value: String(product.sku) });
+  }
+
+  attributes.forEach((attr: any) => {
+    const label = attr?.attributeName;
+    const value = attr?.optionText;
+    if (label && value) {
+      details.push({ label, value });
+    }
+  });
+
+  if (details.length === 0) {
+    return null;
+  }
+
   return (
     <div style={{ marginBottom: 8, overflow: "hidden" }}>
       <div
         style={{
           display: "flex",
           alignItems: "center",
-          cursor: "default",
+          cursor: "pointer",
           fontWeight: 600,
           fontSize: 17,
           padding: "12px 0",
           transition: "all 0.3s ease",
         }}
+        onClick={onClick}
       >
-        {/* Luôn hiển thị, không cần biểu tượng mở/đóng */}
         Thông tin chi tiết sản phẩm
       </div>
       <div
         style={{
-          maxHeight: "none",
-          opacity: 1,
-          overflow: "visible",
-          transition: "none",
+          maxHeight: open ? "2000px" : "0",
+          opacity: open ? 1 : 0,
+          overflow: "hidden",
+          transition: "max-height 0.5s ease, opacity 0.3s ease",
         }}
       >
         <div
           style={{ marginTop: 18, marginLeft: 24, fontSize: 16, color: "#222" }}
         >
-          <div style={{ marginBottom: 12 }}>
-            <b>Mã sản phẩm:</b> TDV250361
-          </div>
-          <div style={{ marginBottom: 12 }}>
-            <b>Chất liệu:</b> Da PU cao cấp và Denim thật
-          </div>
-          <div style={{ marginBottom: 12 }}>
-            <b>Thiết kế:</b>
-            <div style={{ marginLeft: 16 }}>
-              - 01 ngăn
-              <br />
-              - Đáy tròn
-              <br />- Khoá kéo
+          {details.map((item, idx) => (
+            <div key={idx} style={{ marginBottom: 12 }}>
+              <b>{item.label}:</b> {item.value}
             </div>
-          </div>
-          <div style={{ marginBottom: 12 }}>
-            <b>Chiều dài:</b> 24 cm
-          </div>
-          <div style={{ marginBottom: 12 }}>
-            <b>Chiều rộng:</b> 6 cm
-          </div>
-          <div style={{ marginBottom: 12 }}>
-            <b>Chiều cao:</b> 12 cm
-          </div>
-          <div style={{ marginBottom: 12 }}>
-            <b>Khối lượng:</b> 200 gr
-          </div>
+          ))}
         </div>
       </div>
     </div>
