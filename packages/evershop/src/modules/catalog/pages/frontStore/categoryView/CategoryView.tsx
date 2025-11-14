@@ -15,10 +15,62 @@ interface CategoryViewProps {
 }
 
 export default function CategoryView({ category }: CategoryViewProps) {
+  // Gọi API lấy danh mục cho CategoryInfo & CategoryList
+  const [categories, setCategories] = React.useState<Array<{ name: string; url: string; uuid?: string; image?: { url: string } }>>([]);
+  const [loading, setLoading] = React.useState(true);
+  React.useEffect(() => {
+    (async () => {
+      setLoading(true);
+      try {
+        const res = await fetch("/api/graphql", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ query: `
+            query NavigationData {
+              categories(
+                filters: [
+                  { key: "status", operation: eq, value: "1" },
+                  { key: "include_in_nav", operation: eq, value: "1" }
+                ]
+              ) {
+                items {
+                  name
+                  url
+                  uuid
+                  image { url }
+                }
+              }
+            }
+          ` }),
+        });
+        const json = await res.json();
+        const items = (json?.data?.categories?.items || []).map((c: any) => ({
+          name: c.name,
+          url: c.url || "/san-pham",
+          uuid: c.uuid || c.categoryId || c.name,
+          image: {url: 'https://product.hstatic.net/200000142885/product/z4121570251442_1ea4dad0962c57799e2306bf9b6cfe76_90c1420390b94518b2c2b45936bfbb88_master.jpg'}
+        }));
+        setCategories(items);
+      } catch (e) {
+        setCategories([]);
+      }
+      setLoading(false);
+    })();
+  }, []);
+
+  if(loading && categories.length === 0) {
+    return (
+      <div className="page-width-container py-10 flex flex-col items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-[#79192A] mb-4"></div>
+        <div className="text-base text-gray-600 font-medium tracking-wide">Đang tải danh mục sản phẩm...</div>
+      </div>
+    );
+  }
+
   return (
     <CategoryProvider category={category}>
-      <CategoryInfo />
-      <CategoryList />
+      <CategoryInfo categories={categories} />
+      <CategoryList categories={categories} />
       <div className="page-width-container py-2 border-b border-gray-200 shadow-sm">
         <Area
           id="categoryFilters"

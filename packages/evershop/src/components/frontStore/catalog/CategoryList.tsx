@@ -2,14 +2,11 @@ import { _ } from "@evershop/evershop/lib/locale/translate/_";
 import React from "react";
 import { useCategory } from "./categoryContext.js";
 
-export function CategoryList() {
-  const categories = [
-    { name: "Áo", url: "/ao", uuid: "1" },
-    { name: "Quần", url: "/quan", uuid: "2" },
-    { name: "Váy & Đầm", url: "/vay-dam", uuid: "3" },
-    { name: "Set Bộ", url: "/set-bo", uuid: "4" },
-    { name: "Men", url: "/men", uuid: "5" },
-  ];
+type CategoryListProps = {
+  categories: Array<{ name: string; url: string; uuid?: string }>;
+};
+
+export function CategoryList({ categories }: CategoryListProps) {
   return (
     <div className="border-b border-t border-gray-300 shadow-sm">
       <div className="page-width-container">

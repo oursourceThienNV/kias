@@ -6,13 +6,14 @@ export interface SuggestionProduct {
   price: string;
   oldPrice?: string;
   discount?: string;
+  url?: string;
 }
 
 interface MiniCartSuggestionListProps {
-  products: SuggestionProduct[];
+  products?: SuggestionProduct[];
 }
 
-export const MiniCartSuggestionList: React.FC<MiniCartSuggestionListProps> = ({ products }) => {
+export const MiniCartSuggestionList: React.FC<MiniCartSuggestionListProps> = ({ products = [] }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
@@ -43,6 +44,10 @@ export const MiniCartSuggestionList: React.FC<MiniCartSuggestionListProps> = ({ 
     }
   };
 
+  if (!products || products.length === 0) {
+    return null;
+  }
+
   return (
     <div className="">
       <div className="flex items-center justify-between mb-2">
@@ -72,12 +77,13 @@ export const MiniCartSuggestionList: React.FC<MiniCartSuggestionListProps> = ({ 
         style={{ scrollBehavior: 'smooth' }}
       >
         {products.map((product, idx) => (
-          <div
+          <a
             key={idx}
+            href={product.url}
             className="min-w-[220px] bg-white rounded-lg hover:border hover:border-gray-200 flex flex-col items-center p-3 shadow-md mx-1 cursor-pointer"
             style={{ boxShadow: '0 2px 8px 0 rgba(0,0,0,0.06)' }}
           >
-            <img src={product.img} alt={product.name} className="w-full h-32 object-contain mb-2 rounded" />
+            <img src={typeof product.img === 'string' ? product.img : product.img?.url} alt={product.name} className="w-full h-32 object-contain mb-2 rounded" />
             <div className="text-[14px] text-gray-900 text-center leading-tight mb-2 min-h-[38px] flex items-center justify-center font-medium">
               {product.name}
             </div>
@@ -92,7 +98,7 @@ export const MiniCartSuggestionList: React.FC<MiniCartSuggestionListProps> = ({ 
                 {product.discount}
               </div>
             )}
-          </div>
+          </a>
         ))}
       </div>
       <style>{`

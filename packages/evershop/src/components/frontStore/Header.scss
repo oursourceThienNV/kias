@@ -12,8 +12,7 @@
 }
 
 @media (max-width: 768px) {
-  .header__middle {
-    grid-template-columns: 48px 1fr 48px;
+  .header__middle {   
     height: 48px;
     padding: 0;
   }

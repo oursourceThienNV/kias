@@ -147,9 +147,9 @@ const CartItemComponent: React.FC<{
           {item.thumbnail ? (
             <img
               src={
-                "https://cdn.shopify.com/s/files/1/0456/5070/6581/files/cach-phan-biet-giay-sneaker-chinh-hang_600x600.jpg?v=1663556399"
+                item.thumbnail
               }
-              alt={item.name}
+              alt={item.thumbnail}
               className="w-[100px] h-[100px] object-cover"
             />
           ) : (

@@ -49,10 +49,7 @@ export default function HapasLogo({
             alt={logoConfig.alt || ""}
             className="w-full h-auto object-contain"
             style={{
-              maxHeight: "50px",
-              minHeight: "30px",
-              height: "auto",
-              width: "100%",
+              width: "200px"
             }}
             onError={() => setImageError(true)}
             loading="eager"
@@ -63,10 +60,7 @@ export default function HapasLogo({
             alt="HAPAS"
             className="w-full h-auto object-contain"
             style={{
-              maxHeight: "50px",
-              minHeight: "30px",
-              height: "auto",
-              width: "100%",
+              width: "200px"
             }}
           />
         )}

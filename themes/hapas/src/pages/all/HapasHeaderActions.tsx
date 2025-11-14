@@ -26,13 +26,13 @@ export default function HeaderActionsRight({
                 <a
                     href={isLoggedIn ? '/account' : '/account/login'}
                     aria-label={isLoggedIn ? 'Tài khoản' : 'Đăng nhập'}
-                    className="relative flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 no-underline hover:opacity-80 transition-opacity hidden md:flex"
+                    className="relative flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 no-underline hover:opacity-80 transition-opacity hidden xl:flex"
                     style={{ color: '#79192A' }}
                 >
                     <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
                         <circle cx="10" cy="7" r="3.25" stroke="currentColor" strokeWidth="1.5" />
                         <path d="M4.5 18c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="currentColor" strokeWidth="1.5" />
-                    </svg>
+                    </svg>  
                 </a>
 
                 {/* Cart (MiniCart with slide drawer): luôn hiện */}
@@ -64,7 +64,7 @@ export default function HeaderActionsRight({
                 <a
                     href="/wishlist"
                     aria-label={`Yêu thích${wishlistCount ? ` (${wishlistCount})` : ''}`}
-                    className="relative flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 no-underline hover:opacity-80 transition-opacity hidden md:flex"
+                    className="relative flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 no-underline hover:opacity-80 transition-opacity hidden xl:flex"
                     style={{ color: "#79192A" }}
                 >
                     <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">

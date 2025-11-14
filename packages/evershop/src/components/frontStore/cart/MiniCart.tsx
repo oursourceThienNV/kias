@@ -1,7 +1,5 @@
-import {
-  MiniCartSuggestionList,
-} from "./MiniCartSuggestionList.js";
 /* eslint-disable react/prop-types */
+import React, { ReactNode, useCallback, useState, useEffect, useRef } from "react";
 import Area from "@components/common/Area.js";
 import { Image } from "@components/common/Image.js";
 import { ProductNoThumbnail } from "@components/common/ProductNoThumbnail.js";
@@ -19,12 +17,32 @@ import { CartTotalSummary } from "@components/frontStore/cart/CartTotalSummary.j
 import { ItemQuantity } from "@components/frontStore/cart/ItemQuantity.js";
 import { _ } from "@evershop/evershop/lib/locale/translate/_";
 import { ShoppingBagIcon } from "@heroicons/react/24/outline";
-import React, { ReactNode, useCallback, useState, useEffect, useRef } from "react";
+import {
+  MiniCartSuggestionList,
+  SuggestionProduct,
+} from "./MiniCartSuggestionList.js";
 import "./MiniCart.scss";
+
+interface GraphQLProducts {
+  products?: {
+    items?: Array<{
+      productId: number;
+      name: string;
+      url?: string;
+      urlKey?: string;
+      price: {
+        regular: { value: number; text: string };
+        special?: { value: number; text: string };
+      };
+      image?: { url: string; alt?: string | null } | null;
+    }>;
+  };
+}
 
 interface MiniCartProps {
   cartUrl?: string;
   dropdownPosition?: "left" | "right";
+  products?: GraphQLProducts["products"];
   showItemCount?: boolean;
   renderCartIcon?: (props: {
     totalQty: number;
@@ -98,10 +116,8 @@ const CartItemComponent: React.FC<{
       <div className="flex-shrink-0">
         {item.thumbnail ? (
           <Image
-            src={
-              "https://cdn.shopify.com/s/files/1/0456/5070/6581/files/cach-phan-biet-giay-sneaker-chinh-hang_600x600.jpg?v=1663556399"
-            }
-            alt={item.name}
+            src={item.thumbnail}
+            alt={item.thumbnail}
             className="object-cover rounded-md"
             width={100}
             height={100}
@@ -242,6 +258,7 @@ export function MiniCart({
   cartUrl = "/cart",
   dropdownPosition = "right",
   showItemCount = true,
+  products: graphQLProducts,
   renderCartIcon,
   renderCartDropdown,
   renderCartItems,
@@ -253,8 +270,84 @@ export function MiniCart({
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout>>(null);
-
+  const [suggestionProducts, setSuggestionProducts] = useState<SuggestionProduct[]>([]);
   const cart = cartData;
+
+  // Fetch products từ API nếu không có props
+  useEffect(() => {
+    if (graphQLProducts?.items) {
+      // Transform GraphQL data sang SuggestionProduct format
+      const transformed = graphQLProducts.items.map(item  => ({
+        img: item.image?.url || "",
+        name: item.name,
+        price: item.price.special?.text || item.price.regular.text,
+        oldPrice: item.price.special ? item.price.regular.text : undefined,
+        discount: item.price.special
+          ? `-${Math.round(((item.price.regular.value - item.price.special.value) / item.price.regular.value) * 100)}%`
+          : undefined,
+      }));
+      setSuggestionProducts(transformed);
+    } else {
+      // Fetch từ API nếu không có props
+      fetch('/api/graphql', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          query: `
+            query RecommendationProducts {
+              products(
+                filters: [
+                  { key: "status", operation: eq, value: "1" }
+                ],
+                limit: 6
+              ) {
+                items {
+                  productId
+                  name
+                  url
+                  urlKey
+                  price {
+                    regular {
+                      value
+                      text
+                    }
+                    special {
+                      value
+                      text
+                    }
+                  }
+                  image {
+                    url
+                    alt
+                  }
+                }
+              }
+            }
+          `,
+        }),
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data?.data?.products?.items) {
+            const transformed = data.data.products.items.map((item: any) => (
+              {
+              url: item.url,
+              img: item.image?.url || "",
+              name: item.name,
+              price: item.price.special?.text || item.price.regular.text,
+              oldPrice: item.price.special ? item.price.regular.text : undefined,
+              discount: item.price.special
+                ? `-${Math.round(((item.price.regular.value - item.price.special.value) / item.price.regular.value) * 100)}%`
+                : undefined,
+            }));
+            setSuggestionProducts(transformed);
+          }
+        })
+        .catch(err => {
+          // Silent error handling
+        });
+    }
+  }, [graphQLProducts]);
 
   // Cleanup timers on unmount
   useEffect(() => {
@@ -496,45 +589,7 @@ export function MiniCart({
               {/* Suggestion and Footer sticky at bottom */}
               <div className="sticky bottom-0 left-0 right-0 z-10 bg-white border-t border-gray-200">
                 <div className="px-4 pt-4">
-                  <MiniCartSuggestionList
-                    products={[
-                      {
-                        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRArp-xEmjBy4UMgoXPNwZhtdxgVjZDqCtZKA&s",
-                        name: "TDV Hobo Dây Vuông Love Charm Sz 23 - Den",
-                        price: "1,007,190đ",
-                        oldPrice: "1,083,000đ",
-                        discount: "Giảm 7%",
-                      },
-                      {
-                        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4r1CqesB33sTYX7ndZvl9wRSNWalQnMVv1g&s",
-                        name: "TDV Hobo Dây Vuông Love Charm Sz 23 - Jean",
-                        price: "1,007,190đ",
-                        oldPrice: "1,083,000đ",
-                        discount: "Giảm 7%",
-                      },
-                      {
-                        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSjJragGoIG3LMp2UhiX06H4_DY2WddJeCrA&s",
-                        name: "TDV Hobo Dây Vuông Love Charm Sz 23 - Cam",
-                        price: "1,007,190đ",
-                        oldPrice: "1,083,000đ",
-                        discount: "Giảm 7%",
-                      },
-                      {
-                        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFtACwvJNSAAAgXw7s6br9EPc0kmneV0b7QQ&s",
-                        name: "TDV Hobo Dây Vuông Love Charm Sz 23 - Xanh Lá",
-                        price: "1,007,190đ",
-                        oldPrice: "1,083,000đ",
-                        discount: "Giảm 7%",
-                      },
-                      {
-                        img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQS8BTXFgaIAjGTH1C_tS4-HvmrIUfgw9tF9A&s",
-                        name: "TDV Hobo Dây Vuông Love Charm Sz 23 - Xanh Lá",
-                        price: "1,007,190đ",
-                        oldPrice: "1,083,000đ",
-                        discount: "Giảm 7%",
-                      },
-                    ]}
-                  />
+                  <MiniCartSuggestionList products={suggestionProducts} />
                 </div>
                 <div className="px-4 pb-4">
                   <Area id="miniCartSummaryBefore" noOuter />
