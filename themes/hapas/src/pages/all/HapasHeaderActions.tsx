@@ -1,11 +1,13 @@
 import React from 'react';
-import type { ComponentLayout } from '@evershop/evershop';
 import { MiniCart } from '@components/frontStore/cart/MiniCart.js';
 
 interface HeaderActionsRightProps {
     cartCount?: number;
     wishlistCount?: number;
     isLoggedIn?: boolean;
+    customer?: { uuid: string } | null;
+    loginUrl: string;
+    logoutApi: string;
     currentLanguage?: string; // 'VN'
     colorHex?: string;        // navy
 }
@@ -14,26 +16,92 @@ export default function HeaderActionsRight({
     cartCount = 0,
     wishlistCount = 0,
     isLoggedIn = false,
+    customer,
+    loginUrl,
+    logoutApi,
     currentLanguage = 'VN',
     colorHex = '#22295B'
 }: HeaderActionsRightProps) {
     const navy = colorHex;
+    const [open, setOpen] = React.useState(false);
+    const ref = React.useRef<HTMLDivElement>(null);
+
+    const loggedIn = customer ? true : isLoggedIn;
+
+    React.useEffect(() => {
+        function onDocClick(e: MouseEvent) {
+            if (!ref.current) return;
+            if (!ref.current.contains(e.target as Node)) {
+                setOpen(false);
+            }
+        }
+        document.addEventListener('click', onDocClick);
+        return () => document.removeEventListener('click', onDocClick);
+    }, []);
 
     return (
         <div className="flex items-center justify-end" style={{ color: navy }}>
             <div className="flex items-center gap-3 sm:gap-4">
-                {/* Account: chỉ hiện trên desktop */}
-                <a
-                    href={isLoggedIn ? '/account' : '/account/login'}
-                    aria-label={isLoggedIn ? 'Tài khoản' : 'Đăng nhập'}
-                    className="relative flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 no-underline hover:opacity-80 transition-opacity hidden md:flex"
-                    style={{ color: '#79192A' }}
-                >
-                    <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-                        <circle cx="10" cy="7" r="3.25" stroke="currentColor" strokeWidth="1.5" />
-                        <path d="M4.5 18c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="currentColor" strokeWidth="1.5" />
-                    </svg>
-                </a>
+                {/* Account with dropdown */}
+                <div className="relative hidden md:flex z-40" ref={ref} style={{ pointerEvents: 'auto' }}>
+                    {!loggedIn ? (
+                        <a
+                            href={loginUrl}
+                            aria-label={'Đăng nhập'}
+                            className="relative flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 no-underline hover:opacity-80 transition-opacity"
+                            style={{ color: '#79192A' }}
+                        >
+                            <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                                <circle cx="10" cy="7" r="3.25" stroke="currentColor" strokeWidth="1.5" />
+                                <path d="M4.5 18c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="currentColor" strokeWidth="1.5" />
+                            </svg>
+                        </a>
+                    ) : (
+                        <>
+                            <button
+                                type="button"
+                                aria-haspopup="menu"
+                                aria-expanded={open}
+                                onClick={(e) => { e.stopPropagation(); setOpen(v => !v); }}
+                                className="relative flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 hover:opacity-80 transition-opacity cursor-pointer"
+                                style={{ color: '#79192A' }}
+                            >
+                                <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                                    <circle cx="10" cy="7" r="3.25" stroke="currentColor" strokeWidth="1.5" />
+                                    <path d="M4.5 18c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="currentColor" strokeWidth="1.5" />
+                                </svg>
+                            </button>
+                            {open && (
+                                <div
+                                    role="menu"
+                                    className="absolute right-0 mt-2 w-44 rounded-md border border-gray-200 bg-white shadow-lg z-50"
+                                >
+                                    <a
+                                        href="/account/profile"
+                                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                                        role="menuitem"
+                                    >
+                                        Thông tin cá nhân
+                                    </a>
+                                    <button
+                                        className="w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                                        role="menuitem"
+                                        onClick={async () => {
+                                            try {
+                                                await fetch(logoutApi, { method: 'POST' });
+                                                window.location.href = '/';
+                                            } catch (e) {
+                                                window.location.reload();
+                                            }
+                                        }}
+                                    >
+                                        Đăng xuất
+                                    </button>
+                                </div>
+                            )}
+                        </>
+                    )}
+                </div>
 
                 {/* Cart (MiniCart with slide drawer): luôn hiện */}
                 <MiniCart
@@ -95,7 +163,15 @@ export default function HeaderActionsRight({
 }
 
 /* ĐĂNG KÝ BÊN PHẢI */
-export const layout: ComponentLayout = {
+export const layout = {
     areaId: 'headerMiddleRight',
     sortOrder: 10
 };
+
+export const query = `
+  query HeaderActionsQuery {
+    customer: currentCustomer { uuid }
+    loginUrl: url(routeId: "login")
+    logoutApi: url(routeId: "customerLogoutJson")
+  }
+`;
