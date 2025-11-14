@@ -221,6 +221,7 @@ const Guest: React.FC<{
 
 export function ContactInformation() {
   const { customer } = useCustomer();
+  const { addAddress } = useCustomerDispatch();
   const { data: cart } = useCartState();
   const { form } = useCheckout();
   const {
@@ -259,11 +260,63 @@ export function ContactInformation() {
     };
   }, [form]);
 
+  // Nếu customer đã đăng nhập và có addresses
+  if (customer && customer.addresses && customer.addresses.length > 0) {
+    return (
+      <div className="w-full">
+        <div className="bg-white border border-gray-200 rounded-2xl p-5">
+          <h2 className="text-base font-bold mb-4">{_('Địa chỉ giao hàng')}</h2>
+          <div className="grid grid-cols-1 gap-4">
+            {customer.addresses.map((address) => (
+              <button
+                type="button"
+                key={address.uuid}
+                className={`border rounded p-4 cursor-pointer transition text-left ${
+                  address.isDefault ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-blue-400'
+                }`}
+                onClick={() => {
+                  // Populate form với địa chỉ đã chọn
+                  form.setValue('shippingAddress.fullName', address.fullName || '');
+                  form.setValue('shippingAddress.telephone', address.telephone || '');
+                  form.setValue('shippingAddress.address1', address.address1 || '');
+                  form.setValue('shippingAddress.city', address.city || '');
+                  form.setValue('shippingAddress.province', address.province?.code || '');
+                  form.setValue('shippingAddress.country', address.country?.code || '');
+                  form.setValue('shippingAddress.postcode', address.postcode || '');
+                }}
+              >
+                {address.isDefault && (
+                  <span className="inline-block bg-blue-500 text-white text-xs px-2 py-1 rounded mb-2">
+                    {_('Mặc định')}
+                  </span>
+                )}
+                <div className="text-sm">
+                  <div className="font-semibold">{address.fullName}</div>
+                  <div className="text-gray-600">{address.telephone}</div>
+                  <div className="text-gray-600">
+                    {address.address1}
+                    {address.address2 && `, ${address.address2}`}
+                  </div>
+                  <div className="text-gray-600">
+                    {address.city}
+                    {address.province?.code && `, ${address.province.code}`}
+                    {address.country?.code && `, ${address.country.code}`}
+                  </div>
+                  {address.postcode && <div className="text-gray-600">{address.postcode}</div>}
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Nếu chưa đăng nhập hoặc chưa có địa chỉ, hiện form nhập
   return (
     <div className="w-full">
-      {/* Box thông tin giao hàng */}
       <div className="bg-white border border-gray-200 rounded-2xl p-5">
-        <h2 className="text-base font-bold mb-4">Thông tin giao hàng</h2>
+        <h2 className="text-base font-bold mb-4">{_('Thông tin giao hàng')}</h2>
         <CustomerAddressForm
           areaId="checkoutShippingAddressForm"
           fieldNamePrefix="shippingAddress"

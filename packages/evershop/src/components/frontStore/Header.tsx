@@ -27,6 +27,10 @@ function HeaderMobileLeft({ onMenuOpen }: { onMenuOpen: () => void }) {
 import Area from "@components/common/Area.js";
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import "./Header.scss";
+import {
+  useCustomer,
+  useCustomerDispatch
+} from '@components/frontStore/customer/customerContext.js';
 
 /* === GraphQL query (y hệt bạn đưa) === */
 export const query = `
@@ -173,6 +177,9 @@ export function Header({
     return baseNav;
   }, [navigationConfig, source]);
 
+  const { customer: account } = useCustomer();
+  const { logout } = useCustomerDispatch();
+
   return (
     <header className="header sm:pl-[24px] lg:pl-[44px] relative">
       <Area id="headerTop" className="header__top" />
@@ -264,36 +271,24 @@ export function Header({
               <line x1="6" y1="6" x2="18" y2="18" />
             </svg>
           </button>
-          {/* Đăng nhập/account */}
-          <div className="flex items-center gap-2 px-4 pt-6 pb-4 border-b">
-            <svg
-              width="20"
-              height="20"
-              fill="none"
-              stroke="#79192A"
-              strokeWidth="1.5"
-              viewBox="0 0 20 20"
-            >
-              <circle
-                cx="10"
-                cy="7"
-                r="3.25"
-                stroke="currentColor"
-                strokeWidth="1.5"
-              />
-              <path
-                d="M4.5 18c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5"
-                stroke="currentColor"
-                strokeWidth="1.5"
-              />
-            </svg>
-            <a
-              href="/account/login"
-              className="text-[15px] text-[#79192A] font-medium"
-            >
-              Đăng nhập
-            </a>
-          </div>
+          {/* Đăng nhập/account/profile/logout */}
+          {account ? (
+            <div className="flex items-center gap-2 px-4 pt-6 pb-4 border-b">
+              <svg width="20" height="20" fill="none" stroke="#79192A" strokeWidth="1.5" viewBox="0 0 20 20">
+                <circle cx="10" cy="7" r="3.25" stroke="currentColor" strokeWidth="1.5" />
+                <path d="M4.5 18c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="currentColor" strokeWidth="1.5" />
+              </svg>
+              <a href="/account/profile" className="text-[15px] text-[#79192A] font-medium">{account.fullName}</a>
+            </div>
+          ) : (
+            <div className="flex items-center gap-2 px-4 pt-6 pb-4 border-b">
+              <svg width="20" height="20" fill="none" stroke="#79192A" strokeWidth="1.5" viewBox="0 0 20 20">
+                <circle cx="10" cy="7" r="3.25" stroke="currentColor" strokeWidth="1.5" />
+                <path d="M4.5 18c0-3.59 2.91-6.5 6.5-6.5s6.5 2.91 6.5 6.5" stroke="currentColor" strokeWidth="1.5" />
+              </svg>
+              <a href="/account/login" className="text-[15px] text-[#79192A] font-medium">Đăng nhập</a>
+            </div>
+          )}
           {/* Menu items from defaultNavItems */}
           <div className="flex-1 overflow-y-auto px-4 py-4">
             <ul className="space-y-1">

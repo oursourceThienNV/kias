@@ -6,27 +6,19 @@
  */
 
 import React from 'react';
-import { ComponentLayout } from '@evershop/evershop';
 
 export default function CustomerIcon() {
-  // Return empty - handled by HapasHeaderActions
   return null;
 }
 
-export const layout: ComponentLayout = {
+export const layout = {
   areaId: 'headerMiddleRight',
   sortOrder: 10
 };
 
 export const query = `
   query Query {
-    customer: currentCustomer {
-      uuid
-      fullName
-      email
-    }
-    accountUrl: url(routeId: "account")
-    loginUrl: url(routeId: "login")
+    customer: currentCustomer { uuid }
   }
 `;
 

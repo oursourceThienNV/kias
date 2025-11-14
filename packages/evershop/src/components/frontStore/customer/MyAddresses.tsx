@@ -17,49 +17,69 @@ const Address: React.FC<{
   address: ExtendedCustomerAddress;
 }> = ({ address }) => {
   const { updateAddress, deleteAddress } = useCustomerDispatch();
-  const modal = useModal();
-  const classes = address.isDefault ? 'border-2 border-interactive' : '';
+  const editModal = useModal();
+  const viewModal = useModal();
+  
   return (
-    <div className={`bg-white p-5 shadow rounded ${classes}`}>
+    <div className={`border rounded p-4 ${address.isDefault ? 'border-blue-500' : 'border-gray-300'}`}>
+      {address.isDefault && (
+        <span className="inline-block bg-blue-500 text-white text-xs px-2 py-1 rounded mb-2">
+          {_('Mặc định')}
+        </span>
+      )}
       <AddressSummary address={address} />
-      <div className="flex justify-between items-center mt-2">
-        <a
-          href="#"
-          className="text-interactive hover:underline"
-          onClick={(e) => {
-            e.preventDefault();
-            modal.open();
-          }}
+      <div className="flex gap-2 mt-3">
+        <button
+          onClick={() => editModal.open()}
+          className="flex-1 px-3 py-2 border border-blue-500 text-blue-500 rounded hover:bg-blue-50"
         >
-          {_('Edit')}
-        </a>
-        <a
-          href="#"
-          className="text-critical hover:underline"
-          onClick={async (e) => {
-            e.preventDefault();
-            try {
-              await deleteAddress(address.addressId);
-              toast.success(_('Address has been deleted successfully!'));
-            } catch (error) {
-              toast.error(error.message);
+          {_('Sửa')}
+        </button>
+        <button
+          onClick={async () => {
+            if (window.confirm(_('Bạn có chắc muốn xóa địa chỉ này?'))) {
+              try {
+                await deleteAddress(address.addressId);
+                toast.success(_('Xóa địa chỉ thành công!'));
+              } catch (error) {
+                toast.error(error.message);
+              }
             }
           }}
+          className="flex-1 px-3 py-2 border border-red-500 text-red-500 rounded hover:bg-red-50"
         >
-          {_('Delete')}
-        </a>
+          {_('Xóa')}
+        </button>
       </div>
-      <Modal title="Edit Address" onClose={modal.close} isOpen={modal.isOpen}>
+
+      {/* View Modal - Disabled Form */}
+      <Modal title={_('Xem địa chỉ')} onClose={viewModal.close} isOpen={viewModal.isOpen}>
+        <div className="view-address-form">
+          <CustomerAddressForm address={address} fieldNamePrefix="" />
+        </div>
+        <style>{`
+          .view-address-form input,
+          .view-address-form select,
+          .view-address-form textarea {
+            pointer-events: none !important;
+            background-color: #f3f4f6 !important;
+            color: #6b7280 !important;
+            opacity: 1 !important;
+          }
+        `}</style>
+      </Modal>
+
+      {/* Edit Modal */}
+      <Modal title={_('Sửa địa chỉ')} onClose={editModal.close} isOpen={editModal.isOpen}>
         <Form
           id="customerAddressForm"
           method="PATCH"
           onSubmit={async (data) => {
             await updateAddress(address.addressId, data);
-            modal.close();
           }}
           onSuccess={(response) => {
             if (!response.error) {
-              modal.close();
+              editModal.close();
               toast.success(_('Address has been updated successfully!'));
             } else {
               toast.error(response.error.message);
@@ -89,30 +109,27 @@ export function MyAddresses({ title }: { title?: string }) {
     <div>
       {title && (
         <div className="border-b mb-5 border-gray-200">
-          <h2>{_('Address Book')}</h2>
+          <h2>{_('Thông tin địa chỉ')}</h2>
         </div>
       )}
       {customer.addresses.length === 0 && (
         <div className="order-history-empty">
-          {_('You have no addresses saved')}
+          {_('Bạn chưa có địa chỉ nào')}
         </div>
       )}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {customer.addresses.map((address) => (
           <Address key={address.uuid} address={address} />
         ))}
       </div>
-      <br />
-      <a
-        href="#"
-        className="text-interactive underline"
-        onClick={(e) => {
-          e.preventDefault();
-          modal.open();
-        }}
-      >
-        {_('Add new address')}
-      </a>
+      <div className="mt-4">
+        <button
+          onClick={() => modal.open()}
+          className="w-full px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+        >
+          {_('Thêm địa chỉ mới')}
+        </button>
+      </div>
       <Modal
         title={_('Add new address')}
         onClose={modal.close}
