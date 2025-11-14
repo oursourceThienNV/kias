@@ -1,16 +1,24 @@
 import React, { useState, useRef, useEffect } from "react";
+import { Image } from "@components/common/Image";
+import { useCartDispatch } from "@components/frontStore/cart/cartContext";
 
 interface MoneyText {
   value: number;
   text: string;
 }
 
-type Category = {
-  categoryId: number;
+interface ProductImage {
+  url: string;
+  alt?: string | null;
+}
+
+type Product = {
+  productId: string;
   name: string;
   url: string;
   urlKey: string;
-  image?: { url: string; alt?: string | null } | null;
+  sku?: string;
+  image?: ProductImage | null;
   price?: {
     regular: MoneyText;
     special?: MoneyText;
@@ -18,109 +26,24 @@ type Category = {
   badge?: string;
 };
 
-type CategoriesData = {
-  items: Category[];
+type ProductsData = {
+  items: Product[];
 };
 
 interface Props {
   title?: string;
-  categories?: CategoriesData;
+  products?: ProductsData;
   viewAllHref?: string;
 }
 
 export default function CategoryTiles({
   title = "Sản phẩm mới",
-  categories,
-  viewAllHref = "/collections/all-bag-styles",
+  products,
+  viewAllHref = "/products",
 }: Props) {
-  const mockCategories: Category[] = [
-    {
-      categoryId: 1001,
-      name: "Satchel",
-      url: "/satchel",
-      urlKey: "satchel",
-      image: {
-        url: "https://file.hstatic.net/200000978078/file/t_i_tr_ng.png",
-        alt: "Túi Trống",
-      },
-      price: {
-        regular: { value: 1500000, text: "1.500.000₫" },
-        special: { value: 1200000, text: "1.200.000₫" },
-      },
-      badge: "NEW",
-    },
-    {
-      categoryId: 1002,
-      name: "Hobo",
-      url: "/hobo",
-      urlKey: "Túi Hobo",
-      image: {
-        url: "https://file.hstatic.net/200000978078/file/_nh__3_.png",
-        alt: "Hobo",
-      },
-      price: {
-        regular: { value: 1800000, text: "1.800.000₫" },
-      },
-    },
-    {
-      categoryId: 1003,
-      name: "Tote",
-      url: "/tote",
-      urlKey: "Túi tote",
-      image: {
-        url: "https://file.hstatic.net/200000978078/file/_nh.png",
-        alt: "Tote",
-      },
-      price: {
-        regular: { value: 2000000, text: "2.000.000₫" },
-        special: { value: 1600000, text: "1.600.000₫" },
-      },
-    },
-    {
-      categoryId: 1004,
-      name: "Backpack",
-      url: "/backpack",
-      urlKey: "backpack",
-      image: {
-        url: "https://file.hstatic.net/200000978078/file/_nh__4_.png",
-        alt: "Backpack",
-      },
-      price: {
-        regular: { value: 2200000, text: "2.200.000₫" },
-      },
-    },
-    {
-      categoryId: 1005,
-      name: "Clutch",
-      url: "/clutch",
-      urlKey: "clutch",
-      image: {
-        url: "https://file.hstatic.net/200000978078/file/_nh__1_.png",
-        alt: "Clutch",
-      },
-      price: {
-        regular: { value: 1200000, text: "1.200.000₫" },
-        special: { value: 900000, text: "900.000₫" },
-      },
-    },
-    {
-      categoryId: 1006,
-      name: "Crossbody",
-      url: "/crossbody",
-      urlKey: "crossbody",
-      image: {
-        url: "https://product.hstatic.net/200000978078/product/_mg_5233__1__c74b4a5708ca4f6bac8aed8fa2f355e1_master.jpg",
-        alt: "Crossbody",
-      },
-      price: {
-        regular: { value: 1700000, text: "1.700.000₫" },
-      },
-      badge: "HOT",
-    },
-  ];
-
-  const tiles = mockCategories;
-  if (!tiles.length) return null;
+  const { addItem } = useCartDispatch();
+  const productList = products?.items || [];
+  if (!productList.length) return null;
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -141,11 +64,13 @@ export default function CategoryTiles({
   const [showRightArrow, setShowRightArrow] = useState(true);
 
   // Hover preview state
-  const [hoveredCategory, setHoveredCategory] = useState<number | null>(null);
+  const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
   const [hoverTimeout, setHoverTimeout] = useState<NodeJS.Timeout | null>(null);
   const [hideTimeout, setHideTimeout] = useState<NodeJS.Timeout | null>(null);
   const [popupPosition, setPopupPosition] = useState<"left" | "right">("right");
-  const [popupCoords, setPopupCoords] = useState<{ top: number; left: number }>({ top: 0, left: 0 });
+  const [popupCoords, setPopupCoords] = useState<{ top: number; left: number }>(
+    { top: 0, left: 0 }
+  );
 
   // Scroll sang trái
   const scrollToPrev = () => {
@@ -180,7 +105,7 @@ export default function CategoryTiles({
 
   // Hover preview handlers
   const handleMouseEnterImage = (
-    categoryId: number,
+    productId: string,
     event: React.MouseEvent<HTMLDivElement>
   ) => {
     // Only show popup on desktop (>= 1024px)
@@ -209,17 +134,29 @@ export default function CategoryTiles({
         // Center vertically relative to the tile
         const centerY = rect.top + rect.height / 2;
         const unclampedTop = centerY - popupHeight / 2;
-        const clampedTop = Math.max(8, Math.min(unclampedTop, window.innerHeight - popupHeight - 8));
+        const clampedTop = Math.max(
+          8,
+          Math.min(unclampedTop, window.innerHeight - popupHeight - 8)
+        );
 
         if (spaceOnRight < popupWidth + margin) {
           setPopupPosition("left");
-          setPopupCoords({ top: clampedTop, left: Math.max(8, rect.left - popupWidth - margin) });
+          setPopupCoords({
+            top: clampedTop,
+            left: Math.max(8, rect.left - popupWidth - margin),
+          });
         } else {
           setPopupPosition("right");
-          setPopupCoords({ top: clampedTop, left: Math.min(window.innerWidth - popupWidth - 8, rect.right + margin) });
+          setPopupCoords({
+            top: clampedTop,
+            left: Math.min(
+              window.innerWidth - popupWidth - 8,
+              rect.right + margin
+            ),
+          });
         }
 
-        setHoveredCategory(categoryId);
+        setHoveredCategory(productId);
       }
     }, 200);
     setHoverTimeout(timeout);
@@ -324,15 +261,19 @@ export default function CategoryTiles({
     if (!scrollElement) return;
 
     let touchStartX = 0;
+    let touchStartY = 0;
     let touchCurrentX = 0;
     let touchStartTime = 0;
     let touchScrollLeft = 0;
     let isTouchDragging = false;
+    let hasLockedDirection = false;
+    let isHorizontalLock = false;
 
     const handleTouchStartNative = (e: TouchEvent) => {
       isTouchDragging = true;
       touchStartX = e.touches[0].clientX;
       touchCurrentX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
       touchStartTime = Date.now();
       touchScrollLeft = scrollElement.scrollLeft;
       setIsDragging(true);
@@ -340,13 +281,25 @@ export default function CategoryTiles({
       setCurrentX(touchCurrentX);
       setScrollLeft(touchScrollLeft);
       setDragStartTime(touchStartTime);
+      hasLockedDirection = false;
+      isHorizontalLock = false;
     };
 
     const handleTouchMoveNative = (e: TouchEvent) => {
       if (!isTouchDragging) return;
 
-      // Prevent scroll while dragging
-      e.preventDefault();
+      // Determine gesture intent
+      const dx = e.touches[0].clientX - touchStartX;
+      const dy = e.touches[0].clientY - touchStartY;
+      if (!hasLockedDirection) {
+        if (Math.abs(dx) > 8 || Math.abs(dy) > 8) {
+          hasLockedDirection = true;
+          isHorizontalLock = Math.abs(dx) > Math.abs(dy);
+        }
+      }
+      if (isHorizontalLock) {
+        e.preventDefault();
+      }
 
       touchCurrentX = e.touches[0].clientX;
       setCurrentX(touchCurrentX);
@@ -360,7 +313,6 @@ export default function CategoryTiles({
     const handleTouchEndNative = (e: TouchEvent) => {
       if (!isTouchDragging) return;
 
-      e.preventDefault();
       isTouchDragging = false;
       setIsDragging(false);
       setDragOffset(0);
@@ -461,7 +413,7 @@ export default function CategoryTiles({
           ref={scrollRef}
           className="flex overflow-x-scroll gap-4 scrollbar-hide cursor-grab active:cursor-grabbing select-none px-1"
           style={{
-            touchAction: "none",
+            touchAction: "pan-y",
             WebkitOverflowScrolling: "touch",
             scrollbarWidth: "none",
             msOverflowStyle: "none",
@@ -471,18 +423,18 @@ export default function CategoryTiles({
           onMouseUp={handleMouseUp}
           onMouseLeave={handleMouseLeave}
         >
-          {tiles.map((x) => {
-            const label = x.name;
-            const href = x.url;
-            const img = x.image?.url || "/placeholder-category.jpg";
-            const discount = x.price?.special?.value
-              ? calculateDiscount(x.price.regular.value, x.price.special.value)
+          {productList.map((p) => {
+            const label = p.name;
+            const href = p.url;
+            const img = p.image?.url || "/placeholder-product.jpg";
+            const discount = p.price?.special?.value
+              ? calculateDiscount(p.price.regular.value, p.price.special.value)
               : 0;
 
             return (
               <div
                 className="group flex-shrink-0 w-[calc(100vw-2rem)] sm:w-[calc(50vw-2rem)] md:w-[calc(33.333vw-1.5rem)] lg:w-[280px] flex flex-col relative"
-                key={x.categoryId ?? x.url ?? x.urlKey}
+                key={p.productId ?? p.url ?? p.urlKey}
               >
                 <a
                   href={href}
@@ -499,19 +451,36 @@ export default function CategoryTiles({
                   <div
                     className="relative overflow-hidden"
                     style={{ aspectRatio: "5 / 6.5" } as React.CSSProperties}
-                    onMouseEnter={(e) => handleMouseEnterImage(x.categoryId, e)}
+                    onMouseEnter={(e) =>
+                      handleMouseEnterImage(String(p.productId), e)
+                    }
                     onMouseLeave={handleMouseLeaveImage}
                   >
-                    <img
-                      src={img}
-                      alt={x.image?.alt || label}
-                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      loading="lazy"
-                      draggable="false"
-                    />
-                    {x.badge && (
+                    {p.image?.url ? (
+                      <Image
+                        src={p.image.url}
+                        alt={p.image?.alt || label}
+                        width={480}
+                        height={640}
+                        sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+                        loading="lazy"
+                        decoding="async"
+                        objectFit="cover"
+                        className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        draggable="false"
+                      />
+                    ) : (
+                      <img
+                        src={"/placeholder-product.jpg"}
+                        alt={label}
+                        className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        loading="lazy"
+                        draggable="false"
+                      />
+                    )}
+                    {p.badge && (
                       <span className="absolute top-2 left-2 bg-black text-white px-2 py-1 text-xs font-medium z-20 shadow-lg">
-                        {x.badge}
+                        {p.badge}
                       </span>
                     )}
                     {discount > 0 && (
@@ -522,7 +491,7 @@ export default function CategoryTiles({
                   </div>
 
                   {/* Hover Preview Popup */}
-                  {hoveredCategory === x.categoryId && (
+                  {hoveredCategory === String(p.productId) && (
                     <div
                       className={`fixed w-[720px] h-[460px] overflow-hidden bg-white shadow-2xl rounded-lg z-50 border border-gray-200`}
                       style={{
@@ -537,7 +506,7 @@ export default function CategoryTiles({
                         {/* Ảnh mẫu */}
                         <div className="col-span-2">
                           <img
-                            src={img}
+                            src={p.image?.url || "/placeholder-product.jpg"}
                             alt={label}
                             className="w-full h-52 object-cover rounded"
                           />
@@ -550,7 +519,7 @@ export default function CategoryTiles({
                           </div>
                           <div className="relative overflow-hidden">
                             <img
-                              src={img}
+                              src={p.image?.url || "/placeholder-product.jpg"}
                               alt="Material texture"
                               className="w-full h-[10.25rem] object-cover object-center rounded border border-gray-200"
                             />
@@ -571,7 +540,7 @@ export default function CategoryTiles({
                       {/* Nút xem thêm */}
                       <div className="sticky bottom-0 left-0 right-0 bg-white px-3 py-2 border-t border-gray-200">
                         <a
-                          href={href}
+                          href="/products"
                           className="block w-full bg-black text-white text-center py-2 px-3 text-sm font-medium uppercase tracking-wide hover:bg-gray-900 transition-colors rounded"
                         >
                           Xem thêm
@@ -584,20 +553,20 @@ export default function CategoryTiles({
                     <h3 className="text-sm font-medium text-gray-900 text-center group-hover:text-gray-600 transition-colors line-clamp-2">
                       {label}
                     </h3>
-                    {x.price && (
+                    {p.price && (
                       <div className="mt-1 flex items-center justify-center gap-2">
-                        {x.price.special?.value ? (
+                        {p.price.special?.value ? (
                           <>
                             <span className="text-base font-semibold text-red-600">
-                              {x.price.special.text}
+                              {p.price.special.text}
                             </span>
                             <span className="text-sm text-gray-500 line-through">
-                              {x.price.regular.text}
+                              {p.price.regular.text}
                             </span>
                           </>
                         ) : (
                           <span className="text-base font-semibold text-gray-900">
-                            {x.price.regular.text}
+                            {p.price.regular.text}
                           </span>
                         )}
                       </div>
@@ -609,7 +578,9 @@ export default function CategoryTiles({
                       onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        // Add to cart logic here
+                        if (p.sku) {
+                          addItem({ sku: p.sku, qty: 1 }).catch(() => {});
+                        }
                       }}
                     >
                       Mua ngay
@@ -654,14 +625,33 @@ export default function CategoryTiles({
 export const layout = { areaId: "content", sortOrder: 49 };
 
 export const query = `
-  query CategoryTilesData {
-    categories(filters: [{ key: "status", operation: eq, value: "1" }]) {
+  query NewProductData {
+    products(
+      filters: [
+        { key: "status", operation: eq, value: "1" }
+      ],
+      limit: 12
+    ) {
       items {
-        categoryId
+        productId
         name
         url
         urlKey
-        image { url alt }
+        sku
+        price {
+          regular {
+            value
+            text
+          }
+          special {
+            value
+            text
+          }
+        }
+        image {
+          url
+          alt
+        }
       }
     }
   }

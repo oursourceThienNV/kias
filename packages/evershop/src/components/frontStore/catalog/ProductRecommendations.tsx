@@ -12,10 +12,27 @@ type Product = {
   image?: { url: string; alt?: string | null } | null;
 };
 
+interface GraphQLProducts {
+  products?: {
+    items?: Array<{
+      productId: number;
+      name: string;
+      url?: string;
+      urlKey?: string;
+      price: {
+        regular: { value: number; text: string };
+        special?: { value: number; text: string };
+      };
+      image?: { url: string; alt?: string | null } | null;
+    }>;
+  };
+}
+
 interface Props {
   title?: string;
-  products?: Product[];
   viewAllHref?: string;
+  // GraphQL data từ query - nhận products.items từ GraphQL
+  products?: GraphQLProducts["products"];
 }
 
 // Responsive tiles per view
@@ -33,10 +50,41 @@ const tileWidth = `${100 / TILES_PER_VIEW}%`;
 
 export default function ProductRecommendations({
   title = "CÓ THỂ BẠN SẼ THÍCH",
-  products,
+  products: graphQLProducts,
   viewAllHref = "/products",
 }: Props) {
-  // Mock products nếu không có data
+  // Map GraphQL data sang format Product[]
+  type GraphQLProductItem = {
+    productId: number;
+    name: string;
+    url?: string;
+    urlKey?: string;
+    price: {
+      regular: { value: number; text: string };
+      special?: { value: number; text: string };
+    };
+    image?: { url: string; alt?: string | null } | null;
+  };
+
+  const mapGraphQLToProduct = (item: GraphQLProductItem): Product => {
+    return {
+      productId: item.productId,
+      name: item.name,
+      url: item.url || (item.urlKey ? `/product/${item.urlKey}` : "#"),
+      price: {
+        regular: item.price.regular,
+        special: item.price.special,
+      },
+      image: item.image,
+    };
+  };
+
+  // Lấy products từ GraphQL hoặc dùng mock data
+  const graphQLProductList: Product[] = graphQLProducts?.items
+    ? graphQLProducts.items.map(mapGraphQLToProduct)
+    : [];
+
+  // Mock products nếu không có data từ GraphQL
   const mockProducts: Product[] = [
     {
       productId: 1,
@@ -115,7 +163,9 @@ export default function ProductRecommendations({
     },
   ];
 
-  const productList = products || mockProducts;
+  // Ưu tiên dùng data từ GraphQL, fallback về mock data
+  const productList =
+    graphQLProductList.length > 0 ? graphQLProductList : mockProducts;
   if (!productList.length) return null;
 
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -267,24 +317,43 @@ export default function ProductRecommendations({
     if (!el) return;
 
     let touchStartX = 0;
+    let touchStartY = 0;
     let touchCurrentX = 0;
     let touchScrollLeft = 0;
     let isTouchDragging = false;
+    let hasLockedDirection = false;
+    let isHorizontalLock = false;
 
     const onTouchStart = (e: TouchEvent) => {
       isTouchDragging = true;
       touchStartX = e.touches[0].clientX;
       touchCurrentX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
       touchScrollLeft = el.scrollLeft;
       setIsDraggingScroll(true);
       setStartXScroll(touchStartX);
       setCurrentXScroll(touchCurrentX);
       setScrollLeftStart(touchScrollLeft);
+      hasLockedDirection = false;
+      isHorizontalLock = false;
     };
 
     const onTouchMove = (e: TouchEvent) => {
       if (!isTouchDragging) return;
-      e.preventDefault();
+
+      // Determine gesture intent (horizontal vs vertical)
+      const dx = e.touches[0].clientX - touchStartX;
+      const dy = e.touches[0].clientY - touchStartY;
+      if (!hasLockedDirection) {
+        if (Math.abs(dx) > 8 || Math.abs(dy) > 8) {
+          hasLockedDirection = true;
+          isHorizontalLock = Math.abs(dx) > Math.abs(dy);
+        }
+      }
+      if (isHorizontalLock) {
+        e.preventDefault();
+      }
+
       touchCurrentX = e.touches[0].clientX;
       setCurrentXScroll(touchCurrentX);
       const offset = touchStartX - touchCurrentX;
@@ -293,19 +362,18 @@ export default function ProductRecommendations({
 
     const onTouchEnd = (e: TouchEvent) => {
       if (!isTouchDragging) return;
-      e.preventDefault();
       isTouchDragging = false;
       setIsDraggingScroll(false);
     };
 
-    el.addEventListener('touchstart', onTouchStart, { passive: false });
-    el.addEventListener('touchmove', onTouchMove, { passive: false });
-    el.addEventListener('touchend', onTouchEnd, { passive: false });
+    el.addEventListener("touchstart", onTouchStart, { passive: false });
+    el.addEventListener("touchmove", onTouchMove, { passive: false });
+    el.addEventListener("touchend", onTouchEnd, { passive: false });
 
     return () => {
-      el.removeEventListener('touchstart', onTouchStart as any);
-      el.removeEventListener('touchmove', onTouchMove as any);
-      el.removeEventListener('touchend', onTouchEnd as any);
+      el.removeEventListener("touchstart", onTouchStart as any);
+      el.removeEventListener("touchmove", onTouchMove as any);
+      el.removeEventListener("touchend", onTouchEnd as any);
     };
   }, []);
 
@@ -370,7 +438,12 @@ export default function ProductRecommendations({
       <div
         ref={scrollRef}
         className="flex overflow-x-scroll gap-1 cursor-grab active:cursor-grabbing select-none"
-        style={{ touchAction: "none", WebkitOverflowScrolling: "touch", scrollbarWidth: "none", msOverflowStyle: "none" }}
+        style={{
+          touchAction: "pan-y",
+          WebkitOverflowScrolling: "touch",
+          scrollbarWidth: "none",
+          msOverflowStyle: "none",
+        }}
         onMouseDown={(e) => {
           e.preventDefault();
           e.stopPropagation();
@@ -566,3 +639,34 @@ export default function ProductRecommendations({
     </section>
   );
 }
+export const query = `
+  query RecommendationProducts {
+    products(
+      filters: [
+        { key: "status", operation: eq, value: "1" }
+      ],
+      limit: 12
+    ) {
+      items {
+        productId
+        name
+        url
+        urlKey
+        price {
+          regular {
+            value
+            text
+          }
+          special {
+            value
+            text
+          }
+        }
+        image {
+          url
+          alt
+        }
+      }
+    }
+  }
+`;

@@ -5,6 +5,7 @@
 
 import React, { useRef, useState, useEffect } from "react";
 import { Image } from "@components/common/Image";
+import { useCartDispatch } from "@components/frontStore/cart/cartContext";
 import "./ProductCarousel.scss";
 
 interface MoneyText {
@@ -16,6 +17,7 @@ interface Product {
   productId: string;
   name: string;
   url: string;
+  sku?: string;
   price: {
     regular: MoneyText;
     special?: MoneyText;
@@ -41,6 +43,7 @@ export default function ProductCarousel({
   columns = 4,
 }: ProductCarouselProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const { addItem } = useCartDispatch();
 
   // Drag/Swipe state (from CategoryTiles/HeroSlider pattern)
   const [isDragging, setIsDragging] = useState(false);
@@ -254,15 +257,19 @@ export default function ProductCarousel({
     if (!scrollElement) return;
 
     let touchStartX = 0;
+    let touchStartY = 0;
     let touchCurrentX = 0;
     let touchStartTime = 0;
     let touchScrollLeft = 0;
     let isTouchDragging = false;
+    let hasLockedDirection = false;
+    let isHorizontalLock = false;
 
     const handleTouchStartNative = (e: TouchEvent) => {
       isTouchDragging = true;
       touchStartX = e.touches[0].clientX;
       touchCurrentX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
       touchStartTime = Date.now();
       touchScrollLeft = scrollElement.scrollLeft;
       setIsDragging(true);
@@ -270,13 +277,25 @@ export default function ProductCarousel({
       setCurrentX(touchCurrentX);
       setScrollLeft(touchScrollLeft);
       setDragStartTime(touchStartTime);
+      hasLockedDirection = false;
+      isHorizontalLock = false;
     };
 
     const handleTouchMoveNative = (e: TouchEvent) => {
       if (!isTouchDragging) return;
 
-      // Prevent scroll while dragging
-      e.preventDefault();
+      // Determine gesture intent (horizontal vs vertical)
+      const dx = e.touches[0].clientX - touchStartX;
+      const dy = e.touches[0].clientY - touchStartY;
+      if (!hasLockedDirection) {
+        if (Math.abs(dx) > 8 || Math.abs(dy) > 8) {
+          hasLockedDirection = true;
+          isHorizontalLock = Math.abs(dx) > Math.abs(dy);
+        }
+      }
+      if (isHorizontalLock) {
+        e.preventDefault();
+      }
 
       touchCurrentX = e.touches[0].clientX;
       setCurrentX(touchCurrentX);
@@ -290,7 +309,6 @@ export default function ProductCarousel({
     const handleTouchEndNative = (e: TouchEvent) => {
       if (!isTouchDragging) return;
 
-      e.preventDefault();
       isTouchDragging = false;
       setIsDragging(false);
       setDragOffset(0);
@@ -399,7 +417,7 @@ export default function ProductCarousel({
             ref={scrollRef}
             className="flex overflow-x-scroll gap-4 scrollbar-hide cursor-grab active:cursor-grabbing select-none px-1"
             style={{
-              touchAction: "none",
+              touchAction: "pan-y",
               WebkitOverflowScrolling: "touch",
               scrollbarWidth: "none",
               msOverflowStyle: "none",
@@ -525,7 +543,7 @@ export default function ProductCarousel({
                         {/* Nút xem thêm */}
                         <div className="sticky bottom-0 left-0 right-0 bg-white px-3 py-2 border-t border-gray-200">
                           <a
-                            href={product.url}
+                            href="/products"
                             className="block w-full bg-black text-white text-center py-2 px-3 text-sm font-medium uppercase tracking-wide hover:bg-gray-900 transition-colors rounded"
                           >
                             Xem thêm
@@ -561,7 +579,9 @@ export default function ProductCarousel({
                         onClick={(e) => {
                           e.preventDefault();
                           e.stopPropagation();
-                          // Add to cart logic here
+                          if (product.sku) {
+                            addItem({ sku: product.sku, qty: 1 }).catch(() => {});
+                          }
                         }}
                       >
                         Mua ngay
@@ -622,6 +642,7 @@ export const query = `
         name
         url
         urlKey
+        sku
         price {
           regular {
             value

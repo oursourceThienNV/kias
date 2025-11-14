@@ -221,15 +221,19 @@ export default function NewsGrid({
     if (!scrollElement) return;
 
     let touchStartX = 0;
+    let touchStartY = 0;
     let touchCurrentX = 0;
     let touchStartTime = 0;
     let touchScrollLeft = 0;
     let isTouchDragging = false;
+    let hasLockedDirection = false;
+    let isHorizontalLock = false;
 
     const handleTouchStartNative = (e: TouchEvent) => {
       isTouchDragging = true;
       touchStartX = e.touches[0].clientX;
       touchCurrentX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
       touchStartTime = Date.now();
       touchScrollLeft = scrollElement.scrollLeft;
       setIsDragging(true);
@@ -237,11 +241,24 @@ export default function NewsGrid({
       setCurrentX(touchCurrentX);
       setScrollLeft(touchScrollLeft);
       setDragStartTime(touchStartTime);
+      hasLockedDirection = false;
+      isHorizontalLock = false;
     };
 
     const handleTouchMoveNative = (e: TouchEvent) => {
       if (!isTouchDragging) return;
-      e.preventDefault();
+      // Determine gesture intent
+      const dx = e.touches[0].clientX - touchStartX;
+      const dy = e.touches[0].clientY - touchStartY;
+      if (!hasLockedDirection) {
+        if (Math.abs(dx) > 8 || Math.abs(dy) > 8) {
+          hasLockedDirection = true;
+          isHorizontalLock = Math.abs(dx) > Math.abs(dy);
+        }
+      }
+      if (isHorizontalLock) {
+        e.preventDefault();
+      }
       touchCurrentX = e.touches[0].clientX;
       setCurrentX(touchCurrentX);
       const offset = touchStartX - touchCurrentX;
@@ -250,7 +267,6 @@ export default function NewsGrid({
 
     const handleTouchEndNative = (e: TouchEvent) => {
       if (!isTouchDragging) return;
-      e.preventDefault();
       isTouchDragging = false;
       setIsDragging(false);
       setDragOffset(0);
@@ -347,7 +363,7 @@ export default function NewsGrid({
             ref={scrollRef}
             className="flex items-stretch overflow-x-scroll gap-4 scrollbar-hide cursor-grab active:cursor-grabbing select-none px-1"
             style={{
-              touchAction: "none",
+              touchAction: "pan-y",
               WebkitOverflowScrolling: "touch",
               scrollbarWidth: "none",
               msOverflowStyle: "none",

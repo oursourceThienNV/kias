@@ -3,6 +3,7 @@ import { Media } from "@components/frontStore/catalog/Media.js";
 import {
   ProductData,
   ProductProvider,
+  useProduct,
 } from "@components/frontStore/catalog/productContext.js";
 // import { ProductSingleAttributes } from "@components/frontStore/catalog/ProductSingleAttributes.js";
 // import { ProductSingleDescription } from "@components/frontStore/catalog/ProductSingleDescription.js";
@@ -523,9 +524,12 @@ query Query {
     }
 }`;
 
-// Sửa ProductPrice để nhận quantity và tính tổng giá
+// Sửa ProductPrice để nhận quantity và tính tổng giá từ GraphQL
 function ProductPrice({ quantity = 1 }: { quantity?: number }) {
-  const pricePerItem = 1200000;
+  const product = useProduct();
+  // Lấy giá: ưu tiên special price, nếu không có thì dùng regular price
+  const pricePerItem =
+    product.price?.special?.value || product.price?.regular?.value || 0;
   const total = pricePerItem * quantity;
   return <span>{total.toLocaleString("vi-VN")}₫</span>;
 }

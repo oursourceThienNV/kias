@@ -174,10 +174,10 @@
 
 .hapas-friend-carousel {
   position: relative;
-  overflow-x: hidden; /* user cannot scroll horizontally */
-  overflow-y: hidden;
+  overflow-x: auto; /* allow horizontal scrolling */
+  overflow-y: visible; /* do not block vertical scroll bubbling */
   user-select: none; /* Prevent text selection while dragging */
-  touch-action: none; /* disable touch panning */
+  touch-action: pan-y; /* allow vertical page scroll; handle horizontal as needed */
   display: flex;
   align-items: center; /* Center items vertically */
   gap: 1rem;

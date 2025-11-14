@@ -282,25 +282,42 @@ export default function HeroSlider({
     let touchStartX = 0;
     let touchCurrentX = 0;
     let touchStartTime = 0;
+    let touchStartY = 0;
+    let hasLockedDirection = false;
+    let isHorizontalLock = false;
     let isTouchDragging = false;
 
     const handleTouchStartNative = (e: TouchEvent) => {
       isTouchDragging = true;
       touchStartX = e.touches[0].clientX;
       touchCurrentX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
       touchStartTime = Date.now();
       setIsDragging(true);
       setIsTransitioning(false);
       setStartX(touchStartX);
       setCurrentX(touchCurrentX);
       setDragStartTime(touchStartTime);
+      hasLockedDirection = false;
+      isHorizontalLock = false;
     };
 
     const handleTouchMoveNative = (e: TouchEvent) => {
       if (!isTouchDragging) return;
 
-      // Prevent scroll while dragging - works with passive: false
-      e.preventDefault();
+      // Determine gesture intent (horizontal vs vertical)
+      const dx = e.touches[0].clientX - touchStartX;
+      const dy = e.touches[0].clientY - touchStartY;
+      if (!hasLockedDirection) {
+        if (Math.abs(dx) > 8 || Math.abs(dy) > 8) {
+          hasLockedDirection = true;
+          isHorizontalLock = Math.abs(dx) > Math.abs(dy);
+        }
+      }
+      // Only prevent default when confirmed horizontal drag
+      if (isHorizontalLock) {
+        e.preventDefault();
+      }
 
       touchCurrentX = e.touches[0].clientX;
       setCurrentX(touchCurrentX);
@@ -314,7 +331,7 @@ export default function HeroSlider({
     const handleTouchEndNative = (e: TouchEvent) => {
       if (!isTouchDragging) return;
 
-      e.preventDefault();
+      // Do not block default on touchend so vertical scroll can finish naturally
       isTouchDragging = false;
       setIsDragging(false);
 
@@ -342,7 +359,7 @@ export default function HeroSlider({
       setDragOffset(0);
     };
 
-    // Add event listeners with passive: false to allow preventDefault
+    // Add event listeners with passive: false to allow preventDefault when needed
     slider.addEventListener("touchstart", handleTouchStartNative, {
       passive: false,
     });
@@ -388,7 +405,7 @@ export default function HeroSlider({
           ref={sliderRef}
           className="relative overflow-hidden cursor-grab active:cursor-grabbing select-none w-full"
           style={{
-            touchAction: "none", // Prevent all touch gestures, handle manually
+            touchAction: "pan-y", // Allow vertical page scroll; we handle horizontal drag
             margin: "0",
             padding: "0",
           }}

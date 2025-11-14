@@ -711,13 +711,7 @@ export default function HapasFriend({
     // no-op: keep auto-scroll running
   };
 
-  const handleWheelBlock = (e: React.WheelEvent<HTMLDivElement>) => {
-    e.preventDefault();
-  };
-
-  const handleTouchMoveBlock = (e: React.TouchEvent<HTMLDivElement>) => {
-    e.preventDefault();
-  };
+  // Removed wheel/touch blocks to allow natural scrolling on mobile
 
   return (
     <section
@@ -760,11 +754,9 @@ export default function HapasFriend({
         {/* Carousel */}
         <div
           ref={scrollRef}
-          className={`hapas-friend-carousel flex overflow-x-scroll overflow-y-hidden gap-4`}
+          className={`hapas-friend-carousel flex overflow-x-scroll gap-4`}
           onMouseEnter={handleCarouselMouseEnter}
           onMouseLeave={handleCarouselMouseLeave}
-          onWheel={handleWheelBlock}
-          onTouchMove={handleTouchMoveBlock}
           style={{
             scrollbarWidth: "none",
             msOverflowStyle: "none",
