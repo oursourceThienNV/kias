@@ -412,7 +412,6 @@ export const CartProvider = ({
   // Use urql to query cart data
   const [cartQueryResult, refetchCart] = useQuery({
     query: query,
-    pause: !state.data?.uuid // Only query if we have a cart UUID
   });
 
   // --- UTILITY FUNCTIONS ---
@@ -449,6 +448,7 @@ export const CartProvider = ({
           type: 'SET_SYNC_STATUS',
           payload: { syncing: false, synced: true, trigger }
         });
+
       } catch (error) {
         dispatch({
           type: 'SET_ERROR',

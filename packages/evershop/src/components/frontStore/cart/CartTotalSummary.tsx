@@ -276,13 +276,13 @@ function CartTotalSummary({ children }: CartTotalSummaryProps) {
               state === true || (typeof state === 'string' && state !== null)
           )}
           showPriceIncludingTax={priceIncludingTax}
-          subTotal={subTotal}
-          discountAmount={discountAmount}
+          subTotal={formatVnPrice(subTotal)}
+          discountAmount={formatVnPrice(discountAmount)}
           coupon={coupon}
           shippingMethod={shippingMethod}
           shippingCost={shippingCost}
           taxAmount={taxAmount}
-          total={total}
+          total={formatVnPrice(total)}
         />
       )}
     </div>
