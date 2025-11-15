@@ -21,7 +21,7 @@ export default function Profile() {
         {/* Address Book */}
         <div className="lg:col-span-2">
           <div className="bg-white p-6 border border-gray-200 rounded">
-            <h2 className="text-lg font-semibold mb-4">{_('Sổ địa chỉ')}</h2>
+            <h2 className="text-lg font-semibold mb-4">{_('Thông tin địa chỉ')}</h2>
             <MyAddresses />
             <Area id="profilePageAddressBook" noOuter />
           </div>

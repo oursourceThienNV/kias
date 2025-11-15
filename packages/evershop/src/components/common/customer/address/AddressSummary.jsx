@@ -3,6 +3,7 @@ import Area from '@components/common/Area';
 import React from 'react';
 
 export function AddressSummary({ address }) {
+  console.log('Rendering AddressSummary with address:', address);
   return (
     <Area
       id="addressSummary"
@@ -38,7 +39,7 @@ export function AddressSummary({ address }) {
               <div className="city-province-postcode">
                 <div>{`${postcode}, ${city}`}</div>
                 <div>
-                  {province && <span>{province.name}, </span>}{' '}
+                  {province && <span>{province.code}, </span>}{' '}
                   <span>{country.name}</span>
                 </div>
               </div>

@@ -76,7 +76,7 @@ export function PaymentMethods({
           <div className="payment-methods-list">
             {methods?.length === 0 ? (
               <div className="text-gray-500 text-center py-8">
-                <div className="mb-2">{_('No payment methods available')}</div>
+                <div className="mb-2">{_('Không có phương thức thanh toán nào')}</div>
               </div>
             ) : (
               methods.map((method: PaymentMethod) => {

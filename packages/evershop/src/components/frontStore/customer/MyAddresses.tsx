@@ -70,26 +70,24 @@ const Address: React.FC<{
       </Modal>
 
       {/* Edit Modal */}
-      <Modal title={_('Sửa địa chỉ')} onClose={editModal.close} isOpen={editModal.isOpen}>
+      <Modal title={_('Sửa thông tin địa chỉ')} onClose={editModal.close} isOpen={editModal.isOpen}>
         <Form
           id="customerAddressForm"
           method="PATCH"
           onSubmit={async (data) => {
-            await updateAddress(address.addressId, data);
-          }}
-          onSuccess={(response) => {
-            if (!response.error) {
+            try {
+              await updateAddress(address.addressId, data);
               editModal.close();
-              toast.success(_('Address has been updated successfully!'));
-            } else {
-              toast.error(response.error.message);
+              toast.success(_('Cập nhật địa chỉ thành công!'));
+            } catch (error) {
+              toast.error(error.message);
             }
           }}
         >
           <CustomerAddressForm address={address} fieldNamePrefix="" />
           <CheckboxField
-            label={_('Set as default')}
-            defaultChecked={address.isDefault}
+            label={_('Đặt làm mặc định')}
+            checked={!!address.isDefault}
             name="is_default"
           />
         </Form>
@@ -122,50 +120,44 @@ export function MyAddresses({ title }: { title?: string }) {
           <Address key={address.uuid} address={address} />
         ))}
       </div>
-      <div className="mt-4">
-        <button
-          onClick={() => modal.open()}
-          className="w-full px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-        >
-          {_('Thêm địa chỉ mới')}
-        </button>
-      </div>
-      <Modal
-        title={_('Add new address')}
-        onClose={modal.close}
-        isOpen={modal.isOpen}
-      >
-        <Form
-          id="customerAddressForm"
-          method={'POST'}
-          onSubmit={async (data) => {
-            try {
-              await addAddress(data as ExtendedCustomerAddress);
-              toast.success(_('Address has been saved successfully!'));
-            } catch (error) {
-              toast.error(error.message);
-            }
-          }}
-          onSuccess={(response) => {
-            if (!response.error) {
-              modal.close();
-              toast.success(_('Address has been saved successfully!'));
-              setTimeout(() => {
-                window.location.reload();
-              }, 1500);
-            } else {
-              toast.error(response.error.message);
-            }
-          }}
-        >
-          <CustomerAddressForm address={undefined} fieldNamePrefix="" />
-          <CheckboxField
-            label={_('Set as default')}
-            defaultChecked={false}
-            name="is_default"
-          />
-        </Form>
-      </Modal>
+      {customer.addresses.length === 0 && (
+        <>
+          <div className="mt-4">
+            <button
+              onClick={() => modal.open()}
+              className="w-full px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+            >
+              {_('Thêm địa chỉ mới')}
+            </button>
+          </div>
+          <Modal
+            title={_('Thêm địa chỉ mới')}
+            onClose={modal.close}
+            isOpen={modal.isOpen}
+          >
+            <Form
+              id="customerAddressForm"
+              method={'POST'}
+              onSubmit={async (data) => {
+                try {
+                  await addAddress(data as ExtendedCustomerAddress);
+                  toast.success(_('Thêm địa chỉ thành công!'));
+                  modal.close();
+                } catch (error) {
+                  toast.error(error.message);
+                }
+              }}
+            >
+              <CustomerAddressForm address={undefined} fieldNamePrefix="" />
+              <CheckboxField
+                label={_('Đặt làm mặc định')}
+                defaultChecked={false}
+                name="is_default"
+              />
+            </Form>
+          </Modal>
+        </>
+      )}
     </div>
   );
 }

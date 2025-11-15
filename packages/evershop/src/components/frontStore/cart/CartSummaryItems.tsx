@@ -79,10 +79,8 @@ const CartSummaryItemsList: React.FC<{
           <div className="flex-shrink-0">
             {item.thumbnail ? (
               <img
-                src={
-                  "https://cdn.shopify.com/s/files/1/0456/5070/6581/files/cach-phan-biet-giay-sneaker-chinh-hang_600x600.jpg?v=1663556399"
-                }
-                alt={item.name}
+                src={item.thumbnail} 
+                alt={item.thumbnail}
                 className="w-20 h-20 object-cover rounded-md border"
               />
             ) : (

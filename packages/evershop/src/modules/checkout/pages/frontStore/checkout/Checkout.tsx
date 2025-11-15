@@ -58,9 +58,14 @@ export default function CheckoutPage({
           </Form>
           {/* Right: Giỏ hàng, mã khuyến mãi, tóm tắt đơn hàng */}
           <div className="flex flex-col gap-4 lg:col-span-5">
-            <CartCheckout/>
-            <PromoCodeInput />
+            <CartCheckout />
             <OrderSummaryCart />
+            <button
+              type="submit"
+              className="w-full mt-2 bg-[#79192A] text-white rounded-xl py-3 text-lg font-bold hover:bg-[#5a1220] transition"
+            >
+              Đặt hàng
+            </button>
           </div>
         </div>
       </CheckoutProvider>

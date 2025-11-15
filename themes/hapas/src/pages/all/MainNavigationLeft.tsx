@@ -113,11 +113,6 @@ export default function MainNavigationLeft({
           })
         );
         setApiCategories(items);
-        // debug console
-        if (process.env.NODE_ENV !== "production") {
-          // eslint-disable-next-line no-console
-          console.log("NavigationData (API):", items);
-        }
       } catch (e) {
         if (process.env.NODE_ENV !== "production") {
           // eslint-disable-next-line no-console

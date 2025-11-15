@@ -68,7 +68,9 @@ export function BillingAddress({
   };
 
   return (
-    <div>
+    <div className="billing-address-section">
+      <h2 className="text-base font-bold mb-4">{_('Địa chỉ thanh toán')}</h2>
+
       {/* Radio options */}
       <div className="mb-6 space-y-3">
         <div
@@ -97,7 +99,7 @@ export function BillingAddress({
                     handleAddressOptionChange('same');
                   }}
                 >
-                  {_('Thanh toán khi giao hàng (COD)')}
+                  {_('Giống với địa chỉ giao hàng')}
                 </a>
               </div>
             </div>

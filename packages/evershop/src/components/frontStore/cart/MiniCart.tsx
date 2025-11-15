@@ -237,6 +237,7 @@ const DefaultCartItems = ({
   totalItems: number;
   onRemoveItem: (itemId: string) => Promise<void>;
 }) => {
+
   if (isEmpty) {
     return null; // The main MiniCart component will handle the empty state
   }

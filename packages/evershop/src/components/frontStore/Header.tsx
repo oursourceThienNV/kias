@@ -25,12 +25,13 @@ function HeaderMobileLeft({ onMenuOpen }: { onMenuOpen: () => void }) {
 }
 
 import Area from "@components/common/Area.js";
-import React, { useState, useEffect, useMemo, useRef } from "react";
-import "./Header.scss";
+import LogoutConfirmModal from "@components/common/LogoutConfirmModal.js";
 import {
   useCustomer,
   useCustomerDispatch
 } from '@components/frontStore/customer/customerContext.js';
+import React, { useState, useEffect, useMemo, useRef } from "react";
+import "./Header.scss";
 
 /* === GraphQL query (y hệt bạn đưa) === */
 export const query = `
@@ -98,6 +99,8 @@ export function Header({
   graphqlEndpoint = "/api/graphql",
 }: any) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
   // State for collapsible menu sections
   const [openSections, setOpenSections] = useState<{ [key: string]: boolean }>({
     moi: false,
@@ -112,6 +115,7 @@ export function Header({
 
   const [apiCategories, setApiCategories] = useState<Category[]>([]);
   const shouldFetch = !Array.isArray(categories) || categories.length === 0;
+  
   useEffect(() => {
     if (!shouldFetch) return;
     const ctrl = new AbortController();
@@ -134,10 +138,6 @@ export function Header({
         );
         setApiCategories(items);
         // debug console
-        if (process.env.NODE_ENV !== "production") {
-          // eslint-disable-next-line no-console
-          console.log("NavigationData (API):", items);
-        }
       } catch (e) {
         if (process.env.NODE_ENV !== "production") {
           // eslint-disable-next-line no-console
@@ -336,7 +336,8 @@ export function Header({
                   ) : (
                     <a
                       href={item.url}
-                      className="block text-lg font-bold text-[#79192A] py-2 hover:bg-gray-100 rounded transition"
+                      className="block text-lg font-bold c py-2 hover:bg-gray-100 rounded transition"
+                      style={{ color: "#79192A" }}
                     >
                       {item.label}
                     </a>
@@ -363,8 +364,44 @@ export function Header({
               ))}
             </div>
           </div>
+          
+          {/* Logout button at bottom if logged in */}
+          {account && (
+            <div className="border-t px-4 py-3">
+              <button
+                onClick={() => {
+                  setShowLogoutModal(true);
+                  setMenuOpen(false);
+                }}
+                className="w-full flex items-center gap-2 text-[15px] text-[#79192A] font-medium py-2 hover:bg-red-50 rounded transition"
+              >
+                <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" strokeLinecap="round" strokeLinejoin="round"/>
+                  <polyline points="16 17 21 12 16 7" strokeLinecap="round" strokeLinejoin="round"/>
+                  <line x1="21" y1="12" x2="9" y2="12" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                Đăng xuất
+              </button>
+            </div>
+          )}
         </nav>
       </div>
+
+      {/* Logout Confirmation Modal */}
+      <LogoutConfirmModal
+        isOpen={showLogoutModal}
+        isLoading={isLoggingOut}
+        onConfirm={async () => {
+          setIsLoggingOut(true);
+          try {
+            await logout();
+            window.location.href = '/';
+          } catch (error) {
+            window.location.reload();
+          }
+        }}
+        onCancel={() => setShowLogoutModal(false)}
+      />
     </header>
   );
 }

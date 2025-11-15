@@ -467,12 +467,45 @@ export const CartProvider = ({
   );
 
   // Effect to update cart when GraphQL query result changes
-  React.useEffect(() => {
+  React.useEffect(() => {    
     if (cartQueryResult.data?.myCart) {
       const serverCart = cartQueryResult.data.myCart;
       dispatch({
         type: 'SET_CART',
         payload: serverCart
+      });
+    } else if (cartQueryResult.data !== undefined && cartQueryResult.data.myCart === null) {
+      // Cart is explicitly null from server, reset to empty state
+      const emptyCart = {
+        currency: state.data?.currency || 'USD',
+        items: [],
+        totalQty: 0,
+        billingAddress: undefined,
+        shippingAddress: undefined,
+        errors: [],
+        error: null,
+        subTotal: { value: 0, text: '0.00' },
+        subTotalInclTax: { value: 0, text: '0.00' },
+        shippingFeeExclTax: { value: 0, text: '0.00' },
+        shippingFeeInclTax: { value: 0, text: '0.00' },
+        grandTotal: { value: 0, text: '0.00' },
+        taxAmount: { value: 0, text: '0.00' },
+        discountAmount: { value: 0, text: '0.00' },
+        coupon: '',
+        addItemApi: state.data?.addItemApi || '',
+        addPaymentMethodApi: state.data?.addPaymentMethodApi || '',
+        addShippingMethodApi: state.data?.addShippingMethodApi || '',
+        addAddressApi: state.data?.addAddressApi || '',
+        applyCouponApi: state.data?.applyCouponApi || '',
+        addNoteApi: state.data?.addNoteApi || '',
+        addContactInfoApi: state.data?.addContactInfoApi || '',
+        checkoutApi: state.data?.checkoutApi || '',
+        availablePaymentMethods: [],
+        availableShippingMethods: []
+      };
+      dispatch({
+        type: 'SET_CART',
+        payload: emptyCart
       });
     }
   }, [cartQueryResult.data]);
@@ -576,7 +609,7 @@ export const CartProvider = ({
         });
       }
     },
-    [state, syncCartWithServer]
+    [state.data, syncCartWithServer]
   );
 
   const updateItem = useCallback(
@@ -631,7 +664,7 @@ export const CartProvider = ({
         });
       }
     },
-    [state, syncCartWithServer]
+    [state.data, syncCartWithServer]
   );
 
   // Clear error function

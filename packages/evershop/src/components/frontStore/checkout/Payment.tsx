@@ -1,43 +1,43 @@
-import { useCartState } from '@components/frontStore/cart/cartContext.js';
+import { useCartState } from "@components/frontStore/cart/cartContext.js";
 import {
   useCheckout,
-  useCheckoutDispatch
-} from '@components/frontStore/checkout/checkoutContext.js';
-import { BillingAddress } from '@components/frontStore/checkout/payment/BillingAddress.js';
-import { PaymentMethods } from '@components/frontStore/checkout/payment/PaymentMethods.js';
-import { _ } from '@evershop/evershop/lib/locale/translate/_';
-import React, { useEffect } from 'react';
-import { useWatch } from 'react-hook-form';
-import { toast } from 'react-toastify';
+  useCheckoutDispatch,
+} from "@components/frontStore/checkout/checkoutContext.js";
+import { BillingAddress } from "@components/frontStore/checkout/payment/BillingAddress.js";
+import { PaymentMethods } from "@components/frontStore/checkout/payment/PaymentMethods.js";
+import { _ } from "@evershop/evershop/lib/locale/translate/_";
+import React, { useEffect } from "react";
+import { useWatch } from "react-hook-form";
+import { toast } from "react-toastify";
 
 export function Payment() {
   const {
     data: { billingAddress, availablePaymentMethods },
-    loadingStates: { addingBillingAddress }
+    loadingStates: { addingBillingAddress },
   } = useCartState();
   const { updateCheckoutData } = useCheckoutDispatch();
   const { form } = useCheckout();
   const paymentMethod = useWatch({
-    name: 'paymentMethod',
-    control: form.control
+    name: "paymentMethod",
+    control: form.control,
   });
 
   useEffect(() => {
     const updatePaymentMethod = async () => {
       try {
-        const paymentMethod = form.getValues('paymentMethod');
+        const paymentMethod = form.getValues("paymentMethod");
         const methodDetails = availablePaymentMethods?.find(
           (method) => method.code === paymentMethod
         );
         if (!methodDetails) {
-          throw new Error('Please select a valid payment method');
+          throw new Error("Please select a valid payment method");
         }
         updateCheckoutData({ paymentMethod: methodDetails.code });
       } catch (error) {
         toast.error(
           error instanceof Error
             ? error.message
-            : _('Failed to update shipment')
+            : _("Failed to update shipment")
         );
       }
     };
@@ -51,14 +51,14 @@ export function Payment() {
       {/* Box thông tin giao hàng */}
       <div className="bg-white border border-gray-200 rounded-2xl p-5">
         <h2 className="text-base font-bold mb-4">Phương thức thanh toán</h2>
-      {/* <PaymentMethods
-        methods={availablePaymentMethods?.map((method) => ({
-          ...method
-        }))}
-        isLoading={addingBillingAddress}
-      /> */}
-      <BillingAddress billingAddress={billingAddress} />
+        <PaymentMethods
+          methods={availablePaymentMethods?.map((method) => ({
+            ...method,
+          }))}
+          isLoading={addingBillingAddress}
+        />
+        <BillingAddress billingAddress={billingAddress} />
+      </div>
     </div>
-  </div>
   );
 }

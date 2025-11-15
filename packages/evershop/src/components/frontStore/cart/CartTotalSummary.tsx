@@ -1,8 +1,28 @@
-import Area from "@components/common/Area.js";
-import { useCartState } from "@components/frontStore/cart/cartContext.js";
-import { CouponForm } from "@components/frontStore/CouponForm.js";
-import { _ } from "@evershop/evershop/lib/locale/translate/_";
-import React from "react";
+
+
+
+import Area from '@components/common/Area.js';
+import { useCartState } from '@components/frontStore/cart/cartContext.js';
+import { CouponForm } from '@components/frontStore/CouponForm.js';
+import { _ } from '@evershop/evershop/lib/locale/translate/_';
+import React from 'react';
+
+const SkeletonValue: React.FC<{
+  children: React.ReactNode;
+  loading?: boolean;
+  className?: string;
+}> = ({ children, loading = false, className = '' }) => {
+  if (!loading) {
+    return <>{children}</>;
+  }
+
+  return (
+    <span className={`relative ${className}`}>
+      <span className="opacity-0">{children}</span>
+      <span className="absolute inset-0 bg-gray-200 rounded animate-pulse" />
+    </span>
+  );
+};
 
 const Total: React.FC<{
   total: string;
@@ -11,12 +31,26 @@ const Total: React.FC<{
   loading?: boolean;
 }> = ({ total, totalTaxAmount, priceIncludingTax, loading = false }) => {
   return (
-    <div className="summary-row grand-total flex justify-between items-center mb-4">
-      <span className="text-[14px] font-bold" style={{ color: "#171717" }}>
-        Tổng thanh toán
-      </span>
-      <div className="font-bold text-lg">
-        <span className="text-[14px] font-bold">{total}</span>
+    <div className="summary-row grand-total flex justify-between py-2">
+      {(priceIncludingTax && (
+        <div>
+          <div>
+            <div className="font-bold">
+              <span>{_('Total')}</span>
+            </div>
+            <div>
+              <span className="italic font-normal">
+                ({_('Inclusive of tax ${totalTaxAmount}', { totalTaxAmount })})
+              </span>
+            </div>
+          </div>
+        </div>
+      )) || <span className="self-center font-bold">{_('Total')}</span>}
+      <div>
+        <div />
+        <SkeletonValue loading={loading} className="grand-total-value">
+          {total}
+        </SkeletonValue>
       </div>
     </div>
   );
@@ -33,12 +67,12 @@ const Tax: React.FC<{
 
   return (
     <div className="summary-row flex justify-between py-2">
-      <span>{_("Tax")}</span>
+      <span>{_('Tax')}</span>
       <div>
         <div />
-        <span className="text-[14px] font-bold" style={{ color: "#171717" }}>
+        <SkeletonValue loading={loading} className="text-right">
           {amount}
-        </span>
+        </SkeletonValue>
       </div>
     </div>
   );
@@ -46,14 +80,14 @@ const Tax: React.FC<{
 
 const Subtotal: React.FC<{ subTotal: string; loading?: boolean }> = ({
   subTotal,
-  loading = false,
+  loading = false
 }) => {
   return (
     <div className="flex justify-between gap-7 py-2">
-      <div>{_("Sub total")}</div>
-      <span className="text-[14px] font-bold" style={{ color: "#171717" }}>
+      <div>{_('Sub total')}</div>
+      <SkeletonValue loading={loading} className="text-right">
         {subTotal}
-      </span>
+      </SkeletonValue>
     </div>
   );
 };
@@ -73,10 +107,10 @@ const Discount: React.FC<{
 
   return (
     <div className="flex justify-between gap-7 py-2">
-      <div>{_("Discount(${coupon})", { coupon })}</div>
-      <span className="text-[14px] font-bold" style={{ color: "#171717" }}>
+      <div>{_('Discount(${coupon})', { coupon })}</div>
+      <SkeletonValue loading={loading} className="text-right">
         {discountAmount}
-      </span>
+      </SkeletonValue>
     </div>
   );
 };
@@ -88,17 +122,15 @@ const Shipping: React.FC<{
 }> = ({ method, cost, loading = false }) => {
   return (
     <div className="summary-row flex justify-between gap-7 py-2">
-      <span>{_("Shipping")}</span>
+      <span>{_('Shipping')}</span>
       {method && (
         <div>
-          <span className="text-[14px] font-bold" style={{ color: "#171717" }}>
-            {cost}
-          </span>
+          <SkeletonValue loading={loading}>{cost}</SkeletonValue>
         </div>
       )}
       {!method && (
         <span className="text-gray-500 italic font-normal">
-          {_("Select shipping method")}
+          {_('Select shipping method')}
         </span>
       )}
     </div>
@@ -124,37 +156,28 @@ const DefaultCartSummary: React.FC<{
   shippingMethod,
   shippingCost,
   taxAmount,
-  total,
+  total
 }) => (
   <div className="cart__total__summary font-semibold">
     <Area id="cartSummaryBeforeSubTotal" noOuter />
-    <div className="flex justify-between">
-      <span className="text-[14px]" style={{ color: "#171717" }}>
-        Tổng tiền hàng
-      </span>
-      <span className="text-[14px]" style={{ color: "#171717" }}>
-        {subTotal}
-      </span>
-    </div>
+    <Subtotal subTotal={subTotal} loading={loading} />
     <Area id="cartSummaryAfterSubTotal" noOuter />
+    <Area id="cartSummaryBeforeDiscount" noOuter />
+    <Discount
+      discountAmount={discountAmount}
+      coupon={coupon}
+      loading={loading}
+    />
+    <Area id="cartSummaryAfterDiscount" noOuter />
     <Area id="cartSummaryBeforeShipping" noOuter />
-    <div className="flex justify-between">
-      <span className="text-[14px]" style={{ color: "#171717" }}>
-        Phí vận chuyển
-      </span>
-      {shippingMethod ? (
-        <span className="text-[14px] font-bold" style={{ color: "#171717" }}>
-          {shippingCost}
-        </span>
-      ) : (
-        <span className="text-[14px]" style={{ color: "#171717" }}>
-          -
-        </span>
-      )}
-    </div>
+    <Shipping method={shippingMethod} cost={shippingCost} loading={loading} />
     <Area id="cartSummaryAfterShipping" noOuter />
     <Area id="cartSummaryBeforeTax" noOuter />
-    {/* Ẩn dòng thuế */}
+    <Tax
+      amount={taxAmount}
+      showPriceIncludingTax={showPriceIncludingTax}
+      loading={loading}
+    />
     <Area id="cartSummaryAfterTax" noOuter />
     <Area id="cartSummaryBeforeTotal" noOuter />
     <Total
@@ -164,13 +187,6 @@ const DefaultCartSummary: React.FC<{
       loading={loading}
     />
     <Area id="cartSummaryAfterTotal" noOuter />
-    {/* Nút đặt hàng */}
-    <button
-      type="submit"
-      className="w-full mt-2 bg-[#79192A] text-white rounded-xl py-3 text-lg font-bold hover:bg-[#5a1220] transition"
-    >
-      Đặt hàng
-    </button>
   </div>
 );
 
@@ -192,10 +208,26 @@ function CartTotalSummary({ children }: CartTotalSummaryProps) {
   const {
     data: cart,
     loadingStates,
-    setting: { priceIncludingTax },
+    setting: { priceIncludingTax }
   } = useCartState();
 
-  function formatVnPrice(input: any) {
+  const subTotal = priceIncludingTax
+    ? cart?.subTotalInclTax?.text || ''
+    : cart?.subTotal?.text || '';
+
+  const discountAmount = cart?.discountAmount?.text || '';
+  const coupon = cart?.coupon;
+
+  const shippingMethod = cart?.shippingMethodName;
+  const shippingCost = priceIncludingTax
+    ? cart?.shippingFeeInclTax?.text || ''
+    : cart?.shippingFeeExclTax?.text || '';
+
+  const taxAmount = cart?.totalTaxAmount?.text || '';
+  const total = cart?.grandTotal?.text || '';
+
+
+    function formatVnPrice(input: any) {
     if (!input) return "";
     if (typeof input === "object" && input.value !== undefined) {
       return (
@@ -220,28 +252,13 @@ function CartTotalSummary({ children }: CartTotalSummaryProps) {
     return str;
   }
 
-  const subTotal = priceIncludingTax
-    ? cart?.subTotalInclTax?.text || ""
-    : cart?.subTotal?.text || "";
-
-  const discountAmount = cart?.discountAmount?.text || "";
-  const coupon = cart?.coupon;
-
-  const shippingMethod = cart?.shippingMethodName;
-  const shippingCost = priceIncludingTax
-    ? cart?.shippingFeeInclTax?.text || ""
-    : cart?.shippingFeeExclTax?.text || "";
-
-  const taxAmount = cart?.totalTaxAmount?.text || "";
-  const total = cart?.grandTotal?.text || "";
-
   return (
     <div className="grid grid-cols-1 gap-5">
       {children ? (
         children({
           loading: Object.values(loadingStates).some(
             (state) =>
-              state === true || (typeof state === "string" && state !== null)
+              state === true || (typeof state === 'string' && state !== null)
           ),
           showPriceIncludingTax: priceIncludingTax,
           subTotal,
@@ -250,22 +267,22 @@ function CartTotalSummary({ children }: CartTotalSummaryProps) {
           shippingMethod,
           shippingCost,
           taxAmount,
-          total,
+          total
         })
       ) : (
         <DefaultCartSummary
           loading={Object.values(loadingStates).some(
             (state) =>
-              state === true || (typeof state === "string" && state !== null)
+              state === true || (typeof state === 'string' && state !== null)
           )}
           showPriceIncludingTax={priceIncludingTax}
-          subTotal={formatVnPrice(subTotal)}
-          discountAmount={formatVnPrice(discountAmount)}
+          subTotal={subTotal}
+          discountAmount={discountAmount}
           coupon={coupon}
           shippingMethod={shippingMethod}
-          shippingCost={formatVnPrice(shippingCost)}
-          taxAmount={formatVnPrice(taxAmount)}
-          total={formatVnPrice(total)}
+          shippingCost={shippingCost}
+          taxAmount={taxAmount}
+          total={total}
         />
       )}
     </div>
@@ -279,5 +296,5 @@ export {
   Discount,
   Shipping,
   Tax,
-  Total,
+  Total
 };

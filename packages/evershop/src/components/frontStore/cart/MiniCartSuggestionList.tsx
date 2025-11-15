@@ -83,7 +83,7 @@ export const MiniCartSuggestionList: React.FC<MiniCartSuggestionListProps> = ({ 
             className="min-w-[220px] bg-white rounded-lg hover:border hover:border-gray-200 flex flex-col items-center p-3 shadow-md mx-1 cursor-pointer"
             style={{ boxShadow: '0 2px 8px 0 rgba(0,0,0,0.06)' }}
           >
-            <img src={typeof product.img === 'string' ? product.img : product.img?.url} alt={product.name} className="w-full h-32 object-contain mb-2 rounded" />
+            <img src={typeof product.img === 'string' ? product.img : product.img?.url} alt={product.img} className="w-full h-32 object-contain mb-2 rounded" />
             <div className="text-[14px] text-gray-900 text-center leading-tight mb-2 min-h-[38px] flex items-center justify-center font-medium">
               {product.name}
             </div>

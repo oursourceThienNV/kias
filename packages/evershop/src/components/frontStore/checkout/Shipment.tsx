@@ -7,6 +7,7 @@ import {
   useCheckoutDispatch,
 } from "@components/frontStore/checkout/checkoutContext.js";
 import { ShippingMethods } from "@components/frontStore/checkout/shipment/ShippingMethods.js";
+import CustomerAddressForm from "@components/frontStore/customer/address/addressForm/Index.js";
 import { _ } from "@evershop/evershop/lib/locale/translate/_";
 import React, { useEffect, useRef } from "react";
 import { useWatch } from "react-hook-form";
@@ -135,6 +136,11 @@ export function Shipment() {
       {/* Box thông tin giao hàng */}
       <div className="bg-white border border-gray-200 rounded-2xl p-5">
         <h2 className="text-base font-bold mb-4">Phương thức thanh toán</h2>
+        <CustomerAddressForm
+          areaId="checkoutShippingAddressForm"
+          fieldNamePrefix="shippingAddress"
+          address={shippingAddress}
+        />
         <ShippingMethods
           methods={availableShippingMethods?.map((method) => ({
             ...method,

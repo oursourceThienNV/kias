@@ -1,5 +1,7 @@
 import React from "react";
 import { MiniCart } from "@components/frontStore/cart/MiniCart.js";
+import SearchSlidePanel from "../../components/SearchSlidePanel";
+import LogoutConfirmModal from "@components/common/LogoutConfirmModal.js";
 
 interface HeaderActionsRightProps {
   cartCount?: number;
@@ -24,6 +26,9 @@ export default function HeaderActionsRight({
 }: HeaderActionsRightProps) {
   const navy = colorHex;
   const [open, setOpen] = React.useState(false);
+  const [isSearchOpen, setIsSearchOpen] = React.useState(false);
+  const [showLogoutModal, setShowLogoutModal] = React.useState(false);
+  const [isLoggingOut, setIsLoggingOut] = React.useState(false);
   const ref = React.useRef<HTMLDivElement>(null);
 
   const loggedIn = customer ? true : isLoggedIn;
@@ -41,7 +46,38 @@ export default function HeaderActionsRight({
 
   return (
     <div className="flex items-center justify-end" style={{ color: navy }}>
-      <div className="flex items-center gap-3 sm:gap-4">
+      <div className="flex items-center gap-1">
+        {/* Search button - hiện khi account và wishlist ẩn (mobile) */}
+        <button
+          type="button"
+          onClick={() => setIsSearchOpen(true)}
+          aria-label="Tìm kiếm"
+          className="xl:hidden flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 hover:opacity-80 transition-opacity"
+          style={{ color: "#79192A" }}
+        >
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 20 20"
+            fill="none"
+            aria-hidden="true"
+          >
+            <circle
+              cx="9"
+              cy="9"
+              r="6.2"
+              stroke="currentColor"
+              strokeWidth="1.5"
+            />
+            <path
+              d="M14.5 14.5L18 18"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+            />
+          </svg>
+        </button>
+
         {/* Account with dropdown */}
         <div
           className="relative hidden md:flex z-40"
@@ -52,7 +88,7 @@ export default function HeaderActionsRight({
             <a
               href={loginUrl}
               aria-label={"Đăng nhập"}
-              className="relative flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 no-underline hover:opacity-80 transition-opacity"
+              className="relative flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 no-underline hover:opacity-80 transition-opacity hidden xl:flex"
               style={{ color: "#79192A" }}
             >
               <svg
@@ -86,7 +122,7 @@ export default function HeaderActionsRight({
                   e.stopPropagation();
                   setOpen((v) => !v);
                 }}
-                className="relative flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 hover:opacity-80 transition-opacity cursor-pointer"
+                className="relative flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 hover:opacity-80 transition-opacity cursor-pointer hidden xl:flex"
                 style={{ color: "#79192A" }}
               >
                 <svg
@@ -145,13 +181,9 @@ export default function HeaderActionsRight({
                   <button
                     className="w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 flex items-center gap-2"
                     role="menuitem"
-                    onClick={async () => {
-                      try {
-                        await fetch(logoutApi, { method: "POST" });
-                        window.location.href = "/";
-                      } catch (e) {
-                        window.location.reload();
-                      }
+                    onClick={() => {
+                      setShowLogoutModal(true);
+                      setOpen(false);
                     }}
                   >
                     <svg
@@ -255,7 +287,7 @@ export default function HeaderActionsRight({
         </a>
       </div>
 
-      {/* Divider + Language “| VN” */}
+      {/* Divider + Language "| VN" */}
       <div className="flex items-center pl-3 sm:pl-4 ml-2">
         <span className="mx-2 select-none" style={{ color: "#79192A" }}>
           |
@@ -269,6 +301,28 @@ export default function HeaderActionsRight({
           {currentLanguage}
         </button>
       </div>
+
+      {/* Search Slide Panel */}
+      <SearchSlidePanel 
+        isOpen={isSearchOpen} 
+        onClose={() => setIsSearchOpen(false)} 
+      />
+
+      {/* Logout Confirmation Modal */}
+      <LogoutConfirmModal
+        isOpen={showLogoutModal}
+        isLoading={isLoggingOut}
+        onConfirm={async () => {
+          setIsLoggingOut(true);
+          try {
+            await fetch(logoutApi, { method: "POST" });
+            window.location.href = "/";
+          } catch (e) {
+            window.location.reload();
+          }
+        }}
+        onCancel={() => setShowLogoutModal(false)}
+      />
     </div>
   );
 }
