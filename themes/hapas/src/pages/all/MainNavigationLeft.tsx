@@ -64,8 +64,8 @@ const defaultNavItems = [
     label: "BỘ SƯU TẬP",
     url: "/bo-suu-tap",
     submenu: [
-      { id: "bst-he", label: "BST Hè", url: "/bo-suu-tap/he" },
-      { id: "bst-dong", label: "BST Đông", url: "/bo-suu-tap/dong" },
+      { id: "bst-he", label: "BST Hè", url: "/he" },
+      { id: "bst-dong", label: "BST Đông", url: "/dong" },
     ],
   },
   { id: "ve-kias", label: "VỀ KIAS", url: "/ve-kias" },
